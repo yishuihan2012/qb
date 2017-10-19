@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提现列表</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/fakeloader.css" />
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInUp">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>所有提现</h5>
+                        <div class="ibox-tools">
+                            <a class="btn btn-white btn-sm" onclick="auditWxAll()"><i class="fa fa-folder"></i> 批量审核微信提现 </a>
+                            <a class="btn btn-white btn-sm" onclick="auditBkAll()"><i class="fa fa-folder"></i> 批量审核银行提现 </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row m-b-sm m-t-sm">
+                            <form action="{:U('UserManage/UserCash')}" method="get">
+                                <div class="btn-group" id="data_5" style="margin-left: 20px; width:30%;">
+                                    <div class="input-daterange input-group" id="datepicker">
+                                        <span class="input-group-btn"><button class="btn btn-white" type="button">提现日期</button></span>
+                                        <input type="text" class="form-control" name="starttime" value="" />
+                                        <span class="input-group-addon">到</span>
+                                        <input type="text" class="form-control" name="endtime" value="" />
+                                    </div>
+                                </div>
+                                <div class="btn-group" style="margin-left: 20px; width:30%;">
+                                    <div class="input-group">
+                                        <input type="text" name="uname" class="form-control" placeholder="请输入用户名或手机号查询...">
+                                        <span class="input-group-btn"><button class="btn btn-white" type="submit">搜索</button></span>
+                                    </div>
+                                </div>
+                                <div class="btn-group" style="margin-left: 20px; ">
+                                    <div class="input-group">
+                                        <!--<a href="{:U('UserManage/exportE',$map)}" class="btn btn-white "><i class="fa fa-folder"></i>导出EXCEL</a>-->
+                                        <a href="{:U('UserManage/exportEB',$map)}" class="btn btn-white "><i class="fa fa-folder"></i>导出银行卡提现</a>
+                                       <!-- <a href="{:U('UserManage/exportE',$map)}" class="btn btn-white "><i class="fa fa-folder"></i>导出所有记录</a>-->
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="project-list">
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+                                        <td>状态</td>
+                                        <td class="project-title">用户名</td>
+                                        <td class="project-title">联系电话</td>
+                                        <td class="project-completion">提现金额</td>
+                                        <td class="project-title">银行信息</td>
+                                        <td class="project-completion">说明</td>
+                                        <td class="project-completion">申请时间</td>
+                                        <td class="project-actions">操作</td>
+                                    </tr>
+                                <foreach name="list" item="l">
+                                    <tr>
+                                        <td class="project-status">
+                                            <if condition="$l.f_status eq 0">
+                                                <span class="label label-danger">待提现</span>
+                                            </if>
+                                            <if condition="$l.f_status eq 1"> <span class="label label-primary">已提现</span>
+                                              </if>
+                                            <if condition="$l.f_status eq -1">  <span class="label label-danger" style="color: red">失败</span></if>
+                                        </td>
+                                        <td class="project-title">
+                                            <a>{$l.u_account}</a>
+                                        </td>
+                                        <td class="project-title">
+                                            <a>{$l.u_mobile}</a>
+                                        </td>
+                                        <td class="project-completion">
+                                            <a>{$l.f_price}</a>
+                                        </td>
+                                        <td class="project-title">
+                                            <a>{$l.f_bname}</a>
+                                            <br/>
+                                            <small>开户行：{$l.f_bkname|default="空"}</small>
+                                            <br/>
+                                            <small>开户行地址：{$l.f_bkadd|default="空"}</small>
+                                            <br/>
+                                            <small>银行卡号：{$l.f_bnumber}</small>
+                                        </td>
+                                        <td class="project-completion">
+                                            <a>{$l.f_text}</a>
+                                        </td>
+                                        <td class="project-completion">
+                                            <a>{$l.f_datetime|date="Y-m-d H:i:s",###}</a>
+                                        </td>
+                                        <td class="project-actions">
+                                            <if condition="$l.f_status eq 0">
+                                                <a href="javascript:CashSure({$l.id});" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 通过 </a>
+                                            </if>
+                                            <if condition="$l.f_status eq -1">
+                                                <a href="javascript:CashSure({$l.id});" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 重新通过 </a>
+                                            </if>
+
+                                            <a href="javascript:CashDel({$l.id});" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> 忽略 </a>
+                                        </td>
+                                    </tr>
+                                </foreach>
+                                </tbody>
+                            </table>
+                            {$page}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script src="__PUBLIC__/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/fakeloader.min.js"></script>
+    <script>
+       $(document).ready(function(){$("#loading-example-btn").click(function(){btn=$(this);simpleLoad(btn,true);simpleLoad(btn,false)})});function simpleLoad(btn,state){if(state){btn.children().addClass("fa-spin");btn.contents().last().replaceWith(" Loading")}else{setTimeout(function(){btn.children().removeClass("fa-spin");btn.contents().last().replaceWith(" Refresh")},2000)}};
+        function CashDel(id){
+            $.post("{:U('UserManage/CashDel')}",{id:id},function(t){ if(t == 1){alert("删除成功");  window.location.reload();}else{alert("删除失败");}});
+        }
+        function CashSure(id){
+            $.post("{:U('UserManage/CashSure')}",{id:id},function(t){ if(t.status == 2){alert("提现成功,微信提现单号为："+ t.info);  window.location.reload();}else if(t.status==1){alert('用户未绑定微信')}else if(t.status==3){alert(t.info)}else if(t.status==4){alert('银行体现成功')}else if(t.status== 5){alert("银行汇款失败")}});
+        }
+       $("#data_5 .input-daterange").datepicker({
+           keyboardNavigation: !1,
+           forceParse: !1,
+           autoclose: !0
+       });
+        function auditWxAll(){
+            if(confirm('确定要通过所有微信提现吗')){
+                $.post("{:U('UserManage/CashSureAll')}",{me:1},function(t){ if(t.status == 1){alert("部分提现成功"+ t.info);  window.location.reload();}else if(t.status==2){alert('体现成功'+t.info);window.location.reload();}});
+            }
+        }
+       function auditBkAll(){
+           if(confirm('确定要通过所有银行提现吗')){
+               $.post("{:U('UserManage/CashSureAll')}",{me:2},function(t){if(t.status==3){alert('银行体现成功');window.location.reload();}else if(t.status==4){alert("银行汇款失败")}});
+           }
+       }
+    </script>
+    </body>
+</html>

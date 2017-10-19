@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>购物车</title>
+    <link href="__PUBLIC__/web/fonts/iconfont.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/web/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/web/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/web/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/web/css/ectouch.css"></head>
+  <body>
+    <div class="Layout_style">
+      <header id="header">
+        <div class="header_l header_return">
+          <a href="javascript:;" onclick="javascript :history.back(-1);" class="return_cz">
+            <i class="fa fa-angle-left icon_zjt"></i>
+          </a>
+        </div>
+        <h1>购物车</h1></header>
+      <!--购物车样式-->
+      <div class="shop_cart">
+        <div class="schedule">
+          <ul>
+            <li class="on"><em>1</em>查看购物车</li>
+            <li><em>2</em>确认订单</li>
+            <li><em>3</em>成功提交订单</li>
+          </ul>
+        </div>
+        <div class="cart_list">
+          <form class="cartform" method="post" action="{:U('Index/SubmitOrder')}">
+          <ul class="one-shop">
+            <if condition="$cart_list eq null">暂时没有商品</if>
+            <foreach name="cart_list" item="cl">
+            <li class="itemlist one-goods">
+              <div class="shop_Order">商家：自运营
+                <div class="delete"><a href="javascript:CartDel({$cl.id});" class="fa fa-trash-o "></a></div>
+              </div>
+              <div class="s_c_content clearfix">
+                <div class="checkbox">
+                  <label>
+                    <input name="c_id[]" type="checkbox" class="ace GoodsCheck" value="{$cl.id}">
+                    <span class="lbl"></span>
+                  </label>
+                </div>
+                <div class="img_link"><a href="{:U('Index/ProductCon',array('id'=>$cl['c_gid']))}"><img src="{$cl.g_thumb}" width="100%" /></a></div>
+                <div class="cart_info">
+                  <a href="{:U('Index/ProductCon',array('id'=>$cl['c_gid']))}">{$cl.g_title}</a>
+                  <div class="Standard"><span>{$cl.c_ginfo}</span></div>
+                  <div class="price">￥<span class="GoodsPrice">{$cl.g_vipprice}</span></div>
+                </div>
+              </div>
+              <div class="Quantity_s">
+                <span class="txt">
+                  <button type="button" class="decrease minus">-</button>
+                  <input class="am-num-text num" type="text" value="{$cl.c_gnum}">
+                  <input class="c_id" type="hidden" value="{$cl.id}">
+                  <button type="button" class="increase plus">+</button>
+                </span>
+              </div>
+            </li>
+            </foreach>
+           <div class="ShopTotal none"></div>
+          </ul>
+          </form>
+        </div>
+      </div>
+    </div>
+    <footer class="toolbar">
+      <p>合计:<em class="price" >￥<span id="AllTotal">0</span></em></p>
+      <a href="/" class="carry_btn">继续购物</a>
+      <a href="javascript:;" class="Billing" id="send">结算</a></footer>
+    <include file="Index/footer"/>
+    <script type="text/javascript" >var shopCartNum="{:U('Index/editNum')}"</script>
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/web/js/style.js"></script>
+  </body>
+<script>
+  function CartDel(id){
+    $.post("{:U('Index/CartDel')}",{id:id},function(t){ if(t == 1){alert("删除成功");location.href="{:U('Index/ShopCart')}";}else{alert("请先登录");}})
+  }
+  $(".Billing").click(function(){
+    if($("input[type='checkbox']:checked").size()>0) {
+      $(".cartform").submit();
+    }
+    else{
+      alert("未选择商品");
+    }
+  })
+</script>
+</html>

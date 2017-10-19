@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快捷支付订单列表</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/layui/css/layui.css" />
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('UserManage/CertLook')}">实名查询</a></li>
+                </ol>
+            </div>
+        </div>  
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        
+        <div class="row">
+            <div class="col-xs-12">
+              <form name="myform" action="{:U('UserManage/CertLook')}" method="POST">
+              <div class="input-group" style="margin:20px 0px;">
+                  <div class="layui-input-inline" style="margin-right:20px;">
+                    <input type="text" name="u_mobile" class="layui-input" value="{$u_mobile}" placeholder="请输入手机号...">
+                  </div>
+
+                   <div class="layui-input-inline" style="margin-right:20px;">
+                    <input type="text" name="usercertification_card" class="layui-input" value="{$usercertification_card}" placeholder="身份证号...">
+                  </div>
+
+                  <div class="layui-input-inline" style="margin-right:10px;">
+                    <input class="layui-input" name="u_start" value="{$u_start}" placeholder="开始时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                  </div>
+                  <div class="layui-input-inline" style="margin-right:20px;">
+                    <input class="layui-input" name="u_end" value="{$u_end}" placeholder="结束时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                  </div>
+                  <div class="layui-input-inline">
+                    <span class="input-group-btn"><button class="btn btn-white layui-btn" type="submit">搜索</button></span>
+                  </div>
+              </div>
+              </form>
+            </div>
+        </div>
+
+          <table class="table table-striped">
+            <thead>
+                <th>订单编号</th>
+                <td>手机号</td>
+                <th>名字</th>
+                <th>身份证</th>
+                <th>是否实名</th>
+                <td>实名时间</td>
+                <th>相关操作</th>
+            </thead>
+          <tbody>
+              <volist name = "data" id = "vo">
+            <tr>
+                <td>{$vo.id}</td>
+                 <td>{$vo.u_mobile}</td>
+                <td>{: $vo['usercertification_name']?$vo['usercertification_name']:'无'}</td>
+                <td>{: $vo['usercertification_card']?$vo['usercertification_card']:'无'}</td>
+                <td><if condition="$vo['usercertification_state'] eq 1">是<else/>否</if></td>
+                <td>{:$vo['create_at']?$vo['create_at']:'无'}</td>
+                <td>
+                   <if condition="$vo['usercertification_state'] eq 1">
+                    <a href = "{:U('UserManage/certDetail',array('id' => $vo['id']))}" >实名详情</a>&nbsp;|&nbsp;
+                   </if>
+                  <a href = "javascript:;" class = "getAjaxMsg" data-content="删除该实名信息" data-url = "{:U('UserManage/certDelete',array('id' => $vo['usercertification_user_id']))}">删除</a>
+                </td>
+            </tr>
+              </volist>
+        </tbody>
+        <tfoot>
+          <tr><td style="text-align:center;">
+             {$Page}
+          </td></tr>
+        </tfoot>
+      </table>
+
+    </div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script src="__PUBLIC__/layui/layui.js"></script>
+    <script>
+    //一般直接写在一个js文件中
+    layui.use(['layer'], function(){
+        var layer = layui.layer;
+
+        $(".getAjaxMsg").click(function(){
+            var url=$(this).attr('data-url');
+            layer.confirm("您确定要"+$(this).attr('data-content')+"吗？", {
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                $.ajax({
+                    url:url,
+                    type:'POST',
+                    dataType:'html',
+                    success:function(data){
+                        if(data=='1'){
+                            layer.msg('删除成功', {time:1000,icon:6}, function(){
+                                window.location.reload(); 
+                            });
+                        }else{
+                            layer.msg('删除失败', {time:1000,icon:5});
+                        }
+                    }
+                })
+            }, function(){
+
+            });
+        })
+    });
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+    })
+    </script>
+
+</body>
+</html>

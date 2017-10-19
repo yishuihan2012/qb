@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{:C('SYSTEM_TITLE')}-修改常见问题</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <script src="__PUBLIC__/js/editor/kindeditor-min.js"></script>
+</head>
+
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('UserSuggestion/getQuestionList')}">问题列表</a></li>
+                    <li><a href="#" class="active">问题修改</a></li>
+                </ol>
+            </div>
+        </div>  
+    </div>
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{:C('SYSTEM_TITLE')} - 修改常见问题</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal" action="{:U('UserSuggestion/addQuestion_act')}">
+                        <input type="hidden" name="id" value="{:$problem_result['problem_id']}"/>
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">标题</label>
+                              <div class="col-sm-10">
+                                  <div class="col-sm-10" style="margin-bottom: 1%;">
+                                       <input type="text" name="title" value="{:$problem_result['problem_title']}" class="form-control" style="width:65%;">
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">内容</label>
+                              <div class="col-sm-10">
+                                  <div class="col-sm-10" style="margin-bottom: 1%;">
+                                       <textarea id="content" name="content" cols="" rows="">{:$problem_result['problem_info']}</textarea>
+                                  </div>
+                              </div>
+                          </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">是否发布</label>
+                              <div class="col-sm-10">
+                                  <div class="col-sm-10" style="margin-bottom: 1%;">
+                                       <input type="text" name="is_show" value="{:$problem_result['is_show']}" class="form-control" style="width:65%;">
+                                  </div>
+                              </div>
+                          </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="button">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fakeloader" style="display: none;"></div>
+    
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>   
+    <script type="text/javascript" src="__PUBLIC__/js/MrPiAdmin.js"></script>
+    <script type="text/javascript">
+    KindEditor.ready(function(K){
+        editor = K.create('#content'); 
+    });
+
+        $(".btn-primary").click(function(){
+        	var title = $("textarea[name='title']").val();
+        	editor.sync();   
+            var content = $("textarea[name='content']").val();
+
+            if(title == ''){alert('标题不能为空');return false;}
+            if(content == ''){alert('内容不能为空');return false;}
+            
+            $.post("{:U('UserSuggestion/modifyQuestion_act')}",
+              $(".form-horizontal").serialize(),
+                function(t){
+                  if(t == 0){
+                    alert("参数不能为空");
+                  }
+                  else if(t == 1){
+                    alert("修改成功！");
+                    location.href="{:U('UserSuggestion/getQuestionList')}";
+                  }
+
+                }
+              )
+          });
+    </script>
+</body>
+
+</html>

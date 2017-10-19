@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修改银行卡</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ue/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ue/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ue/lang/zh-cn/zh-cn.js"></script>
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/fakeloader.css" />
+    <link rel="stylesheet" href="__PUBLIC__/layui/css/layui.css"  media="all">
+</head>
+
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('QuickPay/cardList')}">银行卡列表</a></li>
+                    <li><a href="#" class="active">修改银行卡</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>修改银行卡</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal" action="">
+
+                        <input type='hidden' name="card_id" value="{$data.card_id}" />
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">卡号</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="card_number" value="{$data.card_number}" class="form-control" maxlength="30">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            
+                             <div class="form-group">
+                                <label class="col-sm-2 control-label">卡类型</label>
+                                <div class="col-sm-10">
+                                     <select class="form-control m-b" name="card_type" style="width:30%;float: left;margin-right: 2%;margin-bottom:0;">
+                                          <option value="0" <if condition="$data.card_type eq 0">selected="selected" </if> >信用卡</option>
+                                          <option value="1" <if condition="$data.card_type eq 1">selected="selected" </if>>储蓄卡</option>
+                                      </select>
+                                </div>
+                            </div>
+                    
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">持卡人</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="card_name" value="{$data.card_name}" class="form-control" maxlength="30">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">所属银行</label>
+                                <div class="col-sm-10">
+                                    <!-- <input type="text" name="card_bank" value="{$data.card_bank}" class="form-control" maxlength="30"> -->
+                                     <select class="form-control m-b" name="card_bank" style="width:30%;float: left;margin-right: 2%;margin-bottom:0;">
+                                          <foreach name='card_list'  item="vo">
+                                          <option value="{$vo.bank_name}" <if condition="$data.card_bank eq $vo['bank_name']">selected="selected" </if> >{$vo.bank_name}</option>
+                                          </foreach>
+                                      </select>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">预留手机号</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="card_tel" value="{$data.card_tel}" class="form-control" maxlength="11">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">持卡人身份证号</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="card_identify" value="{$data.card_identify}" class="form-control" maxlength="18">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit" >保存修改</button>
+                                    <button class="btn btn-white" type="button" onclick="history.go(-1)">返回列表页</button>
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fakeloader" style="display: none;"></div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script src="__PUBLIC__/js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
+    <script src="__PUBLIC__/js/plugins/summernote/summernote.min.js"></script>
+    <script src="__PUBLIC__/js/plugins/summernote/summernote-zh-CN.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/fakeloader.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/MrPiAdmin.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".fakeloader").fakeLoader({timeToHide:1000000,bgColor:"#fff",spinner:"spinner2"});
+        });
+    </script>
+    <script type="text/javascript">
+        var ue = UE.getEditor('editor');
+    </script>
+
+    <script src="__PUBLIC__/layui/layui.js" charset="utf-8"></script>
+    <script>
+        layui.use('laydate', function(){
+          var laydate = layui.laydate;
+          
+          var start = {
+            min: laydate.now()
+            ,max: '2099-06-16 23:59:59'
+            ,istoday: false
+            ,choose: function(datas){
+              end.min = datas; //开始日选好后，重置结束日的最小日期
+              end.start = datas //将结束日的初始值设定为开始日
+            }
+          };
+          
+          var end = {
+            min: laydate.now()
+            ,max: '2099-06-16 23:59:59'
+            ,istoday: false
+            ,choose: function(datas){
+              start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+          };
+          
+          document.getElementById('LAY_demorange_s').onclick = function(){
+            start.elem = this;
+            laydate(start);
+          }
+          document.getElementById('LAY_demorange_e').onclick = function(){
+            end.elem = this
+            laydate(end);
+          }
+          
+        });
+    </script>
+</body>
+
+</html>

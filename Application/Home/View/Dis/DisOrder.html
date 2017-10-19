@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<title>爱心订单</title>
+<link href="__PUBLIC__/web/fonts/iconfont.css" rel="stylesheet" type="text/css">
+<link  href="__PUBLIC__/web/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/web/css/style.css" />
+<link type="text/css" rel="stylesheet"  href="__PUBLIC__/web/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/web/css/ectouch.css">
+</head>
+<body>
+<div class="Layout_style">
+<!--顶部通用样式--> 
+<header id="header">
+  <div class="header_l header_return"><a href="javascript:;" onclick="javascript :history.back(-1);" class="return_cz"><i class="fa fa-angle-left icon_zjt"></i></a></div>
+  <h1> 爱心订单 </h1>
+</header>
+<section class=" user_style">
+  <div class="Billing_records">
+      <div id="leftTabBox">
+   <div class="bd"  id="tabBox1-bd">
+    <div class="con"> 
+     <ul class="Transaction_history">
+       <volist name="list" id="vo"> 
+         <li>
+           <div class="history_info">
+              <div class="jy_status">交易号：{$vo.o_sn}
+               <span class="f_r">{$vo.o_datetime|date="Y-m-d H:i:s",###}</span></div>
+              <div class="Money">
+                  <foreach name="vo.o_ginfo" item="og">
+                  <span>商品名称:</span>{$og.g_title}*{$og.gnum}<br>
+                  </foreach>
+                  <p class="red"><span>订单金额:</span><span class="f_r">{$vo.o_price} {$vo.o_status|get_fy=###}</span></p>
+              </div>
+            </div>
+          </li>
+      </volist> 
+      <!--分页样式-->
+
+     </ul>
+        <div class="Paging">{$page}</div>
+    </div>
+    </div> 
+   </div> 
+  </div>
+</section>
+</div>
+<include file="Index/footer"/>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/web/js/style.js"></script>
+</body>
+</html>

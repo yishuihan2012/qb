@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加用户</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/fakeloader.css" />
+</head>
+
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('UserManage/UserList')}">用户列表</a></li>
+                    <li><a href="#" class="active">添加用户</a></li>
+                </ol>
+            </div>
+        </div>  
+    </div>
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>添加用户</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">手机号</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="u_mobile" class="form-control" maxlength="11">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" >密码</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="u_pass" class="form-control" id = "password">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">分销等级</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control m-b" name="u_member_id">
+                                        <foreach name="role" item="v">
+                                        <option value="{$v['member_id']}" selected>{$v['member_name']}</option>
+                                        </foreach>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">头像</label>
+                                <div class="col-sm-10">
+                                    <input type="file" id="u_image" class="form-control">
+                                    <input type="hidden" name="u_image" value="" />
+                                </div>
+                            </div>
+                            <!-- <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">分销比例</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="u_scale" class="form-control" placeholder="100%" value="">*直接输入数字，如10%输入10就可。
+                                </div>
+                            </div> -->
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="button">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="history.go(-1)">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fakeloader" style="display: none;"></div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script src="__PUBLIC__/js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
+    <script src="__PUBLIC__/js/plugins/summernote/summernote.min.js"></script>
+    <script src="__PUBLIC__/js/plugins/summernote/summernote-zh-CN.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/fakeloader.min.js"></script>
+     <script type="text/javascript" >
+         PicUploadUrl="{:U('upload/summernote')}";
+    </script>
+    <script type="text/javascript" src="__PUBLIC__/js/MrPiAdmin.js"></script>
+    <script>
+        $(function(){
+            $(".fakeloader").fakeLoader({timeToHide:1000000,bgColor:"#fff",spinner:"spinner2"});
+        });
+        $('input[type="file"]').prettyFile();
+        $(".btn-primary").click(function(){
+            var password = $('#password').val();
+            if(password == ""){alert('密码不能为空');return false;}else if(password.length < 6 ){alert('密码不能少于六位');return false;}
+            var u_mobile=$("input[name='u_mobile']").val();
+            if(u_mobile==""){alert("请输入手机号");return false;}
+            if(u_mobile.length<11){alert("请输入正确手机号");return false;}
+            $.post("{:U('UserManage/UserAdd')}",$(".form-horizontal").serialize(),function(t){ if(t == 1){alert("添加成功");location.href="{:U('UserManage/UserAdd')}";}else{alert("手机号重复");}})
+        });
+        $('#u_image').change(function(e){
+            data=new FormData();
+            for(var i=0;i<e.target.files.length;i++)
+            {
+                var file = e.target.files.item(i);
+                //判断类型
+                if(!/image\/\w+/.test(file.type))
+                {
+                    continue;   //不是图片 就跳出这一次循环
+                }
+                else{
+                    data.append("file[]",file);
+                }
+            }
+            send_File(data,0);
+        });
+        function send_File(file,t) {
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: "{:U('upload/summernote')}",
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend:function(){
+                    $(".fakeloader").show();
+                },
+                complete:function(){
+                    $(".fakeloader").hide();
+                },
+                success: function(url) {
+                    var a=eval(url);
+                    $("input[name='u_image']").val(a[0]);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

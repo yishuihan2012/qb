@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订单列表</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/fakeloader.css" />
+    <style>
+        .red{color:#FFFFFF;background: red;}
+        .blue{color: #FFFFFF;background: blue;}
+        .green{color:#FFFFFF;background: green}
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInUp">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>订单列表</h5>
+                        <div class="ibox-tools">
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                            <form action="{:U('OrderManage/OrderList')}" method="get">
+                                <div class="btn-group">
+                                    <input type="hidden" value="" name="o_status">
+                                    <button type="button" class="btn btn-white">订单状态</button>
+                                    <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">订单状态</span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="javascript:;" nums="0">未付款</a></li>
+                                        <li><a href="javascript:;" nums="1">待发货</a></li>
+                                        <li><a href="javascript:;" nums="2">已发货</a></li>
+                                        <li><a href="javascript:;" nums="3">已完成</a></li>
+                                        <li><a href="javascript:;" nums="5">退款中</a></li>
+                                        <li><a href="javascript:;" nums="6">已退款</a></li>
+                                        <li><a href="javascript:;" nums="7">驳回退款</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="javascript:;" nums="">全部</a></li>
+                                    </ul>
+                                </div>
+                                <div class="btn-group" id="data_5" style="margin-left: 20px; width:30%;">
+                                    <div class="input-daterange input-group" id="datepicker">
+                                        <span class="input-group-btn"><button class="btn btn-white" type="button">订单日期</button></span>
+                                        <input type="text" class="form-control" name="starttime" value="" />
+                                        <span class="input-group-addon">到</span>
+                                        <input type="text" class="form-control" name="endtime" value="" />
+                                    </div>
+                                </div>
+                                <div class="btn-group" style="margin-left: 20px; width:30%;">
+                                    <div class="input-group">
+                                        <input type="text" name="search_key" class="form-control" placeholder="请输入订单号查询...">
+                                        <span class="input-group-btn"><button class="btn btn-white" type="submit">搜索</button></span>
+                                    </div>
+                                </div>
+                                <div class="btn-group" style="margin-left: 20px; ">
+                                    <div class="input-group">
+                                        <a href="{:U('OrderManage/exportE',$map)}" class="btn btn-white "><i class="fa fa-folder"></i>导出EXCEL</a>
+                                    </div>
+                                </div>
+                            </form>
+
+                        <table class="table " style="margin-top: 10px;margin-bottom: -10px">
+                            <tr style="border-top:0px;">
+                                <td  class="project-completion">订单总数：{$count}</td>
+                                <td  class="project-completion">共计￥{$price|default=0}</td>
+                                <td  class="project-completion">已付款￥{$payprice|default=0}</td>
+                                <td  class="project-completion">已付款订单数：{$paycount|default=0}</td>
+                                <td  class="project-completion">未付款￥{$notpayprice|default=0}</td>
+                                <td  class="project-completion">未付款订单数：{$notpaycount|default=0}</td>
+                            </tr>
+                        </table>
+                        </div>
+
+
+
+                        <div class="project-list">
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+                                        <td class="project-title">订单号</td>
+                                        <td class="project-completion">商品列表</td>
+                                        <td class="project-completion">地址信息</td>
+                                        <td class="project-completion">收货人</td>
+                                        <td class="project-completion">订单金额</td>
+                                        <td class="project-completion">订单时间</td>
+                                        <td class="project-completion">快递信息</td>
+                                        <td class="project-completion">用户</td>
+                                        <td class="project-actions">相关操作</td>
+                                    </tr>
+                                <foreach name="order_list" item="ol">
+
+                                    <tr>
+                                        <td class="project-title">
+                                            <a href="javascript:void(0);">{$ol.o_sn}</a><br>
+                                            <small>
+                                                <if condition="$ol.o_status eq 0">（未付款）</if>
+                                                <if condition="$ol.o_status eq 1">（已付款）</if>
+                                                <if condition="$ol.o_status eq 2">（待收货）</if>
+                                                <if condition="$ol.o_status eq 3">（已完成）</if>
+                                                <if condition="$ol.o_status eq 5">（待退款）</if>
+                                                <if condition="$ol.o_status eq 6">（已退款）</if>
+                                                <if condition="$ol.o_status eq 7">（驳回退款）</if>
+                                            </small>
+                                        </td>
+                                        <td class="project-completion">
+                                            <foreach name="ol.o_ginfo" item="og">
+                                                {$og.gname} * {$og.gnum}（{$og.ginfo}）<br>
+                                            </foreach>
+                                        </td>
+                                        <td class="project-completion">
+                                            省：{$ol.address.a_provice}<br>
+                                            市：{$ol.address.a_city}<br>
+                                            区：{$ol.address.a_county}<br>
+                                            详细地址：{$ol.address.a_address}<br>
+                                            邮编：{$ol.address.a_postcode}
+                                        </td>
+                                        <td class="project-completion">
+                                            {$ol.address.a_consignee}<br>
+                                            <small>电话：{$ol.address.a_mobile}</small>
+                                        </td>
+                                        <td class="project-completion">
+                                            {$ol.o_price}
+                                        </td>
+                                        <td class="project-completion">
+                                            下单时间：{$ol.o_datetime|date="Y-m-d H:i:s",###}<br>
+                                            付款时间：{$ol.o_paytime|date="Y-m-d H:i:s",###}
+                                        </td>
+                                        <td class="project-completion">
+                                            {$ol.o_eid_name}<br>
+                                            <small>单号：{$ol.o_enumber}</small>
+                                        </td>
+
+                                        <td class="project-completion">
+                                            {$ol.o_uid}
+                                        </td>
+                                        <td class="project-actions">
+                                            <if condition="$ol.o_eid neq 0 and $ol.o_status gt 1 and $ol.o_status lt 3">
+                                            <a href="{:U('Home/Index/OrderPrint',array('id'=>$ol['id']))}" class="btn btn-white btn-sm" target="_blank"><i class="fa fa-folder"></i> 查看/打印 </a>
+                                            </if>
+                                            <if condition="$ol.o_status eq 0"><a href="javascript:OrderState({$ol.id},1);" class="btn btn-white btn-sm red"><i class="fa fa-folder"></i> 确认付款 </a></if>
+                                            <if condition="$ol.o_status eq 1"><a href="javascript:showPage({$ol.id},2);" class="btn btn-white btn-sm green"><i class="fa fa-folder"></i> 确认发货 </a></if>
+                                            <if condition="$ol.o_status eq 2"><a href="javascript:OrderSure({$ol.id},3);" class="btn btn-white btn-sm blue"><i class="fa fa-folder "></i> 确认完成 </a></if>
+                                            <if condition="$ol.o_status eq 5">
+                                                <a href="{:U('OrderManage/cancel',array('id'=>$ol['id'],'ostatus'=>$ol['o_status']))}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i>是否退款退货</a>
+                                                <!--<a href="javascript:OrderState({$ol.id},6);" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 确认退款 </a>-->
+                                            </if>
+                                            <if condition="$ol.o_status eq 6">
+                                                <a href="{:U('OrderManage/cancel',array('id'=>$ol['id'],'ostatus'=>$ol['o_status']))}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i>查看退款退货信息</a>
+                                            </if>
+                                            <if condition="$ol.o_status eq 7 ">
+                                                <a href="{:U('OrderManage/cancel',array('id'=>$ol['id'],'ostatus'=>$ol['o_status']))}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i>查看退款退货信息</a>
+                                            </if>
+                                            <a href="javascript:OrderDel({$ol.id});" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> 删除 </a>
+                                        </td>
+                                    </tr>
+                                </foreach>
+                                </tbody>
+                            </table>
+                            {$page}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ibox-content" id="showDiv" style="display: none;width: 450px;height:250px;position: absolute;z-index: 5000;top:25%;left:30%;background: #ffffff;border: 1px solid #1ab394">
+        <div class="ibox-title">
+            <h5>添加快递单号</h5>
+        </div>
+        <div class="ibox-content">
+            <input type="hidden" name="id" id="order_id">
+            <input type="hidden" name="o_status" id="o_status">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">快递</label>
+                <div class="col-sm-10">
+                    <select name="o_eid" id="o_eid" class="form-control m-b">
+                        <foreach name="enumber" item="vo">
+                            <option value="{$vo.id}">{$vo.e_name}</option>
+                        </foreach>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">快递单号</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="o_enumber" name="o_enumber">
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <button class="btn btn-primary" type="button" onclick="submitDiv()">保存内容</button>
+                    <button class="btn btn-white" type="button" onclick="hidDiv()">取消</button>
+                    <a id="savePrint" onclick="savePrint()" class="btn btn-white btn-sm" target="_blank"><i class="fa fa-folder"></i>保存并打印 </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fakeloader" style="display: none;"></div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script src="__PUBLIC__/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/fakeloader.min.js"></script>
+    <script>
+        $(function(){
+            $(".fakeloader").fakeLoader({timeToHide:100000,bgColor:"#fff",spinner:"spinner2"});
+        });
+       $(document).ready(function(){$("#loading-example-btn").click(function(){btn=$(this);simpleLoad(btn,true);simpleLoad(btn,false)})});function simpleLoad(btn,state){if(state){btn.children().addClass("fa-spin");btn.contents().last().replaceWith(" Loading")}else{setTimeout(function(){btn.children().removeClass("fa-spin");btn.contents().last().replaceWith(" Refresh")},2000)}};
+       function OrderDel(id){
+           $.post("{:U('OrderManage/OrderDel')}",{id:id},function(t){ if(t == 1){alert("删除成功");  window.location.reload();}else{alert("删除失败");}});
+       }
+       function OrderState(id,state){
+           $.post("{:U('OrderManage/OrderState')}",{id:id,state:state},function(t){ if(t == 1){alert("状态修改成功");  window.location.reload();}else{alert("已成功修改，请刷新！");}});
+       }
+        function OrderSure(id,state){
+            $.post("{:U('OrderManage/OrderSure')}",{id:id,state:state},function(t){ if(t == 1){alert("收货完成");
+                window.location.reload();            }else{alert("已成功修改，请刷新！");}});
+        }
+       $("#data_5 .input-daterange").datepicker({
+           keyboardNavigation: !1,
+           forceParse: !1,
+           autoclose: !0,
+
+       });
+       $(".dropdown-menu").find("a").click(function(){
+           var a=$(this).parent().parent().parent().find("button").eq(0);
+           var b=$(this).parent().parent().parent();
+           a.html($(this).html());
+           b.find("input").val($(this).attr("nums"));
+       });
+       function showPage(id,states) {
+           $(".fakeloader").show();
+           $("#showDiv").show();
+           $("#order_id").val(id);
+           $("#o_status").val(states);
+
+       }
+       function submitDiv() {
+           var id = $("#order_id").val();
+           var enumber = $("#o_enumber").val();
+           if(enumber==""){
+               alert('填写快递单号');
+               return false;
+           }
+           var state =  $("#o_status").val();
+           var o_eid =  $("#o_eid").val();
+           $.post("{:U('OrderManage/addEnumber')}",{id:id,o_status:state,o_enumber:enumber,o_eid:o_eid},function(t){ if(t == 1){alert("添加快递单号成功");
+               window.location.reload();
+           }else{alert("已成功修改，请刷新！");}});
+           $(".fakeloader").hide();
+           $("#showDiv").hide();
+       }
+       function hidDiv() {
+           $(".fakeloader").hide();
+           $("#showDiv").hide();
+       }
+       function savePrint() {
+           var id = $("#order_id").val();
+           var enumber = $("#o_enumber").val();
+           if(enumber==""){
+               alert('填写快递单号');
+               return false;
+           }
+           var state =  $("#o_status").val();
+           var o_eid =  $("#o_eid").val();
+           $.post("{:U('OrderManage/addEnumber')}",{id:id,o_status:state,o_enumber:enumber,o_eid:o_eid},function(t){ if(t == 1){alert("添加快递单号成功");
+               window.open("{:U('Home/Index/OrderPrint/id/"+id+"')}");}else{alert("已成功修改，请刷新！");}});
+           $(".fakeloader").hide();
+           $("#showDiv").hide();
+       }
+    </script>
+    </body>
+</html>

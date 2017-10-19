@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<title>订单详细</title>
+<link href="__PUBLIC__/web/fonts/iconfont.css" rel="stylesheet" type="text/css">
+<link  href="__PUBLIC__/web/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/web/css/style.css" />
+<link type="text/css" rel="stylesheet"  href="__PUBLIC__/web/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/web/css/ectouch.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/web/css/kuaidi100.css">
+</head>
+<body>
+<div class="Layout_style">
+<!--顶部通用样式-->
+<header id="header">
+  <div class="header_l header_return"><a href="javascript:;" onclick="javascript :history.back(-1);" class="return_cz"><i class="fa fa-angle-left icon_zjt"></i></a></div>
+  <h1> 订单详细 </h1>
+</header>
+<!--订单详细-->
+<div class="shop_cart">
+   <div class="schedule"><ul><li><em>1</em>查看购物车</li><li ><em>2</em>确认订单</li><li class="on"><em>3</em>成功提交订单</li></ul></div>
+</div>
+<div class="detailed_style clearfix">
+
+<div class="time"><if condition="$o.o_status eq 0">下单时间：{$o.o_datetime|date="Y-m-d H:i:s",###}<else/>付款时间：{$o.o_paytime|date="Y-m-d H:i:s",###}</if></div>
+ <div class="Order_address_style clearfix">
+  <div><label class="label_name">收&nbsp;&nbsp;货&nbsp;人：</label><span class="address_xinxi">{$a.a_consignee} <span class="f_r">{$a.a_mobile}</span></span></div>
+  <div class=" clearfix"><label class="label_name">收货地址：</label><span class="address_xinxi">{$a.a_provice}{$a.a_city}{$a.a_county}{$a.a_address}</span></div>
+</div>
+  <div class="Numbering">订单编号：{$o.o_sn} <span class="f_r">状态：{$o.o_status|get_status=###}</span></div>
+  <ul class="list clearfix">
+      <foreach name="goods_list" item="gl">
+   <li class="product_detailed">
+   <a href="{:U('Index/ProductCon',array('id'=>$gl['id']))}" class="product_img"><img src="{$gl.g_thumb}"  width="90" height="90"/></a>
+    <div class="product_content"><a href="#">{$gl.g_title}</a><h3><span>{$gl.ginfo}</span><span></span></h3>
+     <h2>价格：￥<i>{$gl.g_vipprice}x{$gl.gnum}</i></h2></div>
+   </li>
+      </foreach>
+
+  </ul>
+  <div class="numeral">
+  <span>数量：{$o.o_gnum}件</span><span>总价：<i>{$o.o_price}</i><small>（ 邮费：{$yf|default=0}）</small></span>
+      <if condition="$o.o_status eq 0">
+  <a href="javascript:void(0);" class="btn buy_btn" id="Billing">结算</a>
+   <a href="/" class="btn buy_btn1">取消</a>
+   <!-- <a href="#" class="btn buy_btn2" id="">评论</a>-->
+      </if>
+   </div>
+    <if condition="$o['o_status'] gt 1">
+        <br><span class="title">【{$o.o_eid|getExpress=###}】快递单号：{$o.o_enumber}</span>
+
+            <div data-mohe-type="kuaidi_new" class="g-mohe " id="mohe-kuaidi_new">
+                <div id="mohe-kuaidi_new_nucom">
+                    <div class="mohe-wrap mh-wrap">
+                        <div class="mh-cont mh-list-wrap mh-unfold">
+                            <div class="mh-list">
+                                <if condition="$status eq 1">
+                                <ul>
+                                    <foreach name="content" item="vo" key="k">
+                                    <li <if condition="$k eq 0"> class="first"</if> >
+                                        <p>{$vo.time}</p>
+                                        <p>{$vo.context}</p>
+                                        <span class="before"></span><span class="after"></span><if condition="$k eq 0"><i class="mh-icon mh-icon-new"></i></if></li>
+                                    </foreach>
+
+                                </ul>
+                                    </if>
+                                <if condition="$status eq 0">
+                                    <p>没有物流信息</p>
+                                </if>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>{$powered}</div>
+    </if>
+</div>
+</div>
+<include file="Index/footer"/>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/web/js/style.js"></script>
+</body>
+</html>

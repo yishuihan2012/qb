@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<title>我的财富</title>
+<link href="__PUBLIC__/web/fonts/iconfont.css" rel="stylesheet" type="text/css">
+<link  href="__PUBLIC__/web/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/web/css/style.css" />
+<link type="text/css" rel="stylesheet"  href="__PUBLIC__/web/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/web/css/ectouch.css">
+</head>
+<body>
+<div class="Layout_style">
+<header id="header">
+  <div class="header_l header_return"><a href="javascript:;" onclick="javascript :history.back(-1);" class="iconfont icon-turn-left"></a></div>
+  <h1> 我的幸福指数 </h1>
+  </header>
+<section class="user_style">
+    <div class="xse2 xsr">
+        <div class="xse_l"><h3>已提现幸福指数</h3><p>￥{$u_price}</p></div>
+        <div class="xse_r"><h3>爱心提现</h3><p>￥{$u_money}</p></div>
+    </div>
+    <div class="cz_form">
+        <div class="cz1"><span>手机号:</span><input class="txt " type="text" name="Name"  autocomplete="off" disabled="disabled" value="{$u_mobile_h}" /></div>
+        <div class="cz1 l_s"><span>验证码:</span><input class="txt " type="text" name="c_code" value="" autocomplete="off" placeholder="验证码">
+            <span class="verification">
+      <input class="fl same-code" name="vcode" type="button " id="btn" value="获取验证码" onclick="sendMobileCode(this)" style="
+      font-size: 0.8rem; padding: 0px; color: #555555;"/>
+           </span>
+        </div>
+        <input type="hidden" name="u_mobile" id="mobileValue" value="{$u_mobile_c}">
+     <div class="cz1"><span>金额(￥):</span><input class="txt " type="text" name="f_price" value="" autocomplete="off" placeholder="请输入金额10元起"></div>
+    </div>
+     <div class="cz2"><a href="javascript:ToMoney(1)" class="green">微信提现</a><a href="javascript:BankSubmit();">银行提现</a></div>
+    <div class="cz3"><a href="{:U('My/WxSq')}">微信提现必须微信授权才可以提现点击授权</a></div>
+
+        <div class="record_list">
+            <div class="title_name">提现记录</div>
+            <div class="txjl">
+                <p class="cur">待审核</p><p>已完成</p><p>提现失败</p>
+            </div>
+            <ul class="txj_con">
+                <notempty name="list_0">
+                <foreach name="list_0" item="l0">
+                <li>{$l0.f_datetime|date='Y-m-d H:m:s',###} {$l0.f_text} <span class="f_r">-{$l0.f_price}</span>
+                    <if condition="$l0.f_status eq 1"> 提现</if>
+
+                </li>
+                </foreach>
+                    <else/>
+                    <li>无提现记录</li>
+                </notempty>
+            </ul>
+            <ul class="txj_con none">
+                <notempty name="list ">
+                <foreach name="list" item="l">
+                    <li>{$l.f_datetime|date='Y-m-d H:m:s',###} {$l.f_text} <span class="f_r">-{$l.f_price}</span>
+                        <if condition="$l.f_status eq 1"> 提现</if>
+
+                    </li>
+                </foreach>
+                <else/>
+                <li>无提现完成记录</li>
+                </notempty>
+            </ul>
+            <ul class="txj_con none">
+                <notempty name="list_1">
+                <foreach name="list_1" item="l1">
+                    <li>{$l1.f_datetime|date='Y-m-d H:m:s',###} {$l1.f_text} <span class="f_r">-{$l1.f_price}</span>
+                        <if condition="$l1.f_status eq 1"> 提现</if>
+                    </li>
+                </foreach>
+            </ul>
+            <else/>
+            <li>无提现失败记录</li>
+            </notempty>
+
+        </div>
+
+</section>
+</div>
+<include file="Index/footer"/>
+</body>
+<script>var sendMobileCodeUrl="{:U('Smscode/sendCode')}";</script>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/web/js/homeajax.js"></script>
+<script type="text/javascript" src="__PUBLIC__/web/js/style.js"></script>
+<script>
+    function ToMoney(tt){
+        var f_price=$("input[name='f_price']").val();
+        var c_code=$("input[name='c_code']").val();
+        if(c_code==""){
+            alert('请输入手机验证码');
+            return false;
+        }else{
+            if(f_price>=10) {
+                $.post("{:U('My/ToMoney')}", {types: tt, f_price: f_price,f_types:3,c_code:c_code}, function (t) {
+                    if (t == 1) {
+                        alert("已提交申请，请耐心等待！");
+                        location.reload();
+                    } else if(t == 0){
+                        alert("金额不足");
+                    }else if(t==3){
+                        alert('验证码错误');
+                    }
+                });
+            }
+            else{
+                alert("输入金额小于10元");
+            }
+        }
+
+    }
+    function BankSubmit(){
+        var f_price=$("input[name='f_price']").val();
+        var c_code=$("input[name='c_code']").val()
+        if(c_code!=""){
+            if(f_price>=10) {
+                location.href="/index.php/Home/My/MyBank/c_code/"+c_code+"/f_price/"+f_price+"/f_types/3.html";
+            }
+            else{
+                alert("输入金额小于10元");
+            }
+
+        }else{
+            alert('请输入手机验证码');
+        }
+
+    }
+</script>
+</html>

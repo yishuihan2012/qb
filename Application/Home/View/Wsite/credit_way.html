@@ -1,0 +1,50 @@
+<!DOCTYPE>
+<html style="font-size:100px;">
+  <head>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <link href="__PUBLIC__/web/css/style.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/css/page.css" rel="stylesheet" type="text/css">
+  	<title>贷款通道详情</title>
+  </head>
+  <body>
+    <section class="credit-alleyway-container">
+
+
+        <ul class="credit-alleyway-list">
+          <volist name = "data" id = "vo">
+          <li>
+            <img src="{$vo.image}" class="left">
+            <div class="credit-alleyway-list-center left">
+              <h3>{$vo.title}</h3>
+              <p style="color:#666;">{$vo.short_desc}</p>
+              <p><span style="text-align:left;">最高额度</span><span>利率</span></p>
+              <p><span style="color:#d70204;">  <if condition = "$vo['quota'] == ''">{$vo.sma_quota}万&#8764;{$vo.max_quota}万<else />{$vo.quota}万</if>  </span><span>{$vo.rate}月</span></p>
+            </div>
+            <div class="right">
+              <a href="{$vo.credit_way}" class="application-btn">立即申请</a>
+              <a href="#" class="application-instr-btn" id="applicationInstrBtn">申请说明<img src="__PUBLIC__/web/images/common_open.png"></a>
+            </div>
+            <div class="application-instr-detail clear">
+
+              <volist name="vo.credit_way_info" id="info">
+               <p>{$i}、{$info}</p>
+              </volist> 
+
+              <a href="#" class="application-close-btn">收起<img src="__PUBLIC__/web/images/common_close.png"></a>
+            </div>
+          </li>
+          </volist>
+        </ul>
+<!--         <div>
+  {$page}
+</div> -->
+    </section>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="__PUBLIC__/web/js/common.js"></script>
+    <script>
+	    reCall();
+      //setTimeout(showPage,1);
+    </script>
+  </body>
+</html>

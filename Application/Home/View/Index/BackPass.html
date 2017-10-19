@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<title>忘记密码</title>
+<link href="__PUBLIC__/web/fonts/iconfont.css" rel="stylesheet" type="text/css">
+<link  href="__PUBLIC__/web/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/web/css/style.css" />
+<link type="text/css" rel="stylesheet"  href="__PUBLIC__/web/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/web/css/ectouch.css">
+</head>
+
+<body>
+<div class="Layout_style">
+ <header id="header">
+  <div class="header_l header_return"><a  href="javascript:;"onClick="javascript :history.back(-1);" class="iconfont icon-turn-left"></a></div>
+  <h1>忘记密码 </h1>
+  <div class="header_r">
+  <a class="iconfont icon-home" href="/"></a> </div>
+</header>
+ <!--忘记密码-->
+ <div class="user_style kf_service " style="background: #ffffff;">
+   <div class="Forgot_Password" id="Forgot_pass">
+        <div class="hd">
+         <ul><li class="cur">手机找回</li></ul>
+        </div>
+        <div class="bd" id="order-bd">
+         <div class="con">
+         <ul class="list">
+           <li>
+             <div class="verification_box">
+              <input name="u_mobile" value="" id="mobileValue"  type="text"><button class="button" id="verif_btn">验证手机</button>
+             </div>
+             <div class="Codes_Enter">
+                <div class="Codes_style">
+                <input id="Codes" name="vcode" value=""  type="text"><button class="button" id="Next_btn">下一步</button>
+                 </div>
+                 <input class="send_btn"  type="button" id="btn" value="再次发送" onclick="sendMobileCode(this)" style="padding: 0px;"/>
+             </div>
+             <!--修改密码-->
+              <div class="change_Password">
+                 <ul>
+                  <li class="Password_k"><input name="newpwd"  value="" id="newpwd" type="password" placeholder="新密码" class="passwordtext" id="Nes_pas"></li>
+                  <li class="Password_k"><input name="newpwd1"  value="" id="newpwd1"  type="password" placeholder="确认密码" class="passwordtext" id="c_mew_pas"></li>
+                  <li style="text-align:center"><button class="btn modify_btn" type="button" id="modify_btn">确认修改</button></li>
+                 </ul>
+              </div>
+             </li>
+         </ul>
+          </div>
+        </div>
+   </div>
+ </div>
+</div>
+<include file="Index/footer"/>
+<script type="text/javascript">var checkPhoneNumUrl="{:U('Index/checkPhone')}";</script>
+<script type="text/javascript">var forgetSendCodeUrl="{:U('Smscode/forgetSendCode')}";</script>
+<script type="text/javascript">var sendMobileCodeUrl="{:U('Smscode/forgetSendCode')}";</script>
+<script type="text/javascript">var verifyMobileCodeUrl="{:U('Smscode/forgetVerifyCode')}";</script>
+<script type="text/javascript">var changPwdUrl="{:U('Index/changePwd')}";</script>
+<script type="text/javascript">var loginUrl="{:U('Index/login')}";</script>
+<script type="text/javascript">var backPassUrl="{:U('Index/BackPass')}";</script>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/web/js/style.js"></script>
+<script type="text/javascript" src="__PUBLIC__/web/js/homeajax.js"></script>
+</body>
+</html>

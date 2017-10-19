@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>主页</title>
+
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+
+
+<body class="gray-bg">
+
+    <div class="row  border-bottom white-bg dashboard-header">
+
+        <div class="col-sm-3" style="width:80%;">
+
+            <h2>您好，欢迎使用{:C('SYSTEM_TITLE')}内容管理系统。</h2>
+
+        </div>
+
+    </div>
+
+    <div class="wrapper wrapper-content">
+            <div class="panel panel-headline">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">数据总览</h3>
+                            <p class="panel-subtitle">{$count['time']|date='Y-m-d H:i:s',###}</p>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="metric">
+                                        <span class="icon"><i class="fa fa-user-plus"></i></span>
+                                        <p><span class="number">{$count.count_member}</span><span class="title">用户总数</span></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric">
+                                        <span class="icon"><i class="fa fa-shopping-bag"></i></span>
+                                        <p><span class="number">{$count.count_member_today}</span><span class="title">今日注册数</span></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric">
+                                        <span class="icon"><i class="fa fa-reorder"></i></span>
+                                        <p><span class="number">{$count.count_order}</span><span class="title">订单总数</span></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric">
+                                        <span class="icon"><i class="fa fa-bar-chart"></i></span>
+                                        <p><span class="number">{$count.count_success_order}</span><span class="title">完成订单</span></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+        <div class="row">
+
+            <div class="col-sm-4">
+
+              <!--   <div class="ibox float-e-margins">
+
+                    <div class="ibox-title">
+
+                        <h5>统计信息</h5>
+
+                    </div>
+
+                    <div class="ibox-content">
+
+                        <p>测试后台内容信息</p>
+
+                    </div>
+
+                </div> -->
+            
+
+            </div>
+
+        <!--     <div class="col-sm-4">
+
+                <div class="ibox float-e-margins">
+
+                    <div class="ibox-title">
+
+                        <h5>技术支持</h5>
+
+                    </div>
+
+                    <div class="ibox-content">
+
+                      ----
+
+                    </div>
+
+                </div>
+
+            </div> -->
+
+            <div class="col-sm-4" style="display: none">
+
+                <div class="ibox float-e-margins">
+
+                    <div class="ibox-title">
+
+                        <a href="/index.php?s=/Mrpiadmin/UserManage/UserList.html"><h5>New</h5></a>
+
+                        
+
+                    </div>
+
+                    <div class="ibox-content">
+
+                            <a onclick="redirect_to_users_list()" class="btn btn-white btn-sm">
+
+                                <span class="glyphicon glyphicon-list-alt login_forbid" aria-hidden="true"></span> 
+
+                                新用户 <span class="badge badge-primary">4</span>
+
+                            </a>
+
+                            <a onclick="redirect_to_users_list()" class="btn btn-white btn-sm">
+
+                                <span class="glyphicon glyphicon-list-alt login_forbid" aria-hidden="true"></span> 
+
+                                所有用户
+
+                            </a>
+                       
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+
+    <script src="__PUBLIC__/js/plugins/layer/layer.min.js"></script>
+
+    <script src="__PUBLIC__/js/content.min.js"></script>
+
+    <script>
+        function redirect_to_users_list(){
+            location.href="/index.php?s=/Mrpiadmin/UserManage/UserList.html";
+        }
+    </script>
+
+</body>
+
+
+
+</html>
+

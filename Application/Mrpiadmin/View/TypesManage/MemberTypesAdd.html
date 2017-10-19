@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加分类</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+     <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('TypesManage/MemberTypesList')}">会员分类列表</a></li>
+                </ol>
+            </div>
+        </div>  
+    </div>
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>添加分类</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="post" action="{:U('TypesManage/MemberTypesAdd')}" class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">会员名称</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="member_name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                           
+                           <div class="form-group">
+                                <label class="col-sm-2 control-label">会员手续费率</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="member_rate" class="form-control">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">固定代收费</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="member_service_charge" class="form-control">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否允许分润</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control m-b" name="member_allow_profit">
+                                        <option value="1" selected>允许</option>
+                                        <option value="0">不允许</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            
+                             <div class="form-group">
+                                <label class="col-sm-2 control-label">是否允许分佣</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control m-b" name="member_allow_commission">
+                                        <option value="1" selected>允许</option>
+                                        <option value="0">不允许</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否需要实名认证</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control m-b" name="member_need_identify">
+                                        <option value="1" selected>需要</option>
+                                        <option value="0">不需要</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group tjsj">
+                                <label class="col-sm-2 control-label">是否能够推荐升级</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control m-b" name="member_allow_recommend">
+                                        <option value="1" selected>允许</option>
+                                        <option value="0">不允许</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group tjsj1">
+                                <label class="col-sm-2 control-label">推荐升级需要推荐实名认证人数</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="member_recommend_num"  class="form-control">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">升级需要的金钱</label>
+                                <div class="col-sm-10">
+                                   <input type="text" name="member_up_money"  class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">升级描述</label>
+                                <div class="col-sm-10">
+                                   <input type="text" name="member_up_describe"  class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+                            
+                             <div class="form-group">
+                                <label class="col-sm-2 control-label">会员头像</label>
+                                <div class="col-sm-10">
+                                    <input type="file" name="member_head_img" id = "image">
+                                </div>
+                                
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">排序</label>
+                                <div class="col-sm-10">
+                                   <input type="text" name="member_sort"  class="form-control">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            
+                            <div class="form-group">
+                            
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fakeloader" style="display: none;"></div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/MrPiAdmin.js"></script>
+    <script>
+        // $(".btn-primary").click(function(){
+        //     $.post("{:U('TypesManage/MemberTypesAdd')}",$(".form-horizontal").serialize(),function(t){ if(t == 1){alert("添加成功");location.href="{:U('TypesManage/TypesAdd')}";}else{alert("添加失败");}})
+        // });
+    </script>
+</body>
+
+</html>

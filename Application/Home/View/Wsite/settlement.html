@@ -1,0 +1,39 @@
+<!DOCTYPE>
+<html style="font-size:100px;">
+  <head>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <link href="__PUBLIC__/web/css/style.css" rel="stylesheet" type="text/css">
+  	<title>结算费率</title>
+  </head>
+  <body>
+    <section class="settlement-container">
+    <!-- 结算费率start-->
+      <if condition="$arr">
+      <ul>
+        <foreach  name="arr" item="member">
+        	<li class="clear">
+        	  <h2>{$key}</h2>
+        	  <h3><img src="{$member[0]['ct_img']}" style="width:0.5rem;height: 0.3rem">{$key}</h3>
+        	  <p><span>额度:</span><span>{$member[0]['ct_min_money']}-{$member[0]['ct_max_money']}元/笔</span></p>
+        	  <p><span>提示:</span><span>终消费率固定为{$member[0]['ct_min_rate']/10}%,差额会以分润形式补偿</span></p>
+        	  <p><span class="left">费率:</span></p>
+               <span class="left" style="width:70%;">
+                <foreach name="member" item="v">
+                 <p>{$v['member_name']}:{$v['channel_rate']/10}%</p>
+                 </foreach>
+               </span>
+        	</li>
+      </foreach>
+      </ul>
+    </if>
+    <!-- 结算费率end -->
+    </section>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="__PUBLIC__/web/js/common.js"></script>
+    <script>
+	  reCall();
+    //setTimeout(showPage,1);
+    </script>
+  </body>
+</html>

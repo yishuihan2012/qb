@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<title>产品详细页</title>
+<link href="__PUBLIC__/web/fonts/iconfont.css" rel="stylesheet" type="text/css">
+<link  href="__PUBLIC__/web/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/web/css/style.css" />
+<link type="text/css" rel="stylesheet"  href="__PUBLIC__/web/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/web/css/ectouch.css">
+</head>
+<body>
+<div class="Layout_style">
+<!--顶部通用样式-->
+ <header id="header">
+  <div class="header_l header_return"><a href="javascript:;"onClick="javascript :history.back(-1);"  class="iconfont icon-turn-left"></a></div>
+  <h1> 产品详细页 </h1>
+  <!--<div class="header_r"> <a href="" class="fx"><img src="__PUBLIC__/web/images/ico_15.png"></a></div>-->
+</header>
+ <form id="form1" action="{:U('Index/SubmitOrder')}" method="get">
+  <input type="hidden" name="gid" value="{$g.id}"/>
+ <section class="goods_slider">
+  <div class="swiper-container ">
+      <div class="swiper-wrapper">
+       <foreach name="g.g_image" item="gi">
+          <div class="swiper-slide"><img src="{$gi}"></div>
+       </foreach>
+      </div>
+      <div class="swiper-pagination "></div>
+  </div>
+  <section class="goodsInfo">
+   <div class="p_content">
+    <h1>{$g.g_title}</h1>
+    <h4><!--商品描述？--></h4>
+   </div>
+   <div class="buy_info">
+    <ul class="dj">
+     <li><label>会员价</label> <b><i>￥</i><strong class="price">{$g.g_vipprice}</strong></b><span>￥{$g.g_price}</span></li>
+     <foreach name="g.g_attr" item="ga" key="k">
+      <li><label>{$ga.attr_name}</label>
+      <div class="prduct_Size" id="pro_color">
+       <foreach name="ga.attr_value" item="gv" key="j">
+        <input type="radio" name="ginfo[{$k}][]" id="id{$k}{$j}" value="{$gv}"/>{$gv}
+       <!--<a href="javascript:;">{$gv}</a>-->
+       </foreach>
+      </div>
+     </li>
+     </foreach>
+     <li><label>数&nbsp;&nbsp;&nbsp;&nbsp;量</label><div class="j_nums">
+                    <input type="button" value="-"  class="n_btn_2 min"> 
+                    <input type="text" name="num" value="1" class="n_ipt text_box">
+                    <input type="button" value="+" class="n_btn_2 add">
+      </div></li>
+      <li class="Sales">销量：{$g.g_salesnum}件</li>
+    </ul>
+   </div>
+  </section>
+ </section>
+  </form>
+ <section class="s-detail">
+ <div id="leftTabBox">
+   <div class="hd">
+    <ul><li class="cur">详情</li><li>热销</li></ul>
+   </div>
+  <div class="bd"  id="tabBox1-bd">
+  	<div class="con">
+     <div class="p_detailed">
+     <ul>
+      <li>
+       <table class="p_detailed_content">
+        <foreach name="g.g_info" item="gf">
+         <tr>
+          <td class="label">{$gf.info_name}</td>
+          <td class="content"><foreach name="gf.info_value" item="gv">{$gv}</foreach></td>
+         </tr>
+        </foreach>
+      </table>
+      </li>
+      <li>{$g.g_description}</li>
+     </ul>
+     </div>
+   </div>
+   <div class="con none">
+   <ul class="hot_style">
+    <foreach name="goods_list" item="gl">
+    <li><div class="por_hot"><a href="{:U('Index/ProductCon',array('id'=>$gl['id']))}"><img src="{$gl.g_thumb}"  width="100%"/><h3>{$gl.g_title}</h3></a><h4><i>￥</i>{$gl.g_price}</h4> </div>   </li>
+    </foreach>
+   </ul>
+   </div>
+  </div>
+  </div>
+ <!--购买操作-->
+ <div class="buy_style">
+  <ul>
+  <li class="price"><i>￥</i><span id="total"></span></li>
+   <li class="operating"><a href="javascript:rightNowBuy({$g.id});" class="btn buy_btn">立即购买</a></li>
+   <li class="operating"><a href="javascript:CartAdd({$g.id});" class="btn Join_btn">加入购物车</a></li>
+  </ul>
+ </div>
+  </section>
+</div>
+<include file="Index/footer"/>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/web/js/style.js"></script>
+</body>
+<script>
+ function CartAdd(id){
+  var num=$(".text_box").val();
+  var ginfo = $("input[id^='id']");
+  if (ginfo.length > 0){
+   var str = "";
+   var nums=0;
+   for (var i = 0; i < ginfo.length; i++) {
+    if (ginfo[i].checked == true) {
+     str += ginfo[i].value + ",";
+     nums++;
+    }
+   }
+   var attrnum=$(".prduct_Size");
+   if(nums<attrnum.length){
+    alert('请选择商品的所有属性');
+    return false;
+   }
+  }
+  $.post("{:U('Index/CartAdd')}",{id:id,num:num,ginfo:str},function(t){ if(t == 1){alert("已加入购物车")}else{alert("请先登录");}})
+ }
+ function rightNowBuy(id) {
+  var num=$(".text_box").val();
+  var ginfo = $("input[id^='id']");
+  if (ginfo.length > 0){
+   var str = "";
+   var nums=0;
+   for (var i = 0; i < ginfo.length; i++) {
+    if (ginfo[i].checked == true) {
+     str += ginfo[i].value + ",";
+     nums++;
+    }
+   }
+   var attrnum=$(".prduct_Size");
+   if(nums<attrnum.length){
+    alert('请选择商品的所有属性');
+    return false;
+   }
+  }
+  $("#form1").submit();
+ }
+</script>
+</html>

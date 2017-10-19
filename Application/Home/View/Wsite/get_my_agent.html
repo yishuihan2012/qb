@@ -1,0 +1,66 @@
+<!DOCTYPE>
+<html style="font-size:100px;">
+  <head>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <link href="__PUBLIC__/web/css/style.css" rel="stylesheet" type="text/css">
+  	<title>我的代理</title>
+  </head>
+  <body>
+    <section class="myagent-container">
+	  <div class="myagent-top">
+	  	<p>上级代理:<span class="myagent-parent"></span></p>
+	  	<p>上级代理等级:<span class="myagent-parent-tit"></span></p>
+	  	<p>下级商户数:<span class="myagent-sub"></span></p>
+	  </div>
+	  <ul id="myagentList">
+	  </ul>
+    </section>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="__PUBLIC__/web/js/common.js"></script>
+    <script>
+	    reCall();
+      //setTimeout(showPage,1);
+    </script>
+    <script type="text/javascript">
+      window.onload = function(){
+        var id={$id};
+      	var url = "{:U('Webapi/get_my_agent')}";
+      var html="";
+	    $.ajax({
+	        url:url,
+	        type:'POST',
+	        dataType:'json',
+	        data:{id:id},
+	        success:function(data){
+	          $(".myagent-parent").text(data.data.parent.phone);
+	          $(".myagent-parent-tit").text(data.data.parent.role);
+	          $(".myagent-sub").text(data.data.parent.counts);
+	          for(var i = 0;i<data.data.list.length;i++){
+              html="<li>";
+              html+="<div class='left'>";
+              html+="<p>"+data.data.list[i].tel+"</p>";
+              html+="<p>等级:"+data.data.list[i].role+"</p>";
+              html+="</div>";
+              html+="<a href='javascript:void(0)' onclick='call("+data.data.list[i].tel+")' class='right'>";
+              html+="<img src='__PUBLIC__/web/images/common_contant.png'>";
+              html+="</a></li>";
+	        	  $("#myagentList").append(html);
+	        	}
+              }
+	        });
+        }
+
+    </script>
+    <script type="text/javascript">
+      function call(tel){
+          //window.AndroidMessage.call("'"+tel+"'");
+        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {  //判断iPhone|iPad|iPod|iOS
+             window.location.href="tel://"+tel;
+        } else if (/(Android)/i.test(navigator.userAgent)) {   //判断Android
+             window.AndroidMessage.call("'"+tel+"'");
+        }
+      }
+    </script>
+  </body>
+</html>

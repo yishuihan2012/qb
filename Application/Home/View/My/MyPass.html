@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<title>修改密码</title>
+<link href="__PUBLIC__/web/fonts/iconfont.css" rel="stylesheet" type="text/css">
+<link  href="__PUBLIC__/web/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/web/css/style.css" />
+<link type="text/css" rel="stylesheet"  href="__PUBLIC__/web/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/web/css/ectouch.css">
+</head>
+
+<body>
+<div class="Layout_style">
+ <header id="header">
+  <div class="header_l header_return"><a href="javascript:;" onclick="javascript :history.back(-1);" class="iconfont icon-turn-left"></a></div>
+  <h1> 修改密码 </h1>
+  </header>
+  <!--修改密码-->
+  <section class="password_style user_style kf_service">
+  <div class="table_box table_box2">
+            <dl>
+              <dd class="dd1">原密码</dd>
+              <input placeholder="原密码" name="u_pass" type="password" class="dd2">
+            </dl>
+            <dl>
+              <dd class="dd1">新密码</dd>
+              <input placeholder="新密码" name="n_pass" type="password" class="dd2" id="Nes_pas">
+            </dl>
+            <dl>
+              <dd class="dd1">确认密码</dd>
+              <input placeholder="确认密码" name="n_pass_check" type="password" class="dd2" id="c_mew_pas">
+            </dl>
+          </div>
+          <input name="submit" type="button" class="c-btn3" value="确认修改" id="xg_submit">
+  </section>
+</div>
+<include file="Index/footer"/>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/web/js/style.js"></script>
+</body>
+<script>
+    $(".c-btn3").click(function(){
+        var u_pass=$("input[name='u_pass']").val();
+        var n_pass=$("input[name='n_pass']").val();
+        var n_pass_check=$("input[name='n_pass_check']").val();
+        if(n_pass!=n_pass_check){
+            alert("两次输入密码不正确");
+            return false;
+        }
+        if(u_pass==n_pass){
+            alert("新密码与旧密码相同");
+            return false;
+        }
+        $.post("{:U('My/MyPass')}",{u_pass:u_pass,n_pass:n_pass},function(t){ if(t == 1){alert("修改成功");location.href="{:U('Index/login')}";}else if(t==2){alert("原始密码错误");}else{alert("修改失败");}})
+    })
+</script>
+</html>

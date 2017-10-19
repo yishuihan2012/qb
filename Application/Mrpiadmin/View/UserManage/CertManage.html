@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实名认证管理</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/layui/css/layui.css" />
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('UserManage/CertManage')}">实名认证管理</a></li>
+                </ol>
+            </div>
+        </div>  
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+            
+        
+        <table class="table table-striped">
+        <form action="{:U('UserManage/CertManage')}" method="post">
+         <tbody>
+           
+            <tr>
+                <td查询用户是否已经认证：</td>
+                <td><input type="text" name="tel" class="layui-input" value="{$tel}" placeholder="请输入手机号.."></td>
+                <td>认证结果：{$user['is_cert']}</td>
+                <td>最高认证次数：{$max}次</td>
+                <td>已认证次数<input type="text" class="layui-input" value="{$user['user_check_count']}" name="user_check_count" style="display: inline-block;"></td>
+                <td><input type="submit" value="查询/修改"></td>
+                </td>
+            </tr>
+        </tbody>
+        </form>
+        <form action="{:U('UserManage/CertManage')}" method="post">
+          <tbody>
+
+            <tr>
+                <td>实名认证：</td>
+                <td><input type="text" name="mobile" class="layui-input" value="{$mobile}" placeholder="请输入手机号.."></td>
+                <td><input type="text" name="card" class="layui-input" value="{$card}" placeholder="请输入身份证号.."></td>
+                <td><input type="text" name="name" class="layui-input" value="{$name}" placeholder="请输入姓名.."></td>
+                <td><input type="submit" value="提交认证"></td>
+                </td>
+            </tr>
+
+        </tbody>
+        </form>
+      </table>
+    
+    </div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script src="__PUBLIC__/layui/layui.js"></script>
+
+    <script>
+    //一般直接写在一个js文件中
+    layui.use(['layer'], function(){
+        var layer = layui.layer;
+
+        $(".getAjaxMsg").click(function(){
+            var url=$(this).attr('data-url');
+            layer.confirm("您确定要"+$(this).attr('data-content')+"吗？", {
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                $.ajax({
+                    url:url,
+                    type:'POST',
+                    dataType:'html',
+                    success:function(data){
+                        if(data=='1'){
+                            layer.msg('删除成功', {time:1000,icon:6}, function(){
+                                window.location.reload(); 
+                            });
+                        }else{
+                            layer.msg('删除失败', {time:1000,icon:5});
+                        }
+                    }
+                })
+            }, function(){
+
+            });
+        })
+    });
+    </script>
+
+</body>
+</html>

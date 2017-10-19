@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{:C('SYSTEM_TITLE')}-修改管理员密码</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('Sysfy/modifyLoginPasswd')}">修改登录密码</a></li>
+                </ol>
+            </div>
+        </div>  
+    </div>
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{:C('SYSTEM_TITLE')} - 修改管理员登录密码</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="get" class="form-horizontal">
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">当前管理员</label>
+                              <div class="col-sm-10">
+                                  <div class="col-sm-10" style="margin-bottom: 1%;">
+                                      {$t_user}
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">原登录密码</label>
+                              <div class="col-sm-10">
+                                  <div class="col-sm-10" style="margin-bottom: 1%;">
+                                      <input type="text" name="original_passwd" value="{:$sysconf['info']['direct_total']}" class="form-control" style="width:65%;">
+                                  </div>
+                              </div>
+                          </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">新登录密码</label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-10" style="margin-bottom: 1%;">
+                                        <input type="text" name="new_passwd" value="{:$sysconf['info']['direct_total']}" class="form-control" style="width:65%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">确认新登录密码</label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-10" style="margin-bottom: 1%;">
+                                      <input type="text" name="c_new_passwd" value="{:$sysconf['info']['indirect_total']}" class="form-control" style="width:65%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" value="{$identify}" name="identify"> 
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="button">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fakeloader" style="display: none;"></div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/MrPiAdmin.js"></script>
+    <script>
+        $(".btn-primary").click(function(){
+        	var original_passwd = $("input[name='original_passwd']").val();
+            var new_passwd = $("input[name='new_passwd']").val();
+            var c_new_passwd = $("input[name='c_new_passwd']").val();
+            
+            if(original_passwd == ''){alert("请输入原登录密码");return false;}
+            if(new_passwd == ''){alert("请输入新登录密码");return false;}
+            if(c_new_passwd==""){alert("请确认新登录密码");return false;}
+            if(new_passwd != c_new_passwd){alert("确认密码不一致");return false;}
+            
+            $.post("{:U('Sysfy/modifyLoginPasswd_act')}",
+              $(".form-horizontal").serialize(),
+                function(t){
+                  if(t == -2){
+                    alert("两次输入的新密码不一致");
+                    location.href="{:U('Sysfy/modifyLoginPasswd')}";
+                  }
+                  else if(t == -1){
+                    alert("输入的旧密码不正确");
+                    location.href="{:U('Sysfy/modifyLoginPasswd')}";
+                  }
+                  else if(t == 1){
+                    alert("修改成功！");
+                    location.href="{:U('Sysfy/modifyLoginPasswd')}";
+                  } else if(t == 0){
+                    alert("修改失败！");
+                    location.href="{:U('Sysfy/modifyLoginPasswd')}";
+                  }
+
+                }
+              )
+          });
+    </script>
+</body>
+
+</html>

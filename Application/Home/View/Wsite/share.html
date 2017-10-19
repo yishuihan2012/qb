@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html style="font-size:100px;height:100%;">
+  <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,minimum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link href="__PUBLIC__/web/css/style.css" rel="stylesheet" type="text/css">
+	<title>分享</title>
+  </head>
+  <body style="height:100%;">
+	<div class="pages">
+      <div class = "page page3">
+      	<a href="{:U('Wsite/join_us',['invite'=>$invite])}" class="join-us">立即加入</a>
+      	<a href="javascript:void(0);" class="to-top3"><img src="__PUBLIC__/web/images/down.png"></a>
+      </div>
+	  <div class = "page page4">
+	  	<a href="{:U('Wsite/join_us',['invite'=>$invite])}" class="join-us2">立即加入</a>
+	  	<a href="javascript:void(0);" class="to-top3"><img src="__PUBLIC__/web/images/point.png"></a>
+	  </div>
+	</div>
+  </body>
+  <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="__PUBLIC__/web/js/slider.js"></script>
+  <script src="__PUBLIC__/web/js/common.js"></script>
+  <script>
+	  reCall();
+    //setTimeout(showPage,1);
+  </script>
+</html>

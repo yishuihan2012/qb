@@ -1,0 +1,31 @@
+<!DOCTYPE>
+<html style="font-size:100px;">
+  <head>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <link href="__PUBLIC__/web/css/style.css" rel="stylesheet" type="text/css">
+  	<title>系统公告</title>
+  </head>
+  <body>
+    <section class="notice-container">
+    <!-- 公告列表start-->
+      <ul>
+      <foreach name="notice_result" item="notice">
+        <li>
+          <h3>{$notice['title']}</h3>
+          <div class="notice-con">{$notice['content']}</div>
+          <span class="notice-date">{$notice['create_time']}</span>
+          <a href="{:U('Wsite/notice_detail',['id'=>$notice['id']])}" class="see-detail right">查看详情&gt;</a>
+        </li>
+      </foreach>
+      </ul>
+    </section>
+    <!-- 公告列表end -->
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="__PUBLIC__/web/js/common.js"></script>
+    <script>
+	    reCall();
+      //setTimeout(showPage,1);
+    </script>
+  </body>
+</html>

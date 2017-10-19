@@ -1,0 +1,85 @@
+<!DOCTYPE>
+<html style="font-size:100px;">
+  <head>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <link href="__PUBLIC__/web/css/style.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/css/page.css" rel="stylesheet" type="text/css">
+  	<title>用卡攻略</title>
+  </head>
+  <body>
+    <section class="strategy-container">
+	    <div class="strategy-bg" style="background:url(__PUBLIC__/web/images/using_card_bg.png);background-size:100% 100%;"></div>
+      <ul class="strategy-list" id="usingCardStrategy">
+        <volist name = "data" id = "vo">
+        <li><a href = "{:U('wsite/strategy_detail',array('id' => $vo['article_id']))}">
+          <div class="left">
+            <p class="strategy-list-tit">{$vo.article_title}</p>
+            <p>
+              <span class="date-style">{$vo.create_at}</span>
+              <span class="account-of-reading">{$vo.article_view}阅读</span>
+            </p>
+          </div>
+          <img src="{$vo.article_image}" class='right'>
+        </a></li>
+        </volist>
+      </ul>
+      <a href="javascript:void(0)" class="load-more" id="usingCardLoadMore"></a>
+    </section>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="__PUBLIC__/web/js/common.js"></script>
+    <script>
+	    reCall();
+      //setTimeout(showPage,1);
+      var allpage="{$pagenum}";
+      var page=1; //当前页的页码
+      function showAjax(page){
+        $.ajax({
+          url:"{:U('Wsite/ajaxUsingCardStrategy')}",
+          type:"post",
+          data:{page:page},
+          dateType:"json",
+          beforeSend:function(XMLHttpRequest){ 
+            $(".load-more").text("加载中..."); 
+          }, 
+          success:function(data){
+          //要执行的内容
+          //isEnd =  ;
+           for(var i=0;i<data.length;i++){
+              $("#newCard").append("<li><a href = '{:U('wsite/strategy_detail',array('id' =>"+data[i].article_id+"))}'>"+
+                "<div class='left'>"+
+                "<p class='strategy-list-tit'>"+data[i].article_title+"</p>"+
+                "<p>"+
+                "<span class='date-style'>{$vo.create_at}</span>"+
+                "<span class='account-of-reading'>"+data[i].article_view+"阅读</span>"+
+                "</p>"+
+                "</div>"+  
+                "<img src='"+data[i].article_image+"'' class='right'>"+
+                "</a></li>");
+            }
+          },
+          error:function(){
+
+          }
+        });
+        }
+      function scrollFn(){
+        //真实内容的高度
+        var pageHeight = Math.max(document.body.scrollHeight,document.body.offsetHeight);
+        //视窗的高度
+        var viewportHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0;
+        //隐藏的高度
+        var scrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        if(pageHeight - viewportHeight - scrollHeight < 20){
+          page++;
+          if(page<=allpage){
+            showAjax(page);
+          }else{
+            $(".load-more").text("已无数据");
+          }
+         }
+        }
+      $(window).bind("scroll",scrollFn);//绑定滚动事件
+    </script>
+  </body>
+</html>

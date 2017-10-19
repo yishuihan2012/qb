@@ -1,0 +1,42 @@
+<!DOCTYPE>
+<html style="font-size:100px;height:100%;">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <link href="__PUBLIC__/web/css//style.css" rel="stylesheet" type="text/css">
+    <title>分享二维码</title>
+  </head>
+  <body style="visibility:hidden;">
+    <section class="share-code">
+      <div class="top">
+        <img src="__PUBLIC__/web/images/share_code_bg.png">
+      </div>
+      <div class="center">
+        <img src="__PUBLIC__/web/images/share_code_center.png">
+      </div>
+        <div class="share-cont">
+          <img src="__PUBLIC__/web/images/uc_sevice_qq.png" class="share-per left">
+          <div class="left">
+            <h3>优秀创业导师<span>&nbsp{$usercertification_result['usercertification_name']}**</span></h3>
+            <p>{:C('SYSTEM_TITLE')}互联网创业平台</p>
+           </div>
+            <img src="{$usermanage_result['u_ewm']}" class="share-code-pic">
+        </div>
+        <a href="javascript:void(0)">
+        <img src="__PUBLIC__/web/images/share_code_btn.png" class="share-code-btn" id="shareCodeBtn">
+      </a>
+    </section>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="__PUBLIC__/web/js/common.js"></script>
+    <script>
+     // reCall();
+     setTimeout(showPage,1);
+      $('#shareCodeBtn').click(function(){
+            window.AndroidMessage.share();
+      });
+     function showPage(){
+      $("body").css({'visibility':"visible"});
+     }
+    </script>
+  </body>
+</html>

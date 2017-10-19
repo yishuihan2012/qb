@@ -1,0 +1,42 @@
+<!DOCTYPE>
+<html style="font-size:100px;">
+  <head>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <link href="__PUBLIC__/web/css/style.css" rel="stylesheet" type="text/css">
+  	<title>办卡通道</title>
+  </head>
+  <body>
+    <section class="internal-card-container">
+        <ul class="internal-card-list">
+
+          <volist name = "data" id = "vo">
+          <li>
+            <img src="{$vo.bank_logo}" class="left">
+            <div class="internal-card-list-center left">
+              <h3>{$vo.bank_name}<span>(无验证版)</span></h3>
+            </div>
+            <div class="right">
+              <a href="#" class="internal-card-btn left">申请说明<img src="__PUBLIC__/web/images/common_open.png"></a>
+              <a href="{$vo.credit}" class="application-btn left">立即申请</a>
+            </div>
+            <div class="application-instr-detail clear">
+
+              <volist name="vo.credit_info" id="info">
+               <p>{$i}、{$info}</p>
+              </volist>
+
+              <a href="#" class="application-close-btn">收起<img src="__PUBLIC__/web/images/common_close.png"></a>
+            </div>
+          </li>
+          </volist>
+        </ul>
+    </section>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="__PUBLIC__/web/js/common.js"></script>
+    <script>
+	    reCall();
+      //setTimeout(showPage,1);
+    </script>
+  </body>
+</html>

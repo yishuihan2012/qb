@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加商品</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/fakeloader.css" />
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>添加商品</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">标题</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="g_title" class="form-control">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">商品分类</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control m-b" name="g_type">
+                                        <option value="0" selected>请选择</option>
+                                        <foreach name="type_list" item="tl">
+                                            <option value="{$tl.id}">{$tl.g_name}</option>
+                                        </foreach>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">缩略图上传</label>
+                                <div class="col-sm-10" id="g_thumbs">
+                                    <input type="file" id="g_thumb" class="form-control">
+                                    <input type="hidden" name="g_thumb" value="" />
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">展示图上传</label>
+                                <div class="col-sm-10" id="g_images">
+                                    <input type="file" id="g_image" multiple="multiple" class="form-control">
+                                    <div id="object_file" style="width:200px;height:200px;border:1px solid #000000;display:none;"></div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">商品售价</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="g_price" class="form-control">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">会员价</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="g_vipprice" class="form-control">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">商品属性<br><a id="attr_add">增加+</a></label>
+                                <div class="col-sm-10" id="attr">
+                                    <div class="col-sm-10" style="margin-bottom: 1%;">
+                                        <input type="text" name="attr_name[]" class="form-control" style="width:30%;float: left;margin-right: 2%;">
+                                        <input type="text" name="attr_value[]" class="form-control" style="width:65%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">商品信息<br><a id="info_add">增加+</a></label>
+                                <div class="col-sm-10" id="info">
+                                    <div class="col-sm-10" style="margin-bottom: 1%;">
+                                        <input type="text" name="info_name[]" class="form-control" style="width:30%;float: left;margin-right: 2%;">
+                                        <input type="text" name="info_value[]" class="form-control" style="width:65%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">商品销量</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="g_salesnum" class="form-control">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">商品库存</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="g_stock" class="form-control">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">一级分销比例</label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-10" style="margin-bottom: 1%;">
+                                        <select class="form-control m-b" name="types_c" style="width:30%;float: left;margin-right: 2%;">
+                                            <option value="1" selected>百分比</option>
+                                            <option value="2">固定额</option>
+                                        </select>
+                                        <input type="text" name="scale_c" class="form-control" style="width:65%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">二级分销比例</label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-10" style="margin-bottom: 1%;">
+                                        <select class="form-control m-b" name="types_b" style="width:30%;float: left;margin-right: 2%;">
+                                            <option value="1" selected>百分比</option>
+                                            <option value="2">固定额</option>
+                                        </select>
+                                        <input type="text" name="scale_b" class="form-control" style="width:65%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">三级分销比例</label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-10" style="margin-bottom: 1%;">
+                                        <select class="form-control m-b" name="types_a" style="width:30%;float: left;margin-right: 2%;">
+                                            <option value="1" selected>百分比</option>
+                                            <option value="2">固定额</option>
+                                        </select>
+                                        <input type="text" name="scale_a" class="form-control" style="width:65%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">商品描述</label>
+                                <div class="col-sm-10">
+                                    <div class="summernote">
+                                        <h2>商品描述内容。</h2>
+                                    </div>
+                                    <input type="hidden" id="g_description" name="g_description" value="">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="button">保存内容</button>
+                                    <button class="btn btn-white" type="button">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fakeloader" style="display: none;"></div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script src="__PUBLIC__/js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
+    <script src="__PUBLIC__/js/plugins/summernote/summernote.min.js"></script>
+    <script src="__PUBLIC__/js/plugins/summernote/summernote-zh-CN.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/fakeloader.min.js"></script>
+    <script type="text/javascript" >
+         PicUploadUrl="{:U('upload/summernote')}";
+    </script>
+   
+    <script type="text/javascript" src="__PUBLIC__/js/MrPiAdmin.js"></script>
+    <script>
+        $(function(){
+            $(".fakeloader").fakeLoader({timeToHide:1000000,bgColor:"#fff",spinner:"spinner2"});
+        });
+        $('input[type="file"]').prettyFile();
+        $(document).ready(function(){$(".summernote").summernote({lang:"zh-CN",onImageUpload:function(files,editor,$editable){sendFile(files[0],editor,$editable)}})});var edit=function(){$("#eg").addClass("no-padding");$(".click2edit").summernote({lang:"zh-CN",focus:true})};var save=function(){$("#eg").removeClass("no-padding");var aHTML=$(".click2edit").code();$(".click2edit").destroy()};
+        $(".btn-primary").click(function(){
+            $("#g_description").val($.trim($(".summernote").code()));
+            $.post("{:U('GoodsManage/GoodsAdd')}",$(".form-horizontal").serialize(),function(t){ if(t == 1){alert("添加成功");location.href="{:U('GoodsManage/GoodsAdd')}";}else{alert("添加失败");}})
+        });
+        $('#g_thumb').change(function(e){
+            data=new FormData();
+            for(var i=0;i<e.target.files.length;i++)
+            {
+                var file = e.target.files.item(i);
+                //判断类型
+                if(!/image\/\w+/.test(file.type))
+                {
+                    continue;   //不是图片 就跳出这一次循环
+                }
+                else{
+                    data.append("file[]",file);
+                }
+            }
+            send_File(data,0);
+        });
+        $('#g_image').change(function(e){
+            data=new FormData();
+            for(var i=0;i<e.target.files.length;i++)
+            {
+                var file = e.target.files.item(i);
+                data.append("file[]",file);
+            }
+            send_File(data,1);
+        });
+
+        function send_File(file,t) {
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: "{:U('upload/summernote')}",
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend:function(){
+                    $(".fakeloader").show();
+                },
+                complete:function(){
+                    $(".fakeloader").hide();
+                },
+                success: function(url) {
+                    var a=eval(url);
+                    if(t==1){
+                        $("#g_images").find("img").remove();
+                        $("#object_file").html("");
+                        for(j=0;j<a.length;j++){
+                            var k="<img src='"+a[j]+"'>";
+                            var i = '<input type="text" name="g_image[]" value="'+a[j]+'" />';
+                            $("#g_images").prepend(k);
+                            $("#object_file").append(i);
+                        }
+                    }
+                    else {
+                        $("#g_thumbs").find("img").remove();
+                        var j="<img src='"+a[0]+"'>";
+                        $("#g_thumbs").prepend(j);
+                        $("input[name='g_thumb']").val(a[0]);
+                    }
+                }
+            });
+        }
+        var i=0;
+        var a=0;
+        $("#attr_add").click(function(){
+            var companystr="";
+            companystr+="<div class=\"col-sm-10\" style=\"margin-bottom: 1%;\" id='attr"+a+"'>";
+            companystr+="<input type=\"text\" name=\"attr_name[]\" class=\"form-control\" style=\"width:30%;float: left;margin-right: 2%;\">";
+            companystr+="<input type=\"text\" name=\"attr_value[]\" class=\"form-control\" style=\"width:65%;\">";
+            companystr+="<a href='javascript:attr_del(\"attr"+a+"\")' id='dattr"+a+"'>删除-</a>";
+            companystr+="</div>";
+            $("#attr").append(companystr);
+            a++;
+        });
+        function attr_del(id){
+            $("#"+id+"").remove();
+            $("#d"+id+"").remove();
+            a--;
+        }
+        $("#info_add").click(function(){
+            var companystr="";
+            companystr+="<div class=\"col-sm-10\" style=\"margin-bottom: 1%;\" id='info"+i+"'>";
+            companystr+="<input type=\"text\" name=\"info_name[]\" class=\"form-control\" style=\"width:30%;float: left;margin-right: 2%;\">";
+            companystr+="<input type=\"text\" name=\"info_value[]\" class=\"form-control\" style=\"width:65%;\">";
+            companystr+="<a href='javascript:info_del(\"info"+i+"\")' id='dinfo"+i+"'>删除-</a>";
+            companystr+="</div>";
+            $("#info").append(companystr);
+            i++;
+        });
+        function info_del(id){
+            $("#"+id+"").remove();
+            $("#d"+id+"").remove();
+            i--;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE>
+<html style="font-size:100px;">
+  <head>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <link href="__PUBLIC__/web/css/style.css" rel="stylesheet" type="text/css">
+  	<title>交易账单</title>
+  </head>
+  <body>
+    <section class="trade-bill-container">
+	  <ul class="trade-bill-list">
+	  	<volist name = "data" id = "vo">
+	  	<li class="clear">
+	  	  <div class="trade-bill-list-top">
+		  	<p class="left" style="width:65%"><span class="trade-bill-tit">{$vo.operation}</span><span class="trade-bill-method"><if condition = "$vo.log_option == 2">{$vo.account_name}(尾号({$vo.end_bank})<else/>{$vo.account_name}</if></span></p>
+		  	<p class="trade-bill-money right">{$log_amount}</p>
+	  	  </div>
+	  	  <div class="clear">
+	  	  	<p class="left date-style">{$vo.create_at}</p>
+	  	  	<p class="trade-bill-ispayment right"><if condition = "$vo.log_state == 1">{$vo.operation}成功<else/>{$vo.operation}失败</if></p>
+	  	  </div>
+	  	</li>
+		</volist>
+	  </ul>
+    </section>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="__PUBLIC__/web/js/common.js"></script>
+    <script>
+	  reCall();
+      //setTimeout(showPage,1);
+    </script>
+  </body>
+</html>

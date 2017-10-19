@@ -1,0 +1,92 @@
+<!DOCTYPE>
+<html style="font-size:100px;">
+  <head>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <link href="__PUBLIC__/web/css/style.css" rel="stylesheet" type="text/css">
+  	<title>帮助好友开通账户</title>
+  </head>
+  <body style="width:100%;height:100%;background-color:#fff;">
+    <section class="help-open">
+    	<h3>替好友开通后,系统默认关联在您的商户名下(默认密码手机号后六位)</h3>
+		<form action="" method="post" onsubmit="return check()">
+			<div>
+			  <label><img src="__PUBLIC__/web/images/ic_popularize_phone.png"></label>
+			  <input type="text" id="phone" name="phone" placeholder="请输入对方的手机号">
+		    </div>
+		    <div>
+			  <label><img src="__PUBLIC__/web/images/ic_popularize_verificationcode.png"></label>
+			  <input type="text" id="checkCode" name="checkCode" placeholder="请输入验证码">
+			  <input type="button" id="btnSendCode" class="right" value="获取验证码" onclick="sendMessage()">
+			</div>
+			<input type="submit" value="注册" class="help-register">
+		</form>
+    </section>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="__PUBLIC__/web/js/common.js"></script>
+    <script>
+    reCall();
+    // function sendMessage(){
+    //   var url='{:HOST.U("Api/tool/get_verification_code")}';
+    //   var phone='15165011853';
+    //   $.post(url,{phone:phone},function(data){
+    //         message=eval('(' + data + ')');
+    //         alert(message.msg);
+    //   });
+    // }
+      setTimeout(showPage,1);
+        var InterValObj; //timer变量，控制时间
+		var count = 60; //间隔函数，1秒执行
+		var curCount;//当前剩余秒数
+		function sendMessage() {
+			var url='';
+			var phone=$("#phone").val();
+			curCount = count;
+			if(phone != "" && (/^1[34578]\d{9}$/.test(phone))){
+				//设置button效果，开始计时
+				$("#btnSendCode").attr("disabled", "true");
+				$("#btnSendCode").val("请在" + curCount + "秒内输入");
+				InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+			  //向后台发送处理数据
+			  $.post(url,{phone:phone},function(data){
+	            message=eval('(' + data + ')');
+	            alert(message.msg);
+              });
+			}else if(phone == "" ){
+			  alert("手机号不能为空");
+			}else{
+			  alert("请输入正确的手机号");
+			}
+		}
+		//timer处理函数
+		function SetRemainTime() {
+			if (curCount == 0) {
+				window.clearInterval(InterValObj);//停止计时器
+				$("#btnSendCode").removeAttr("disabled");//启用按钮
+				$("#btnSendCode").val("重新发送验证码");
+			}
+			else {
+				curCount--;
+				$("#btnSendCode").val("请在" + curCount + "秒内输入验证码");
+			}
+		}
+		//表单提交前验证
+		function check(){
+		  var phone=$("#phone").val();
+		  var code = $("#btnSendCode").val();
+			if(phone == ""){
+			  alert("手机号不能为空");
+			  return false;
+			}else if(!(/^1[34578]\d{9}$/.test(phone))){
+				alert("请输入正确的手机号");
+				return false;
+			}else if(code == ""){
+				alert("验证码不能为空");
+				return false;
+			}else{
+				return true;
+			}
+		}
+    </script>
+  </body>
+</html>

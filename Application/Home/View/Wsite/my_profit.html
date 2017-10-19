@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html style="width:100%;height:100%;background-color:#f5f5f5;">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>我的盈利</title>
+  <script src="__PUBLIC__/release/js/flexible.js"></script>
+  <link rel="stylesheet" href="__PUBLIC__/release/css/reset.css">
+  <link rel="stylesheet" href="__PUBLIC__/release/css/layout.css">
+</head>
+<body>
+  <div class="top">
+    <div class="fl" style="border-right:1px solid #fff;">
+      <p class="f14">我的分润(元)</p>
+      <p class="f18 bold">{$data['commission_count']}</p>
+    </div>
+    <div class="fl">
+      <p class="f14">我的分佣(元)</p>
+      <p class="f18 bold">{$data['profit_count']}</p>
+    </div>
+  </div>
+  <section class="my-profit">
+	<h3 class="f16">盈利明细</h3>
+	<div class="tab-content-nav">
+	<ul id="profitTabNav">
+	  <li class="fl f14">
+	  	<a href="{:U('Wsite/my_profit',array('id'=>$id,'type'=>3))}" class="group-tab-active">我的分润</a>
+	  </li>
+	  <li class="fl f14">
+	  	<a href="{:U('Wsite/my_profit',array('id'=>$id,'type'=>1))}">我的分佣</a>
+	  </li>
+	</ul>
+	</div>
+	<div>
+	<!-- 我的分润 -->
+	<div class="profit-tab-content clear">
+	  <ul>
+	   <foreach name="data['list']" item="v">
+	   	<if condition ="$v['log_amount'] egt 0.01 ">
+	    <li>
+	      <div class="fl">
+	      	<?php $first= substr($v['log_describe'],0,1);
+				if($first ==1){
+				 $log_des=substr_replace($v['log_describe'], '****', 3, 4);
+				}else{
+				 $log_des=$v['log_describe'];
+				}
+	      	 ?>
+	      	<p class="f16">{$log_des}</p>
+	      	<if condition="$type eq 3">
+	      		<p class="f14 fc9">分润</p>
+	      	<else/>
+	    	  	<p class="f14 fc9">分佣</p>
+	      	</if>
+	      </div>
+	      <div class="fr ftr">
+	      	<p class="f14 fcf57">{$v['log_amount']}元</p>
+	      	<p class="f14 fc9">{$v['create_at']}</p>
+	      </div>
+	    </li>
+		</if>
+	    </foreach>
+	  </ul>
+	</div>
+	</div>
+  </section>
+  <script src="__PUBLIC__/release/js/jquery-2.1.4.min.js"></script>
+  <script src="__PUBLIC__/release/js/base.js"></script>
+  <script>
+  		$(function(){
+  			var type="{$type}";
+  			if(type==3){
+  				$("#profitTabNav li").eq(0).find('a').addClass('group-tab-active');
+  				$("#profitTabNav li").eq(1).find('a').removeClass('group-tab-active');
+  			}else if(type==1){
+  				$("#profitTabNav li").eq(1).find('a').addClass('group-tab-active');
+  				$("#profitTabNav li").eq(0).find('a').removeClass('group-tab-active');
+  			}
+  		})
+  </script>
+</body>
+</html>

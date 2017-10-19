@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章详细信息</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('Article/index')}">文章列表</a></li>
+                    <li><a href="#" class="active">文章详情</a></li>
+                </ol>
+            </div>
+        </div>  
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+      <div class="row">
+          <div class="col-sm-8">
+            <ul class="list-group">
+            <li class="list-group-item">文章标题：{$$data.article_title}</li>
+            <li class="list-group-item">文章分类：{$category.category_name}</li>
+            <li class="list-group-item">浏览数量：{$data.article_view}</li>
+            <li class="list-group-item">创建时间：{$data.create_at}</li>
+            <li class="list-group-item">文章缩略图：<image src = "{$data.article_image}" style = "width:300px"></li>
+            <li class="list-group-item">文章简介：{$data.article_short}</li>
+            <li class="list-group-item">文章描述：{$data.article_description}</li>
+            </ul>
+          </div>
+      </div>
+
+    </div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+</body>
+
+</html>

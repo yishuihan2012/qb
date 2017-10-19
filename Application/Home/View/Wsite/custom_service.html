@@ -1,0 +1,48 @@
+<!DOCTYPE>
+<html style="font-size:100px;">
+  <head>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <link href="__PUBLIC__/web/css/style.css" rel="stylesheet" type="text/css">
+  	<title>客户服务</title>
+  </head>
+  <body>
+    <section class="custom-service-container">
+	    <ul class="custom-service-list">
+        <volist name="qq" id="q">
+          <li>
+            <a href="javascript:void(0)">
+              <img src="__PUBLIC__/web/images/uc_sevice_qq.png" class="left">
+              <div class="left" style="color:#666;">
+                <p>客服</p>
+                <p>在线时间</p>
+              </div>
+              <div class="left">
+                <p>{$q.contact_no}</p>
+                <p>9:00-6:00</p>
+              </div>
+              <img src="__PUBLIC__/web/images/common_more.png" class="right">
+            </a>
+          </li>
+        </volist>
+      <volist name="tel" id="t">
+         <li>
+          <a href="javascript:void(0)">
+            <p class="left">
+              <span>联系客服</span>
+              <span>{$t.contact_no}</span>
+            </p>
+            <img src="__PUBLIC__/web/images/common_contant.png" class="right">
+          </a>
+        </li>
+      </volist>
+      </ul>
+    </section>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="__PUBLIC__/web/js/common.js"></script>
+    <script>
+	    reCall();
+      //setTimeout(showPage,1);
+    </script>
+  </body>
+</html>

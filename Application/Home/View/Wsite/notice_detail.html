@@ -1,0 +1,27 @@
+<!DOCTYPE>
+<html style="font-size:100px;">
+  <head>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <link href="__PUBLIC__/web/css/style.css" rel="stylesheet" type="text/css">
+  	<title>系统公告</title>
+  </head>
+  <body>
+    <section class="notice-container" style="width:94%;padding:0 3%">
+    <!-- 公告详情start-->
+      <h3>{$notice_result['title']}</h3>
+      <span class='notice-date'>{$notice_result['create_time']}</span>
+      <span style='color:#1e81d2;'>{$notice_result['t_name']}</span>
+      <div class='notice-detail'>
+        {$notice_result['content']}
+      </div>
+    </section>
+    <!-- 公告详情end -->
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="__PUBLIC__/web/js/common.js"></script>
+    <script>
+	    reCall();
+      //setTimeout(showPage,1);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE>
+<html style="font-size:100px;">
+  <head>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <link href="__PUBLIC__/web/css/style.css" rel="stylesheet" type="text/css">
+  	<title>意见反馈</title>
+  </head>
+  <body style="visibility:hidden;">
+    <section class="suggestions-container" style="background-color:#f5f5f5;">
+	  <form>
+	  	<textarea placeholder="请输入您的宝贵意见..."></textarea>
+	  	<input type="submit" value="提交">
+	  </form>
+    </section>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="__PUBLIC__/web/js/common.js"></script>
+    <script>
+	  reCall();
+      window.addEventListener('resize',reCall,false);
+    </script>
+  </body>
+</html>

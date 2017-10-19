@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加活动</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/layui/css/layui.css" />
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/fakeloader.css" />
+</head>
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('activity/index')}">活动列表</a></li>
+                    <li><a href="{:u('activity/add_activity')}">活动添加</a></li>
+                </ol>
+            </div>
+        </div>  
+    </div>
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>添加活动</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form action="" method="post" class="form-horizontal layui-form" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">活动标题</label>
+                                <div class="col-sm-10">
+                                    <input type="text" lay-verify="title" name="activity_title" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">短 标 题</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="activity_sort_title" class="form-control" maxlength="30">
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">链接地址</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="activity_href" placeholder="不跳请留空" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">活动分类</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control m-b" name="activity_type">
+                                        <volist name = "activity_type" id = "vo">
+                                            <option value="{$vo.id}" >{$vo.type_name}</option>
+                                        </volist>
+                                    </select>
+                                </div>  
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否内部</label>
+                                <div class="col-sm-10">
+                                    <input type="radio" name="activity_recommend" value="1" title="是" checked>
+                                    <input type="radio" name="activity_recommend" value="0" title="否">
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否显示</label>
+                                <div class="col-sm-10">
+                                    <input type="radio" name="activity_status" value="1" title="显示" >
+                                    <input type="radio" name="activity_status" value="0" title="不显示">
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">权重排序</label>
+                                <div class="col-sm-10">
+                                    <input type="text" lay-verify="sort" name="activity_sort" placeholder="数值越小越靠前" class="form-control" maxlength="30">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" lay-submit="" lay-filter="demo1">添加活动</button>
+                                    <button class="btn btn-white" type="reset" >重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fakeloader" style="display: none;"></div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script src="__PUBLIC__/js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
+    <script src="__PUBLIC__/js/plugins/summernote/summernote.min.js"></script>
+    <script src="__PUBLIC__/js/plugins/summernote/summernote-zh-CN.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/fakeloader.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/MrPiAdmin.js"></script>
+    <script src="__PUBLIC__/layui/layui.js"></script>
+    <script>
+    layui.use('form', function(){
+        var form = layui.form();
+        form.verify({
+            title: function(value){
+                if(value ==''){ return '活动标题不能为空吧'; }
+            },
+            sort: [/^$|^\d+$/, '权重只能为数字,或者为空,默认为0'] 
+        });
+        form.on('submit(demo1)', function(data){
+        });
+
+    });
+    </script>
+</body>
+
+</html>

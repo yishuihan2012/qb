@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提现列表</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/layui/css/layui.css" />
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('UserManage/Cashlist')}">提现列表</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight" style="margin-bottom:20px;">
+
+        <div class="row">
+            <div class="col-xs-12">
+              <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group btn-group-md">
+                    <a href="{:U('UserManage/Cashlist')}" {$status=='' ? "class='btn btn-primary active'" : "class='btn btn-default'"}>全部</a>
+                    <a href="{:U('UserManage/Cashlist',array('status'=>'0'))}" {$status=='0' ? "class='btn btn-primary active'" : "class='btn btn-default'"}>
+                      申请中</a>
+                    <a href="{:U('UserManage/Cashlist',array('status'=>'1'))}" {$status=='1' ? "class='btn btn-primary active'" : "class='btn btn-default'"}>已处理</a>
+                    <a href="{:U('UserManage/Cashlist',array('status'=>'2'))}" {$status=='2' ? "class='btn btn-primary active'" : "class='btn btn-default'"}>处理失败</a>
+                    <a href="{:U('UserManage/Cashlist',array('status'=>'3'))}" {$status=='3' ? "class='btn btn-primary active'" : "class='btn btn-default'"}>被驳回</a>
+                    <a href="{:U('UserManage/Cashlist',array('status'=>'4'))}" {$status=='4' ? "class='btn btn-primary active'" : "class='btn btn-default'"}>被拒绝</a>
+                </div>
+              </div>
+            </div>
+        </div>
+
+          <table class="table table-striped">
+            <thead>
+              <th>提现用户</th>
+              <th>手机号</th>
+              <th>提现金额</th>
+              <th>当前状态</th>
+              <th>提现日期</th>
+              <th>相关操作</th>
+            </thead>
+          <tbody>
+          <if condition="(!empty($cashs))">
+            <foreach name="cashs" item="cash">
+              <tr>
+                <td>{:$cash['usercertification_name']?$cash['usercertification_name']:$cash['u_nick']}</td>
+                <td>{:$cash['u_mobile']}</td>
+                <td> ¥ {$cash['cash_amount']|number_format=2}</td>
+                <td>{:$cash['cash_state']==0?"<span style='color:blue'>申请中</span>":($cash['cash_state']==1?"<span style='color:green'>已打款</span>":($cash['cash_state']==2?"<span style='color:red'>处理失败</span>":($cash['cash_state']==3?"<span style='color:red'>申请被驳回</span>":"<span style='color:red'>申请被拒绝</span>")))}</td>
+                <td>{:$cash['create_at']}</td>
+                <td>
+                    <if condition="$cash['cash_state'] eq 0">
+                        <!-- <a href="{:U('Api/Alipay/adminster_cash',array('id'=>$cash['cash_id']))}" onclick="return confirm('确认处理？处理之后将不可恢复！')">处理提现</a> | -->
+                        <!-- <a href="{:U('UserManage/reject',array('id'=>$cash['cash_id']))}" onclick="return confirm('确认驳回？')">驳回申请</a> | -->
+                        <a href="{:U('UserManage/refuse',array('id'=>$cash['cash_id']))}" onclick="return confirm('确认拒绝？')">拒绝申请</a>
+                      <elseif condition="($cash['cash_state'] eq 1)" />
+                        <span style="color:green;">已 处 理</span>
+                      <elseif condition="($cash['cash_state'] eq 2)" />
+                        <span style="color:red;">处 理 失 败</span>
+                      <elseif condition="($cash['cash_state'] eq 3)" />
+                          <a href="{:U('Api/Alipay/adminster_cash',array('id'=>$cash['cash_id']))}" onclick="return confirm('确认处理？处理之后将不可恢复！')">重新处理</a>
+                      <elseif condition="($cash['cash_state'] eq 4)" />
+                          <span style="color:red">已拒绝</span>
+                      <else />
+                            <span style="color:yellow;">无效提现</span>
+                    </if>
+                  </div>
+                </td>
+              </tr>
+            </foreach>
+              <else />
+              <div class="col-sm-12">
+                  <tr>
+                    <td colspan="6" style="text-align:center;">
+                      暂提现信息
+                    </td>
+                  </tr>
+              </div>
+          </if>
+        </tbody>
+        <tfoot style="border-top:1px solid #f5f5f5;">
+          <tr><td style="text-align:center;">
+              {:$show}
+          </td></tr>
+        </tfoot>
+      </table>
+
+    </div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+</body>
+
+</html>

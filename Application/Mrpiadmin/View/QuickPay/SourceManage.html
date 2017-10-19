@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>渠道来源列表</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/layui/css/layui.css" />
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('QuickPay/SourceManage')}">渠道来源列表</a></li>
+                </ol>
+            </div>
+        </div>  
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-xs-12">
+                     <div class="ibox-title">
+                        <h5>渠道来源列表</h5>
+                        <div class="ibox-tools">
+                            <a href="{:U('QuickPay/addSource')}" class="btn btn-primary btn-xs">添加渠道</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          <table class="table table-striped">
+            <thead>
+                <th>ID</th>
+                <th>渠道来源</th>
+                <td>渠道标识</td>
+                <th>最小刷卡金额</th>
+                <th>最大刷卡金额</th>
+                <th>最低利率</th>
+                <th>描述</th>
+                <th>相关操作</th>
+            </thead>
+          <tbody>
+              <volist name = "data" id = "vo">
+            <tr>
+                <td>{$vo.ct_id}</td>
+                <td>{$vo.ct_name}</td>
+                <td>{$vo.ct_unique_sign}</td>
+                <td>{$vo.ct_min_money}</td>
+                <td>{$vo.ct_max_money}</td>
+                <td>{$vo.ct_min_rate}</td>
+                <td>{$vo.ct_des}</td>
+                <td>
+                  <?php if($vo['ct_status']==0){
+                            $action="启用";
+                        }else{
+                           $action="禁用";
+                        }
+                 ?>
+                  <a href = "{:U('QuickPay/update_channeltype',array('id' => $vo['ct_id']))}" >修改</a>&nbsp;|&nbsp;
+                   <a data-url="{:U('QuickPay/upChannelStatus',array('id' => $vo['ct_id']))}" status="{$vo.ct_status}" class="getAjaxMsg" data-content="{$action}该渠道">{$action} </a>
+                <!--   <a href = "javascript:;" class = "getAjaxMsg" data-content="删除该渠道" data-url = "{:U('QuickPay/channel_delete',array('id' => $vo['channel_id']))}">删除</a> -->
+                </td>
+            </tr>
+              </volist>
+        </tbody>
+        <tfoot>
+          <tr><td style="text-align:center;">
+              {$page}
+          </td></tr>
+        </tfoot>
+      </table>
+
+    </div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script src="__PUBLIC__/layui/layui.js"></script>
+
+    <script>
+    //一般直接写在一个js文件中
+    layui.use(['layer'], function(){
+        var layer = layui.layer;
+
+        $(".getAjaxMsg").click(function(){
+            var url=$(this).attr('data-url');
+            var  data=$(this).attr('status');
+            layer.confirm("您确定要"+$(this).attr('data-content')+"吗？", {
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                $.ajax({
+                    url:url,
+                    type:'POST',
+                    dataType:'html',
+                    data:{'data':data},
+                    success:function(data){
+                        if(data=='1'){
+                            layer.msg('操作成功', {time:1000,icon:6}, function(){
+                                window.location.reload(); 
+                            });
+                        }else{
+                            layer.msg('操作失败', {time:1000,icon:5});
+                        }
+                    }
+                })
+            }, function(){
+
+            });
+        })
+    });
+    </script>
+
+</body>
+</html>

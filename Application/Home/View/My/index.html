@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<title>用户信息</title>
+<link href="__PUBLIC__/web/fonts/iconfont.css" rel="stylesheet" type="text/css">
+<link  href="__PUBLIC__/web/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/web/css/style.css" />
+<link type="text/css" rel="stylesheet"  href="__PUBLIC__/web/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/web/css/ectouch.css">
+</head>
+<body>
+<div class="Layout_style" style="margin-bottom: 61px;">
+ <header id="header">
+  <div class="header_l header_return"><a  href="javascript:;"onClick="javascript :history.back(-1);" class="iconfont icon-turn-left"></a></div>
+  <h1> 用户中心 </h1>
+</header>
+<section class="user_style">
+  <dl class="user_top">
+    <if condition="$u.u_image eq null">
+      <dt> <img src="__PUBLIC__/web/images/logo.jpg"> </dt>
+      <else/>
+      <dt> <img src="{$u.u_image}"></dt>
+    </if>
+  <dd>
+    <p>{$u.u_nick}</p>
+    <p><span>{$u.u_level}</span></p>
+  </dd>
+  <div class="user_top_list">
+    <ul>
+      <li> <a href="{:U('Order/index')}"> <strong>{$u.u_order}</strong> <img  src="__PUBLIC__/web/images/ico_user_01.png"> <span>全部订单</span> </a> </li>
+      <li> <a href="{:U('My/MyXse')}"> <strong>{$u.u_sales}</strong> <img  src="__PUBLIC__/web/images/ico_user_02.png"> <span>销售额</span> </a> </li>
+      <li> <a href="{:U('My/MyXsl')}"> <strong>{$u.u_salesnum}</strong> <img  src="__PUBLIC__/web/images/ico_user_04.png"> <span>销售量</span> </a> </li>
+      <li> <a href="{:U('My/MyCf')}"> <strong>{$u.u_commission}</strong> <img  src="__PUBLIC__/web/images/ico_user_03.png"> <span>申请提现</span> </a> </li>
+    </ul>
+  </div>
+  <div class="quan1"></div>
+  <div class="quan2"></div>
+  <div class="quan3"></div>
+</dl>
+</section>
+<section class="wrap">
+  <div class="list_box padd1 radius10"> 
+    <a href="{:U('My/MyInfo')}" class="clearfix"> <span>用户信息</span></a>
+    <a href="{:U('My/MyAddress')}" class="clearfix"> <span>地址管理</span></a>
+    <a href="{:U('My/MyTg')}" class="clearfix"> <span>我的推广</span></a>
+    <a href="{:U('My/MyCf')}" class="clearfix"> <span>我的财富</span></a>
+    <a href="{:U('My/WxSq')}" class="clearfix"> <span>微信绑定</span></a>
+    <!--if condition="$u_level_l neq 0">
+    <a href="{:U('My/MyFx')}" class="clearfix"> <span>成为股东</span></a>
+    </if-->
+  </div>
+  <div class="blank3"></div>
+  <div class="list_box padd1 radius10" style="padding-top: 0;padding-bottom: 0;"> 
+      <a class="clearfix" onclick="returnUrl()"> <span>我的二维码</span></a>
+  </div>
+  <div class="blank3"></div>
+  <div class="list_box padd1 radius10" style="padding-top: 0;padding-bottom: 0;"> 
+    <a href="{:U('Index/loginout')}" class="clearfix"> <span>退出登录</span></a> </div>
+</section>
+</div>
+<include file="Index/footer"/>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/web/js/style.js"></script>
+<script type="text/javascript">
+  var u_level="{$u_level_l}"
+  function returnUrl() {
+    if(u_level==0){
+      alert('您还没有消费体验产品，不能使用二维码');
+      location.href="{:U('Index/index')}"
+    }else{
+      location.href=" {:U('My/MyEwm',array('u_code'=>$u_code))}"
+    }
+
+  }
+</script>
+</body>
+</html>
+

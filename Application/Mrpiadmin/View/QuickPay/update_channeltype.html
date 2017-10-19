@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修改渠道来源</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+	  <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('QuickPay/SourceManage')}">渠道列表</a></li>
+                </ol>
+            </div>
+        </div>  
+    </div>
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>修改渠道来源</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal" action="{:U('QuickPay/upChannelType',array('id'=>$data['ct_id']))}"  enctype="multipart/form-data">
+                           
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">渠道名称</label>
+                                <div class="col-sm-10">
+                                        <input type="text" name="ct_name" class="form-control"  value="{$data['ct_name']}">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+							
+                             <div class="form-group">
+                                <label class="col-sm-2 control-label">唯一渠道标识</label>
+                                <div class="col-sm-10">
+                                        <input type="text" name="ct_unique_sign" class="form-control"  value="{$data['ct_unique_sign']}">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">最低刷卡金额</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="ct_min_money" class="form-control" value="{$data['ct_min_money']}">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+							
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">最高刷卡金额</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="ct_max_money" class="form-control"  value="{$data['ct_max_money']}">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">最低费率</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="ct_min_rate" class="form-control" value="{$data['ct_min_rate']}">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">描述</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="ct_des" class="form-control" value="{$data['ct_des']}">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">图标log</label>
+                                <div class="col-sm-10">
+                                    <input type="file" name="img" >
+                                    <img src="{$data['ct_img']}" alt="">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                         <!--    <div class="form-group">
+                                <label class="col-sm-2 control-label">是否显示</label>
+                                <div class="col-sm-10">
+                                     <select class="form-control m-b" name="channel_show">
+                                            <option value="0">不显示</option>
+                                             <option value="1" selected="selected"显示</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div> -->
+
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="button">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fakeloader" style="display: none;"></div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/MrPiAdmin.js"></script>
+   
+</body>
+<script>
+    $('.btn-primary').click(function(){$('form').submit();})
+</script>
+</html>

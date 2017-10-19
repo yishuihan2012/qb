@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html style="font-size:100px;height:100%;">
+  <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1,minimum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link href="__PUBLIC__/web/css/style.css" rel="stylesheet" type="text/css">
+  <style>
+    .input-container .get-code{
+        background-color: {:C('COLOR_STYLE')};
+    }
+    .uplod-input{
+          border: 1px solid {:C('COLOR_STYLE')};
+    }
+    .checkbox-container a{
+        color: {:C('COLOR_STYLE')};
+    }
+    .register{
+      background-color: {:C('COLOR_STYLE')}; 
+    }
+  </style>
+  <script type="text/javascript">
+    var browser={
+    versions:function(){
+            var u = navigator.userAgent, app = navigator.appVersion;
+            return {
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/) //是否为移动终端
+            };
+         }(),
+         language:(navigator.browserLanguage || navigator.language).toLowerCase()
+    }
+  </script>
+	<title>分享</title>
+  </head>
+  <body style="height:100%;">
+	<div class="pages">
+      <div class = "page page1">
+      	<form>
+      	  <div class="input-container">
+      	    <input type="text" placeholder="请输入您的手机号" name="phone" class="uplod-input phone" value="">
+      	  </div>
+          <div class="input-container">
+            <input type="password" placeholder="密码" name="password" class="uplod-input password" value="">
+          </div>
+      	  <div class="input-container">
+      	    <input type="text" placeholder="请输入您的验证码" name="identifyingcode" class="uplod-input identifyingcode" value="">
+      	    <label><input href="javascript:void(0)" onclick="sendMessageCode()" class="get-code" value="获取验证码"></label>
+      	  </div>
+          <if condition="(!$get['invite'])">
+            <div class="input-container">
+              <input type="text" placeholder="邀请人手机信息" name="invite" class="uplod-input invite" value="">
+            </div>
+            <else />
+            <input type="text" style="display:none" name="invite" class="invite" value="{:$get['invite']}">
+          </if>
+          
+      	  <div class="input-container checkbox-container" style="text-align:right;">
+      	  	<label  class="checklist iCheck-ed" id="iChecklabel">
+      	  	  <input type="checkbox" class="checkbox" id="iCheckBox" checked>
+			</label>
+
+      	  	<span>同意并接受</span>
+      	  	<a href="#">&lt;&lt;注册协议&gt;&gt;</a>
+      	  </div>
+      	  <div class="input-container">
+      	  	<input type="button" value="注册" class="uplod-input register">
+      	  </div>
+      	</form>
+      	<a href="{:U('Wsite/get_download')}&rand={:time()}" class="go-download" style="color:#e8580c;border:1px solid #e8580c">去下载{:C('SYSTEM_TITLE')},赚大钱</a>
+      	<a href="javascript:void(0);" class="learn-more" id="learnMore">
+      	  <img src="__PUBLIC__/web/images/down.png">
+      	  <span>了解{:C('SYSTEM_TITLE')}</span>
+      	</a>
+      </div>
+	  <div class = "page page2" id="page2">
+	  	<a href="javascript:void(0);" class="to-top"><!-- <img src="__PUBLIC__/web/images/point.png"> --></a>
+	  </div>
+	</div>
+  </body>
+  <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="__PUBLIC__/web/js/slider.js"></script>
+  <script src="__PUBLIC__/web/js/common.js"></script>
+  <script>
+	  reCall();
+    $('body').height($('body')[0].clientHeight);
+    $(document).ready(function(){
+      $('input.register').click(function(){
+          if(checkRegister()){
+            var url='{:HOST.U("Api/Login/Registers")}';
+            var phone=$(".phone").val();
+            var code = $(".identifyingcode").val();
+            var invite=$('.invite').val();
+            var password=$('.password').val();
+
+            $.post(url,{login_name:phone,verification:code,invite:invite,login_passwd:password},function(data){
+              console.log(data);
+                message=eval('(' + data + ')');
+              if(message.code==200){
+                alert(message.msg);
+                location.href='{:U("Wsite/get_download")}';
+              }else{
+                alert("注册失败,"+message.msg);
+              }
+            });
+          }else{
+            alert("注册失败！");
+          }
+          //alert('123');
+
+      });
+    });
+    $('.input').bind('focus',function(){
+            $('.page').css('position','static');
+            $('input').css('position','static');
+            //或者$('#viewport').height($(window).height()+'px');
+        }).bind('blur',function(){
+            $('.page').css({'position':'absolute','top':'0','height':'100%',' overflow':'hidden'});
+            //或者$('#viewport').height('auto');
+        });
+    //setTimeout(showPage,1);
+	  var checkBox = document.getElementById("iCheckBox");
+    var label = document.getElementById("iChecklabel");
+    checkBox.onclick = function(){
+      if(this.checked){
+        label.setAttribute("class","iCheck-ed");
+      }else{
+        label.setAttribute("class","iCheck");
+      }
+    };
+
+    var InterValObj; //timer变量，控制时间
+    var count = 60; //间隔函数，1秒执行
+    var curCount;//当前剩余秒数
+    function sendMessageCode() {
+      var url='{:HOST.U("Api/tool/get_verification_code")}';
+      var phone=$(".phone").val();
+      curCount = count;
+      if(phone != "" && (/^1[34578]\d{9}$/.test(phone))){
+        //设置button效果，开始计时
+        $(".get-code").attr("disabled", "true");
+        $(".get-code").val("" + curCount + "秒");
+        InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+        //向后台发送处理数据
+        $.post(url,{phone:phone},function(data){
+          message=eval('(' + data + ')');
+          alert(message.msg);
+        });
+      }else if(phone == "" ){
+        alert("手机号不能为空");
+      }else{
+        alert("请输入正确的手机号");
+      }
+    }
+    //timer处理函数
+    function SetRemainTime() {
+      if (curCount == 0) {
+        window.clearInterval(InterValObj);//停止计时器
+        $(".get-code").removeAttr("disabled");//启用按钮
+        $(".get-code").val("重新发送");
+      }
+      else {
+        curCount--;
+        $(".get-code").val("" + curCount + "秒");
+      }
+    }
+    //表单提交前验证
+    function checkRegister(){
+      var phone=$(".phone").val();
+      var code = $(".identifyingcode").val();
+      var invite=$('.invite').val();
+      var password=$('.password').val();
+      if(phone == ""){
+        alert("手机号不能为空");
+        return false;
+      }else if(!(/^1[34578]\d{9}$/.test(phone))){
+        alert("请输入正确的手机号!");
+        return false;
+      }else if(code == ""){
+        alert("验证码不能为空");
+        return false;
+      }else if(invite ==""){
+        alert("邀请人信息不能为空！");
+        return false;
+      }else if(!(/^1[34578]\d{9}$/.test(invite))){
+        alert("邀请人手机格式不正确");
+        return false;
+      }else if(password==""){
+        alert("密码不能为空！");
+        return false;
+      }else{
+        return true;
+      }
+    }
+  </script>
+</html>

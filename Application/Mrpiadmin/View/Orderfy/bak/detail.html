@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订单详细信息</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('Orderfy/index')}">订单列表</a></li>
+                    <li><a href="#" class="active">订单详情</a></li>
+                </ol>
+            </div>
+        </div>  
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+      <!--用户基本信息-->
+      <div class="row">
+          <div class="col-sm-4" style="height:210px;overflow:hidden;">
+            <img src="{:$user_info['u_image']}" alt="{:$user_info['u_nick']}" class="img-thumbnail">
+          </div>
+          <div class="col-sm-8">
+            <ul class="list-group">
+            <li class="list-group-item">订单总金额：¥ {$user_info['order_amount']|number_format=2}</li>
+            <li class="list-group-item">用户昵称：{:$user_info['u_nick']}</li>
+            <li class="list-group-item">用户联系方式：{:$user_info['u_mobile']}</li>
+            <li class="list-group-item">用户注册时间：{:$user_info['u_times']}</li>
+            </ul>
+          </div>
+      </div>
+      <!--分成信息-->
+      <div class="row" style="background:#fff;height:400px;displayblock;">
+        <div class="col-sm-12" style="padding:15px;">
+          用户分成信息：
+        </div>
+
+          <div class="col-sm-12">
+            <ul class="list-group">
+              <if condition="(!empty($commissions))">
+                <foreach name="commissions" item="commission">
+                    <li class="list-group-item">上级用户：{:$commission['u_nick']}（{:$commission['u_mobile']}）于 {:$commission['create_at']}；获得分成: ¥ {$commission['commission_amount']|number_format=2}</li>
+                </foreach>
+              </if>
+            </ul>
+          </div>
+      </div>
+
+    </div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+</body>
+
+</html>

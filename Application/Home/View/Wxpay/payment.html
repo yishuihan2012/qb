@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<title>确认订单</title>
+  <link href="__PUBLIC__/web/fonts/iconfont.css" rel="stylesheet" type="text/css">
+  <link  href="__PUBLIC__/web/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link type="text/css" rel="stylesheet" href="__PUBLIC__/web/css/style.css" />
+  <link type="text/css" rel="stylesheet"  href="__PUBLIC__/web/css/swiper.min.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/web/css/ectouch.css">
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/web/js/style.js"></script>
+  <script>
+    function onBridgeReady(){
+      WeixinJSBridge.invoke(
+              'getBrandWCPayRequest',{$jsApiParameters},
+              function(res){
+                if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                  alert("你已成功支付，请耐心等待");
+                  location.href="{:U('Order/index')}";
+                }
+                else if(res.err_msg=="get_brand_wcpay_request:cancel"){
+                  alert("你已取消操作");
+                  location.href="{:U('Order/index')}";
+                }
+                else{
+                  alert("支付失败");
+                  location.href="{:U('Order/index')}";
+                }
+              }
+      );
+    }
+    function callpay()
+    {
+      if (typeof WeixinJSBridge == "undefined"){
+        if( document.addEventListener ){
+          document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        }else if (document.attachEvent){
+          document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+          document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        }
+      }else{
+        onBridgeReady();
+      }
+    }
+  </script>
+</head>
+<body>
+<div class="Layout_style">
+  <header id="header">
+    <div class="header_l header_return"><a  href="javascript:;"onClick="javascript :history.back(-1);" class="iconfont icon-turn-left"></a></div>
+    <h1>微信支付确认</h1>
+  </header>
+  <div class="qzdd user_info_style user_style kf_service ">
+    <h3>支付金额：￥{$o.o_price}</h3>
+    <div class="dd_li">订 单 号：<span>{$o.o_sn}</span></div>
+    <foreach name="goods_list" item="gl">
+      <div class="dd_li">产品名称：<span>{$gl.g_title}</span></div>
+    </foreach>
+    <a href="javascript:callpay();">确认支付</a>
+  </div>
+</div>
+<include file="Index/footer"/>
+</body>
+</html>

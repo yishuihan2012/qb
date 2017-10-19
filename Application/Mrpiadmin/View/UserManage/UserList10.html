@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户列表</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row m-b-sm m-t-sm">
+            <div class="ibox-tools">
+                <a class="btn btn-white btn-sm" onclick="auditAll()"><i class="fa fa-folder"></i> 批量审核 </a>
+            </div>
+        </div>
+        <div class="row">
+            <foreach name="user_list" item="ul">
+            <div class="col-sm-4">
+                <div class="contact-box">
+                    <a href="{:U('UserManage/UserCon',array('id'=>$ul['id']))}">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="{$ul.u_image}" width="128" height="128">
+                                <div class="m-t-xs font-bold">{$ul.u_account}<br><if condition="$ul.trose eq 1"><span style="color: red;">该用户正在申请股东资格</span></if></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong>{$ul.u_account}<if condition="$ul.is_del eq 1">（已被停用）</if></strong></h3>
+                            <p>
+                                <if condition="$ul.u_level eq 0">普通用户</if>
+                                <if condition="$ul.u_level eq 1">总代理</if>
+                                <if condition="$ul.u_level eq 2">股东</if>
+                                <if condition="$ul.u_level eq 3">分销商</if>
+                            </p>
+                            <address>
+                            电话：{$ul.u_mobile}<br>
+                            余额：{$ul.u_money}<br>
+                            佣金：{$ul.u_commission}<br>
+                            推荐码：{$ul.u_code}<br>
+                            分销比例：{$ul.u_scale}%<br>
+                            所属上级：{$ul.u_thec|getParent=###}<br>
+                                注册时间：{$ul.u_times|date="Y-m-d m:i:s",###}
+                            </address>
+                        </div>
+                        <div class="clearfix">
+                           <!-- <p class="project-actions" style="float:right;">
+                                <a href="javascript:UserPass({$ul.id})" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> 恢复默认密码 </a>
+                            </p>-->
+                            <p class="project-actions" style="float:right;">
+                                <a href="{:U('UserManage/UserEdit',array('id'=>$ul['id']))}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> 修改 </a>
+                            </p>
+                            <if condition="$ul.is_del eq 0">
+                            <p class="project-actions" style="float:right;">
+                                <a href="javascript:UserDel({$ul.id})" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> 禁用 </a>
+                            </p>
+                                <else/>
+                            <p class="project-actions" style="float:right;">
+                                <a href="javascript:UserOpen({$ul.id})" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> 启用 </a>
+                            </p>
+                            </if>
+                            <if condition="$ul.u_state eq 0">
+                            <p class="project-actions" style="float:right;">
+                                <a href="javascript:UserState({$ul.id})" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> 审核 </a>
+                            </p>
+                            </if>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            </foreach>
+        </div>
+        {$page}
+    </div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script>
+        function auditAll(){
+            var ids="{$uids}";
+            if(ids.length<=0){
+                alert('没有发现未审核用户');
+                return false;
+            }
+            if(confirm('确定所有用户通过审核吗')){
+                $.post("{:U('UserManage/AuditAll')}",{ids:ids},function(t){ if(t == 1){alert("批量审核通过成功");window.location.reload();}else{alert("批量审核通过成功失败");}});
+            }
+        }
+        $(document).ready(function(){$(".contact-box").each(function(){animationHover(this,"pulse")})});
+        function UserDel(id){
+            $.post("{:U('UserManage/UserDel')}",{id:id},function(t){ if(t == 1){alert("封禁成功");window.location.reload();}else{alert("该用户已被禁止使用");}});
+        }
+        function UserOpen(id){
+            $.post("{:U('UserManage/UserOpen')}",{id:id},function(t){ if(t == 1){alert("启用成功");window.location.reload();}else{alert("该用户已成功启用");}});
+        }
+        function UserPass(id){
+            $.post("{:U('UserManage/UserPass')}",{id:id},function(t){ if(t == 1){alert("恢复成功");window.location.reload();}else{alert("该用户已恢复密码");}});
+        }
+        function UserState(id){
+            $.post("{:U('UserManage/UserState')}",{id:id},function(t){ if(t == 1){alert("审核成功");window.location.reload();}else{alert("审核失败");}});
+        }
+    </script>
+</body>
+
+</html>

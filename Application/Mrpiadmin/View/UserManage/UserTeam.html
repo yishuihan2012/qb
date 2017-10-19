@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>团队销售额排名</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/fakeloader.css" />
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInUp">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>团队销售额排名</h5>
+
+                    </div>
+                    <div class="ibox-content">
+
+                        <form action="{:U('UserManage/UserTeam')}" method="get">
+                            <div class="btn-group">
+                                <input type="hidden" value="" name="u_level">
+                                <button type="button" class="btn btn-white">分销等级</button>
+                                <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">分销等级</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="javascript:;" nums="1">总代</a></li>
+                                    <li><a href="javascript:;" nums="2">股东</a></li>
+                                    <li><a href="javascript:;" nums="3">分销商</a></li>
+                                    <li><a href="javascript:;" nums="">全部</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group" style="margin-left: 20px; width:30%;">
+                                <div class="input-group">
+                                    <span class="input-group-btn"><button class="btn btn-white" type="submit">搜索</button></span>
+                                </div>
+                            </div>
+                        </form>
+                    <div class="ibox-content">
+                        <div class="project-list">
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+                                        <td class="project-title">排序</td>
+                                        <td class="project-title">昵称</td>
+                                        <td class="project-title">手机号</td>
+                                        <td class="project-title">销售额</td>
+                                    </tr>
+                                <foreach name="list" item="l" key="k">
+                                    <tr>
+                                        <td class="project-title">
+                                            <a>{$k+1}/{$l.id}</a>
+                                        </td>
+                                        <td class="project-title">
+                                            <if condition="$l.u_nick neq ''">
+                                                {$l.u_nick}
+                                                <else/>
+                                                {$l.u_mobile}
+                                            </if>
+
+                                        </td>
+                                        <td class="project-title">
+                                            {$l.u_mobile}
+                                        </td>
+                                        <td class="project-title">
+                                            ￥{$l.sale_price}
+                                        </td>
+
+                                    </tr>
+                                </foreach>
+                                </tbody>
+                            </table>
+                            {$page}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script src="__PUBLIC__/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/fakeloader.min.js"></script>
+<script>
+    $(".dropdown-menu").find("a").click(function(){
+        var a=$(this).parent().parent().parent().find("button").eq(0);
+        var b=$(this).parent().parent().parent();
+        a.html($(this).html());
+        b.find("input").val($(this).attr("nums"));
+    });
+</script>
+    </body>
+</html>

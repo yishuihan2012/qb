@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>我的商户</title>
+  <script src="__PUBLIC__/release/js/flexible.js"></script>
+  <link rel="stylesheet" href="__PUBLIC__/release/css/reset.css">
+  <link rel="stylesheet" href="__PUBLIC__/release/css/layout.css">
+  <script src="__PUBLIC__/release/js/jquery-2.1.4.min.js"></script>
+</head>
+<body>
+  <div class="top">
+    <p class="f36 bold">{$data['count']?$data['count']:0}</p>
+    <p class="f14" style="margin-top:-0.2rem;">商户人数(人)</p>
+  </div>
+  <section>
+    <div class="list-cells">
+      <ul>
+       <foreach name="data['list']" item="v">
+        <li class="list-cell">
+          <a href="{:U('Wsite/team_group',array('id'=>$id,'member_id'=>$v['member_id']))}">
+            <div class="list-cell-fl fl"><img src="{$v['img']}" class="circle-pic"></div>
+            <div class="list-cell-fc fl">
+              <p class="f18">{$v[name]}</p>
+              <p class="f14">直接{$v['first']}人 间接{$v['second']}人</p>
+            </div>
+            <div class="list-cell-fr fr">
+              <span class="f20">{$v['first']+$v['second']}人</span>
+              <img src="__PUBLIC__/release/images/spread.png">
+            </div>
+          </a>
+        </li>
+       </foreach>
+      </ul>
+    </div>
+  </section>
+</body>
+</html>

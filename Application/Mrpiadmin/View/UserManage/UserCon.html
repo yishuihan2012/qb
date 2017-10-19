@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户信息</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+
+    <style>
+    .clients-list .tab-pane{
+      min-height: 600px!important;
+    }
+    </style>
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('UserManage/UserList')}">用户列表</a></li>
+                    <!-- <li><a href="#" class="active">用户详情</a></li> -->
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <span class="text-muted small pull-right">最后更新：<i class="fa fa-clock-o"></i> {$users['update_at']}</span>
+                        <h2>用户信息</h2>
+                        <div class="input-group">&nbsp;<!--用户搜索--></div>
+                        <div class="clients-list">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-user"></i> 客户关系</a>
+                                </li>
+                                <li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-user"></i> 提现记录</a>
+                                </li>
+                                <li class=""><a data-toggle="tab" href="#tab-3"><i class="fa fa-user"></i> 分润记录</a>
+                                </li>
+                                <!-- <li class=""><a data-toggle="tab" href="#tab-3"><i class="fa fa-user"></i> 我的提现</a>
+                                </li>
+                                <li class=""><a data-toggle="tab" href="#tab-4"><i class="fa fa-user"></i> 我的客户</a>
+                                </li> -->
+                            </ul>
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="full-height-scroll" style="padding:10px 25px;">
+                                      <div class="row">
+                                        <hr />
+                                        <h3>直接上级</h3>
+                                        <hr />
+                                        <if condition="($user_parent)">
+                                          <div class="col-xs-3">用户姓名：{:$user_parent['usercertification_name']?$user_parent['usercertification_name']:$user_parent['u_nick']}</div>
+                                          <div class="col-xs-3">联系方式：{$user_parent['u_mobile']}</div>
+                                          <div class="col-xs-3">用户角色：{$user_parent['member_name']}
+                                          </div>
+                                          <else />
+                                          无上级信息
+                                        </if>
+                                      </div>
+                                      <div class="row">
+                                        <hr />
+                                        <h4>直接下级</h4>
+                                        <hr />
+                                        <if condition="($user_1st)">
+                                          <volist name="user_1st" id="u_1st">
+                                              <div class="col-xs-3">
+                                                用户姓名：{:$u_1st['usercertification_name']?$u_1st['usercertification_name']:$u_1st['u_nick']}<br />
+                                                联系方式：{:$u_1st['u_mobile']}<br />
+                                                用户角色：{$u_1st['member_name']}<br />
+                                                <a href="{:U('UserManage/UserCon',array('id'=>$u_1st['id']))}">查看详情</a>
+                                              </div>
+                                          </volist>
+                                          <else />
+                                           暂无直接下级用户！
+                                        </if>
+
+                                      </div>
+                                      <div class="row">
+                                        <hr />
+                                        <h4>间接下级</h4>
+                                        <hr />
+                                        <if condition="($user_2nd)">
+                                          <volist name="user_2nd" id="u_2nd">
+                                              <div class="col-xs-3">
+                                                用户姓名：{:$u_2nd['usercertification_name']?$u_2nd['usercertification_name']:$u_2nd['u_nick']}<br />
+                                                联系方式：{:$u_2nd['u_mobile']}<br />
+                                                用户角色：{$u_2nd['member_name']}<br />
+                                                <a href="{:U('UserManage/UserCon',array('id'=>$u_2nd['id']))}">查看详情</a>
+                                              </div>
+                                          </volist>
+                                          <else />
+                                           暂无间接下级用户！
+                                        </if>
+                                      </div>
+                                      <div class="row">
+                                        <hr />
+                                        <h4>三级用户</h4>
+                                        <hr />
+                                        <if condition="($user_3rd)">
+                                          <volist name="user_3rd" id="u_3rd">
+                                              <div class="col-xs-3">
+                                                用户姓名：{:$u_3rd['usercertification_name']?$u_3rd['usercertification_name']:$u_3rd['u_nick']}<br />
+                                                联系方式：{:$u_3rd['u_mobile']}<br />
+                                                用户角色：{$u_3rd['member_name']}<br />
+                                                <a href="{:U('UserManage/UserCon',array('id'=>$u_3rd['id']))}">查看详情</a>
+                                              </div>
+                                          </volist>
+                                          <else />
+                                           暂无三级用户！
+                                        </if>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div id="tab-2" class="tab-pane">
+                                    <div class="full-height-scroll">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover">
+                                                <tbody>
+                                                <foreach name="crash_list" item="list">
+                                                    <tr>
+                                                        <td>金额：{$list['log_amount']}
+                                                        </td>
+                                                        <td>账户：{$list.account}</td>
+                                                        <td>手续费用：{$list.service_charge}</td>
+                                                        <td>
+                                                          {:$list['create_at']}
+                                                        </td>
+                                                    </tr>
+                                                </foreach>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                 <div id="tab-3" class="tab-pane">
+                                    <div class="full-height-scroll">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover">
+                                                <tbody>
+                                                <foreach name="profit_list" item="list">
+                                                    <tr>
+                                                        <td>金额：{$list['log_amount']}
+                                                        </td>
+                                                        <td>描述：{$list.account}</td>
+                                                        <td>手续费用：{$list.service_charge}</td>
+                                                        <td>
+                                                          时间：{:$list['create_at']}
+                                                        </td>
+                                                    </tr>
+                                                </foreach>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div id="tab-3" class="tab-pane">
+                                    <div class="full-height-scroll">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover">
+                                                <tbody>
+                                                <foreach name="Withdrawals" item="w">
+                                                    <tr>
+                                                        <td class="client-avatar"></td>
+                                                        <td><a data-toggle="tab" href="#" class="client-link">{$w.f_datetime}</a>
+                                                        </td>
+                                                        <td> {$w.f_text}</td>
+                                                        <td class="contact-type"><i class="fa fa-cny"> </i>
+                                                        </td>
+                                                        <td> {$w.f_price}</td>
+                                                        <td class="client-status">
+                                                            <if condition="$w.f_status eq -1"><span class="label label-primary">失败</span></if>
+                                                            <if condition="$w.f_status eq 0"><span class="label label-info">未汇款</span></if>
+                                                            <if condition="$w.f_status eq 1"><span class="label label-primary">已汇款</span></if>
+                                                        </td>
+                                                    </tr>
+                                                </foreach>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!-- <div id="tab-4" class="tab-pane">
+                                    <div class="full-height-scroll">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover">
+                                                <tbody>
+                                                <foreach name="user" item="u">
+                                                    <tr>
+                                                        <td class="client-avatar"><img alt="image" src="{$u.u_image}"> </td>
+                                                        <td><a data-toggle="tab" href="#" class="client-link">{$u.u_nick}</a>
+                                                        </td>
+                                                        <td> 翔云长禄生物有限公司</td>
+                                                        <td class="contact-type"><i class="fa fa-phone"> </i>
+                                                        </td>
+                                                        <td> {$u.u_mobile}</td>
+                                                        <td class="contact-type"><i class="fa fa-cny"> </i>
+                                                        </td>
+                                                        <td> {$u.u_commission}</td>
+                                                        <td class="client-status">
+                                                            <if condition="$u.is_del eq 0">
+                                                                <if condition="$u.u_state eq 1">
+                                                                    <span class="label label-primary">正常</span>
+                                                                    <else/>
+                                                                    <span class="label label-warning">待审</span>
+                                                                </if>
+                                                                <else/>
+                                                                <span class="label label-danger">禁用</span>
+                                                            </if>
+                                                        </td>
+                                                    </tr>
+                                                </foreach>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox ">
+                    <div class="ibox-content">
+                        <div class="tab-content">
+                            <div id="contact-1" class="tab-pane active">
+                                <div class="row m-b-lg">
+                                    <div class="col-lg-4 text-center">
+                                        <h5>{$users['u_nick']}</h5>
+                                        <div class="m-b-sm">
+                                            <img alt="image" class="img-circle" src="{$users['u_image']}" style="width: 62px">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <h3>个人详情</h3>
+                                        <p>联系电话：{$users['u_mobile']}</p>
+                                            <volist name="wallets" id="wallet">
+                                              <if condition="($wallet['wallet_type'] eq 1)">
+                                                分佣账户：
+                                                <elseif condition="($wallet['wallet_type'] eq 2)" />
+                                                分润账户：
+                                                <else />
+                                                其他账户：
+                                              </if>
+                                              <if condition="(!empty($wallet))">
+                                                  ¥ {$wallet['wallet_amount']|number_format=2}  <br />
+                                                  <else />
+                                                  账户余额：¥ 0.00<br />
+                                              </if>
+                                            </volist>
+
+                                        <!-- <p>累计佣金：{$total_com}元</p>
+                                        <p>可用佣金：{$m.u_commission}元</p> -->
+                                        <!-- <p>提现佣金：{$total_wit}元</p> -->
+                                        <!-- <p>团队人数：{$total_peo}人</p>
+                                        <p>团队收益：{$total_pro}元</p> -->
+                                        <!-- <p>提成比例：{$m.u_scale}%</p>
+                                        <p>团队销售额：{$total_sal}元</p> -->
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="client-detail">
+                                    <div class="full-height-scroll">
+                                        <strong>我的二维码</strong>
+                                        <p>认证状态：
+                                        <if condition = "$users['usercertification_state'] neq 1">
+                                            未认证
+                                        <else/>
+                                            <span style="color:green">已认证</span><br />
+                                            姓名：{$users['usercertification_name']} <br />
+                                            身份证号：{$users['usercertification_card']}
+                                        </if>
+                                        </p>
+                                        <ul class="list-group clear-list">
+                                            <li class="list-group-item fist-item">
+                                                <img src="{$users['u_ewm']}"  style="width:100%;">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script>
+        $(function(){$(".full-height-scroll").slimScroll({height:"100%"})});
+    </script>
+</body>
+
+</html>

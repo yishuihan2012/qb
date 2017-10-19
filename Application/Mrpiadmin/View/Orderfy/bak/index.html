@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订单信息</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/layui/css/layui.css" />
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('Orderfy/index')}">订单列表</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+        <div class="row">
+            <div class="col-xs-12">
+              <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group btn-group-md">
+                    <a href="{:U('Orderfy/index')}" {$status=='' ? "class='btn btn-primary active'" : "class='btn btn-default'"}>全部</a>
+                    <a href="{:U('Orderfy/index',array('status'=>'2'))}" {$status=='2' ? "class='btn btn-primary active'" : "class='btn btn-default'"}>已确认</a>
+                    <a href="{:U('Orderfy/index',array('status'=>'0'))}" {$status=='0' ? "class='btn btn-primary active'" : "class='btn btn-default'"}>未确认</a>
+                </div>
+              </div>
+              <form name="myform" action="{:U('Orderfy/index',array('status'=>$status))}" method="POST">
+              <div class="input-group" style="margin:20px 0px;">
+                  <div class="layui-input-inline" style="margin-right:20px;">
+                    <input type="text" name="u_order" class="layui-input" value="{$u_order}" placeholder="请输入订单号...">
+                  </div>
+                  <div class="layui-input-inline" style="margin-right:10px;">
+                    <input class="layui-input" name="start" value="{$u_start}" placeholder="开始时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                  </div>
+                  <div class="layui-input-inline" style="margin-right:20px;">
+                    <input class="layui-input" name="end" value="{$u_end}" placeholder="结束时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                  </div>
+                  <div class="layui-input-inline">
+                    <span class="input-group-btn"><button class="btn btn-white layui-btn" type="submit">搜索</button></span>
+                  </div>
+              </div>
+              </form>
+            </div>
+        </div>
+
+          <table class="table table-striped">
+            <thead>
+              <th>订单编号</th>
+              <th>订单金额</th>
+              <th>订单状态</th>
+              <th>购买日期</th>
+              <th>购买人</th>
+              <th>相关操作</th>
+            </thead>
+          <tbody>
+          <if condition="(!empty($orders))">
+            <foreach name="orders" item="order">
+              <tr>
+                <td>{:$order['user_order_id']}</td>
+                <td> ¥ {$order['order_amount']|number_format=2}</td>
+                <td>{:$order['order_state']==0?'未支付':($order['order_state']==1?"已支付，未分成":"已分成")}</td>
+                <td>{:$order['update_at']}</td>
+                <td>{:$order['u_nick']}</td>
+                <td>
+                    <if condition="$order['order_state'] neq 2">
+                        <!-- <if condition="$Think.session.login_type eq 1">
+                        <a href="javascript:;" data-url="{:U('Orderfy/sure',array('id'=>$order['user_order_id']))}" class="sure">确认订单</a>
+                          <else/>
+                        <a href="javascript:;" data-url="{:U('Orderfy/sure',array('id'=>$order['user_order_id']))}" class="">无权分成</a>
+                        </if> -->
+                        <span style="color:green;">待支付</span>&nbsp;
+                    <else/>
+                      <span style="color:green;">已支付</span>&nbsp;
+                    </if>
+                      &nbsp;<a href="{:U('Orderfy/detail',['id'=>$order['user_order_id']])}">查看详情</a>
+                    </div>
+                </td>
+              </tr>
+            </foreach>
+              <else />
+              <div class="col-sm-12">
+                  <tr>
+                    <td colspan="6" style="text-align:center;">
+                      暂无订单信息
+                    </td>
+                  </tr>
+              </div>
+          </if>
+        </tbody>
+        <tfoot>
+          <tr><td style="text-align:center;">
+              {:$show}
+          </td></tr>
+        </tfoot>
+      </table>
+
+    </div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script src="__PUBLIC__/layui/layui.js"></script>
+    <script>
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        $('.sure').click(function(){
+          if(confirm('您确定要确定订单吗?确定后不可更改')){
+              $.ajax({
+                url:$(this).attr('data-url'),
+                type:'POST',
+                dataType:'json',
+                success:function(data){
+                  alert(data.msg);
+                }
+              })
+          }
+
+        })
+
+    });
+    </script>
+</body>
+
+</html>

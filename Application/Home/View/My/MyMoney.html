@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<title>提现</title>
+<link href="__PUBLIC__/web/fonts/iconfont.css" rel="stylesheet" type="text/css">
+<link  href="__PUBLIC__/web/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/web/css/style.css" />
+<link type="text/css" rel="stylesheet"  href="__PUBLIC__/web/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/web/css/ectouch.css">
+</head>
+<body>
+<div class="Layout_style">
+<header id="header">
+  <div class="header_l header_return"><a href="javascript:;" onclick="javascript :history.back(-1);" class="iconfont icon-turn-left"></a></div>
+  <h1> 提现 </h1>
+  </header>
+<section class="user_style">
+<div class="cz_form">
+    <div class="tx_j">幸福指数<span>￥{$u_money}</span></div>
+     <div class="cz1"><span>金额(￥):</span><input class="txt " type="text" name="f_price" value="" autocomplete="off" placeholder="请输入金额10元起"></div>
+</div>
+<div class="cz2"><a href="javascript:ToMoney(1)" class="green">微信提现</a><a href="javascript:BankSubmit();">银行提现</a></div>
+<div class="record_list">
+     <div class="title_name">提现记录</div>
+     <ul>
+         <foreach name="list" item="l">
+     <li>{$l.f_datetime} {$l.f_text} <span class="f_r">-{$l.f_price}</span></li>
+         </foreach>
+     </ul>
+</div>
+</section>
+</div>
+<include file="Index/footer"/>
+</body>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    function ToMoney(tt){
+        var f_price=$("input[name='f_price']").val();
+        if(f_price>10) {
+            $.post("{:U('My/ToMoney')}", {types: tt, f_price: f_price,f_types:1}, function (t) {
+                if (t == 1) {
+                    alert("已提交申请，请耐心等待！");
+                    location.reload();
+                } else {
+                    alert("金额不足");
+                }
+            })
+        }
+        else{
+            alert("输入金额小于10元");
+        }
+    }
+    function BankSubmit(){
+        var f_price=$("input[name='f_price']").val();
+        if(f_price>10) {
+            location.href="/index.php/Home/My/MyBank/f_price/"+f_price+"/f_types/1.html";
+        }
+        else{
+            alert("输入金额小于10元");
+        }
+    }
+</script>
+</html>

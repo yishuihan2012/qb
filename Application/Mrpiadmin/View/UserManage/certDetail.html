@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实名详细信息</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('UserManage/CertLook')}">实名列表</a></li>
+                    <li><a href="#" class="active">实名详情</a></li>
+                </ol>
+            </div>
+        </div>  
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+      <div class="row">
+          <div class="col-sm-8">
+            <form action="{:U('UserManage/updateUserCert')}" method="post" enctype="multipart/form-data">
+            <ul class="list-group">
+            <li class="list-group-item">用户昵称{$data.u_nick}</li>
+            <li class="list-group-item">真实姓名：{$data.usercertification_name}</li>
+            <li class="list-group-item"> 身份证号：{$data.usercertification_card}</li>
+            <li class="list-group-item">实名时间：{$data.create_at}</li>
+            <li class="list-group-item">身份证正面图：     <img src = "{$data['identity_front']}" style = "width:300px"> 
+                    <input type="file" value="" name="identity_front">
+            </li> 
+            <li class="list-group-item">身份证反面图：     <img src = "{$data['identity_back']}" style = "width:300px">
+                    <input type="file" value="" name="identity_back">
+            </li>
+            <li class="list-group-item">银行卡正面图：     <img src = "{$data['bankcard_front']}" style = "width:300px">
+                    <input type="file" value="" name="bankCard_front" >
+            </li>
+            <li class="list-group-item">银行卡反面图：     <img src = "{$data['bankcard_back']}" style = "width:300px">
+                    <input type="file" value="" name="bankCard_back" >
+            </li>
+            <li class="list-group-item">手持身份证半身照： <img src = "{$data['people_bankcard']}" style = "width:300px">
+                    <input type="file" value="" name="people_bankCard">
+            </li>
+             <li class="list-group-item"> <input type="submit" value="提交" ></li>
+             <input type="hidden" name="id" value="{$id}">
+            </ul>
+            </form>
+          </div> 
+      </div>
+
+    </div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+</body>
+<script>
+    $(function(){
+        function onfile(file) {
+            var fd = new FormData();
+            fd.append("fileToUpload", file.files[0]);
+            var url= '{:U("UserManage/updateUserCert")}';
+            // fd= JSON.stringify(fd);  
+            xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+            xhr.send(fd);
+            xhr.onreadystatechange = processResponse
+            // var val=$(this).files;
+            // console.log(val);
+            // $.ajax({
+            //     url: '{:U("UserManage/updateUserCert")}',
+            //     type: 'post',
+            //     dataType: 'json',
+            //     data: {'val':val},
+            //     success:function(data){
+            //         console.log(data);
+            //     }
+            // })
+            
+        }
+        function processResponse(){
+            if(xhr.readyState == 4){
+              alert(" 上传成功");
+              if(xhr.status == 200){
+                var infor = xhr.responseText;
+                alert(infor);
+              }
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>素材详细信息</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('material/material_list')}">素材列表</a></li>
+                    <li><a href="#" class="active">素材详情</a></li>
+                </ol>
+            </div>
+        </div>  
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+      <div class="row">
+          <div class="col-sm-8">
+            <ul class="list-group">
+            <li class="list-group-item">标题： {$material_result['title']}</li>
+            <li class="list-group-item">内容：{:$material_result['content']}</li>
+            <li class="list-group-item">创建时间：{:$material_result['create_time']}</li>
+            <li class="list-group-item">下载数量：{:$material_result['download_num']}</li>
+            </ul>
+          </div>
+          
+        <div style="float:left;margin-left:100px">
+      <?php if (!empty($material_img_result) ) { ?>
+      <?php foreach ($material_img_result as $v) { ?>
+          <div class="col-sm-4" style="width:300px;overflow:hidden;float:left">
+            <img src="<?php echo $v['img'] ?>" class="img-thumbnail">
+          </div>        
+      <?php } } ?>  
+      </div>
+      
+      </div>
+
+    </div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+</body>
+
+</html>

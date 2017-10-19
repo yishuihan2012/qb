@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{:C('SYSTEM_TITLE')}-系统设置</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <style>
+      .pay-methods-list{
+          position: relative;
+      }
+      .remove{
+        position: absolute;
+        right: 100px;
+        top:50%;
+        font-size: 30px;
+        cursor: pointer;
+      }
+    </style>
+</head>
+
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('Sysfy/index')}">属性设置</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{:C('SYSTEM_TITLE')} - 系统设置</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="get" class="form-horizontal">
+                          <!--总 分成 比例-->
+                         <!--  <div class="form-group">
+                              <label class="col-sm-2 control-label">会 员 价 格</label>
+                              <div class="col-sm-10">
+                                  <div class="col-sm-10" style="margin-bottom: 1%;">
+                                      <input type="text" name="member_price" value="{:$sysconf['info']['member_price']}" class="form-control" style="width:65%;">
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">代理商价格</label>
+                              <div class="col-sm-10">
+                                  <div class="col-sm-10" style="margin-bottom: 1%;">
+                                      <input type="text" name="prox_price" value="{:$sysconf['info']['prox_price']}" class="form-control" style="width:65%;">
+                                  </div>
+                              </div>
+                          </div> -->
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">分润比例</label>
+                              <div class="col-sm-10">
+                                    <input type="text" name="prox_price" value="{:$sysconf['info']['prox_price']}" class="form-control" style="width:65%;">
+                              </div>
+                          </div>
+                          
+                          <!-- <div class="form-group">
+                              <label class="col-sm-2 control-label">默认上级手机号</label>
+                              <div class="col-sm-10">
+                                    <input type="text" name="default_ceil_mobile" value="{:$sysconf['info']['default_ceil_mobile']}" class="form-control" style="width:65%;">
+                              </div>
+                          </div> -->
+                          
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">分享文案</label>
+                              <div class="col-sm-10">
+                                    <input type="text" name="share_words" value="{:$sysconf['info']['share_words']}" class="form-control" style="width:65%;">
+                              </div>
+                          </div>
+
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">非会员能否查看会员中心</label>
+                              <div class="col-sm-10">
+                                    <select name="can_see_member" id=""   class="form-control m-b">
+                                          <option value="1" <if condition="$sysconf['info']['can_see_member'] eq 1">selected="selected"</if> >是</option>
+                                          <option value="0" <if condition="$sysconf['info']['can_see_member'] eq 0">selected="selected"</if> >否</option>
+                                    </select>
+                                    <!-- <input type="text" name="is_use_device" value="{:$sysconf['info']['is_use_device']}" class="form-control" style="width:65%;"> -->
+                              </div>
+                          </div>
+
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">是否启用设备码</label>
+                              <div class="col-sm-10">
+                                    <select name="is_use_device" id=""   class="form-control m-b">
+                                          <option value="1" <if condition="$sysconf['info']['is_use_device'] eq 1">selected="selected"</if> >是</option>
+                                          <option value="0" <if condition="$sysconf['info']['is_use_device'] eq 0">selected="selected"</if> >否</option>
+                                    </select>
+                                    <!-- <input type="text" name="is_use_device" value="{:$sysconf['info']['is_use_device']}" class="form-control" style="width:65%;"> -->
+                              </div>
+                          </div>
+                          <div class="form-group">
+                            <label class="col-sm-2 control-label">是否有实名红包</label>
+                            <div class="col-sm-10">
+                                  <select name="is_havecert_redpackets" id="" class="form-control m-b">
+                                      <option value="1" <if condition="$sysconf['info']['is_havecert_redpackets'] eq 1">selected="selected"</if> </option>有</option>
+                                      <option value="0" <if condition="$sysconf['info']['is_havecert_redpackets'] eq 0">selected="selected"</if> >没有</option>
+                                  </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">实名红包金额</label>
+                            <div class="col-sm-10">
+                                  <input type="text" name="cert_redpackets_total" value="{:$sysconf['info']['cert_redpackets_total']}" class="form-control" style="width:65%;">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">是否有首次刷卡红包</label>
+                            <div class="col-sm-10">
+                                    <select name="ishave_firstflush_redpackets" id="" class="form-control m-b">
+                                            <option value="1" <if condition="$sysconf['info']['ishave_firstflush_redpackets'] eq 1">selected="selected"</if> </option>有</option>
+                                            <option value="0" <if condition="$sysconf['info']['ishave_firstflush_redpackets'] eq 0">selected="selected"</if> >没有</option>
+                                    </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">首次刷卡红包金额</label>
+                            <div class="col-sm-10">
+                                  <input type="text" name="firstflush_packet_total" value="{:$sysconf['info']['firstflush_packet_total']}" class="form-control" style="width:65%;">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">提现最小金额</label>
+                            <div class="col-sm-10">
+                                  <input type="text" name="min_getcash_money" value="{:$sysconf['info']['min_getcash_money']}" class="form-control" style="width:65%;" placeholder="为0时不限制提现金额">
+                            </div>
+                        </div>
+
+                         <div class="form-group">
+                            <label class="col-sm-2 control-label">提现最低手续费</label>
+                            <div class="col-sm-10">
+                                  <input type="text" name="min_rate_cash" value="{:$sysconf['info']['min_rate_cash']}" class="form-control" style="width:65%;" placeholder="最低提现手续费">
+                            </div>
+                        </div>
+
+                         <div class="form-group">
+                            <label class="col-sm-2 control-label">提现最高手续费</label>
+                            <div class="col-sm-10">
+                                  <input type="text" name="max_rate_cash" value="{:$sysconf['info']['max_rate_cash']}" class="form-control" style="width:65%;" placeholder="最高提现手续费">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">提现费率</label>
+                            <div class="col-sm-10">
+                                  <input type="text" name="getcash_rate" value="{:$sysconf['info']['getcash_rate']}" class="form-control" style="width:65%;" placeholder="提现费率，百分制">
+                            </div>
+                        </div>
+
+                         <div class="form-group">
+                              <label class="col-sm-2 control-label">推荐人是否必填</label>
+                              <div class="col-sm-10">
+                                    <select name="is_have_recommend" id=""   class="form-control m-b">
+                                          <option value="1" <if condition="$sysconf['info']['is_have_recommend'] eq 1">selected="selected"</if> >是</option>
+                                          <option value="0" <if condition="$sysconf['info']['is_have_recommend'] eq 0">selected="selected"</if> >否</option>
+                                    </select>
+                                    <!-- <input type="text" name="is_use_device" value="{:$sysconf['info']['is_use_device']}" class="form-control" style="width:65%;"> -->
+                              </div>
+                          </div>
+
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">后台升级是否有分佣</label>
+                              <div class="col-sm-10">
+                                    <select name="is_commission_back_up" id=""   class="form-control m-b">
+                                          <option value="1" <if condition="$sysconf['info']['is_commission_back_up'] eq 1">selected="selected"</if> >是</option>
+                                          <option value="0" <if condition="$sysconf['info']['is_commission_back_up'] eq 0">selected="selected"</if> >否</option>
+                                    </select>
+                                    <!-- <input type="text" name="is_use_device" value="{:$sysconf['info']['is_use_device']}" class="form-control" style="width:65%;"> -->
+                              </div>
+                          </div>
+
+                        <div class="hr-line-dashed"></div>
+                        <div class="hr-line-dashed"></div>
+                            <h2>分佣信息设置</h2><!--不允许超过3级-->
+                            
+                          <div class="hr-line-dashed"></div>
+                              
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">分成类型</label>
+                              <div class="col-sm-10">
+                                      <select class="form-control m-b" name="type" style="width:30%;float: left;margin-right: 2%;margin-bottom:0;">
+                                          <option value="1" <if condition="($sysconf['info']['type'] eq 1)">selected</if>>百分比</option>
+                                          <option value="2" <if condition="($sysconf['info']['type'] eq 2)">selected</if>>固定额</option>
+                                      </select>
+                              </div>
+                          </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">分佣总金额比例</label>
+                                <div class="col-sm-10">
+                                        <input type="text" name="direct_rate" value="{:$sysconf['info']['direct_rate']}" class="form-control" style="width:65%;">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">直接分成</label>
+                                <div class="col-sm-10">
+                                        <input type="text" name="direct_total" value="{:$sysconf['info']['direct_total']}" class="form-control" style="width:65%;">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">间接分成</label>
+                                <div class="col-sm-10">
+
+                                      <input type="text" name="indirect_total" value="{:$sysconf['info']['indirect_total']}" class="form-control" style="width:65%;">
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">三级分成</label>
+                                <div class="col-sm-10">
+
+                                      <input type="text" name="indirect_3rd_total" value="{:$sysconf['info']['indirect_3rd_total']}" class="form-control" style="width:65%;">
+
+                                </div>
+                            </div>
+                          <!-- <div class="hr-line-dashed"></div>
+                          <h2>分润信息设置</h2>
+                          <div class="hr-line-dashed"></div> -->
+                          <!-- <div class="form-group">
+                              <label class="col-sm-2 control-label">升级条件</label>
+                              <div class="col-sm-10">
+                                      <volist name="role_list" id="role_a">
+                                          <div class="row" style="line-height:35px;">
+                                            <label class="col-sm-2">升级[{$role_a['manage_role_name']}]所需人数：</label><input type="number" name="commissions[commission_condition][{$role_a['manage_role_id']}]" class="col-sm-4 form-control" style="width:auto;"/>
+                                          </div>
+                                      </volist>
+                              </div>
+                          </div>
+                          <div class="hr-line-dashed"></div> -->
+
+                            <!-- <div class="pay-methods">
+                              <volist name="data_commissions" id="commission">
+                                <div class="hr-line-dashed"></div>
+                                <div class="pay-methods-list">
+
+                                  <div class="form-group">
+                                      <label class="col-sm-2 control-label">移动收款方式：</label>
+                                      <div class="col-sm-10">
+                                        <select name="commissions[pay_method][]">
+                                          <option value="weipay" <if condition="($commission[pay_method] eq 'weipay')">selected</if>>微信</option>
+                                          <option value="alipay" <if condition="($commission[pay_method] eq 'alipay')">selected</if>>支付宝</option>
+                                          <option value="jdpay" <if condition="($commission[pay_method] eq 'jdpay')">selected</if>>京东</option>
+                                        </select>
+                                      </div>
+                                  </div>
+
+                                  <div class="form-group">
+                                      <label class="col-sm-2 control-label">费率等级：</label>
+                                      <div class="col-sm-10">
+                                        <select name="commissions[commission_level][]">
+                                          <volist name="role_list" id="role_b">
+                                              <option value="{$role_b['manage_role_id']}" <if condition="$commission['commission_level'] eq $role_b['manage_role_id']">selected</if>>{$role_b['manage_role_name']}</option>
+
+                                          </volist>
+                                        </select>
+                                      </div>
+                                  </div>
+
+                                  <div class="form-group">
+                                      <label class="col-sm-2 control-label">移动收款额度：</label>
+                                      <div class="col-sm-10">
+
+                                            <input type="text" name="commissions[mobile_receipt_total][]" value="{$commission['mobile_receipt_total']}" class="form-control" style="width:65%;" placeholder="额度区间，以英文逗号分割（10,20000）">
+
+                                      </div>
+                                  </div>
+
+                                  <div class="form-group">
+                                      <label class="col-sm-2 control-label">移动收款提示信息：</label>
+                                      <div class="col-sm-10">
+
+                                            <input type="text" name="commissions[mobile_receipt_info][]" value="{:$commission['mobile_receipt_info']}" class="form-control" style="width:65%;" placeholder="填写提示信息">
+
+                                      </div>
+                                  </div>
+                                  <div class="remove" onclick="remove($(this))">
+                                      <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+                                    </div>
+                                </div>
+                              </volist>
+                            </div> -->
+
+                          <!-- <div class="hr-line-dashed"></div>
+                            <button class="btn btn-method-add" type="button" style="float:right">添加收款方式</button>
+                            <div style="clear:both;"></div>
+                          <div class="hr-line-dashed"></div> -->
+
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="button">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="commssion-list-template" style="display:none">
+      <div class="pay-methods-list">
+        <div class="hr-line-dashed"></div>
+              <div class="form-group">
+                    <label class="col-sm-2 control-label">移动收款方式：</label>
+                    <div class="col-sm-10">
+                          <select name="commissions[pay_method][]">
+                            <option value="weipay">微信</option>
+                            <option value="alipay">支付宝</option>
+                            <option value="jdpay">京东</option>
+                          </select>
+                      </div>
+                 </div>
+
+                  <div class="form-group">
+                      <label class="col-sm-2 control-label">费率等级：</label>
+                      <div class="col-sm-10">
+                          <select name="commissions[commission_level][]">
+                            <volist name="role_list" id="role_c">
+                                <option value="{$role_c['manage_role_id']}">{$role_c['manage_role_name']}</option>
+                            </volist>
+                          </select>
+                           </div>
+                  </div>
+
+                  <div class="form-group">
+                        <label class="col-sm-2 control-label">移动收款额度：</label>
+                        <div class="col-sm-10">
+                          <input type="text" name="commissions[mobile_receipt_total][]" value="" class="form-control" style="width:65%;" placeholder="输入额度区间，以英文逗号间隔">
+                        </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label class="col-sm-2 control-label">移动收款提示信息：</label>
+                      <div class="col-sm-10">
+                            <input type="text" name="commissions[mobile_receipt_info][]" value="" class="form-control" style="width:65%;" placeholder="输入提示信息">
+                      </div>
+                  </div>
+                  <div class="remove" onclick="remove($(this))">
+                    <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+                  </div>
+        </div>
+    </div> -->
+    <div class="fakeloader" style="display: none;"></div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/MrPiAdmin.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $(".btn-primary").click(function(){
+          $.post("{:U('Sysfy/index')}",
+            $(".form-horizontal").serialize(),
+              function(t){
+                if(t == 1){
+                      alert("修改成功");
+                      location.href="{:U('Sysfy/index')}";
+                }else{
+                  alert("修改信息与数据库信息相同，操作取消！");
+                }
+              }
+            )
+        });
+        // $(".btn-method-add").click(function(){
+        //     var html = $('.commssion-list-template .pay-methods-list').clone();
+        //     $('.pay-methods').append(html);
+        // });
+
+    });
+
+    // function remove(obj){
+    //     obj.parent().remove()
+    // }
+    </script>
+</body>
+
+</html>

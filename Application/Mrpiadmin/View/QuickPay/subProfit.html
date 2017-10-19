@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>银行卡列表</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/layui/css/layui.css" />
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('QuickPay/cardList')}">银行卡列表</a></li>
+                </ol>
+            </div>
+        </div>  
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+          <table class="table table-striped">
+            <thead>
+                <th>银行卡编号</th>
+                <th>卡号</th>
+                <th>卡持有人</th>
+                <th>卡类型</th>
+                <th>所属银行</th>
+                <td>身份证号</td>
+                <td>是否认证</td>
+                <th>相关操作</th>
+            </thead>
+          <tbody>
+              <volist name = "data" id = "vo">
+            <tr>
+                <td>{$vo.card_id}</td>
+                <td>{$vo.card_number}</td>
+                <td>{$vo.card_name}</td>
+                <td>{$vo.card_type}</td>
+                <td>{$vo.card_bank}</td>
+                <td>{$vo.card_identify}</td>
+                <td><if condition="$vo.card_validate eq 0">未认证 <else/>已认证</if></td>
+                <td>
+                  <!-- <a href = "{:U('Article/show',array('id' => $vo['article_id']))}" >文章详情</a>&nbsp;|&nbsp; -->
+                  <a href = "{:U('QuickPay/updateCard',array('id' => $vo['card_id']))}" >修改</a>&nbsp;|&nbsp;
+                  <a href = "javascript:;" class = "getAjaxMsg" data-content="删除该卡号" data-url = "{:U('QuickPay/deleteCard',array('id' => $vo['card_id']))}">删除</a>
+                </td>
+            </tr>
+              </volist>
+        </tbody>
+        <tfoot>
+          <tr><td style="text-align:center;">
+              {$page}
+          </td></tr>
+        </tfoot>
+      </table>
+
+    </div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script src="__PUBLIC__/layui/layui.js"></script>
+
+	<script>
+	//一般直接写在一个js文件中
+	layui.use(['layer'], function(){
+	  	var layer = layui.layer;
+
+		$(".getAjaxMsg").click(function(){
+			var url=$(this).attr('data-url');
+			layer.confirm("您确定要"+$(this).attr('data-content')+"吗？", {
+			  	btn: ['确定','取消'] //按钮
+			}, function(){
+			  	$.ajax({
+			  		url:url,
+			  		type:'POST',
+			  		dataType:'html',
+			  		success:function(data){
+			  			if(data=='1'){
+			  				layer.msg('删除成功', {time:1000,icon:6}, function(){
+			  					window.location.reload(); 
+			  				});
+			  			}else{
+			  				layer.msg('删除失败', {time:1000,icon:5});
+			  			}
+			  		}
+			  	})
+			}, function(){
+
+			});
+		})
+	});
+	</script>
+
+</body>
+</html>

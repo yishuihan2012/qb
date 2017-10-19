@@ -1,0 +1,138 @@
+@charset "utf-8";
+/*布局、版面*/
+.top{
+  width:100%;
+  min-height:2.8rem;
+  overflow: hidden;
+  padding-top:0.8rem;
+  background-color:#ff5507;
+  color:#fff;
+  text-align:center;
+}
+.top div{
+  width:49%;
+  margin-top:0.4rem;
+}
+.top div p{word-wrap : break-word}
+/*列表*/
+.list-cells{
+}
+.list-cell{
+  min-height:1.866667rem;
+  overflow: hidden;
+  padding:0.2rem 0.4rem;
+  border-bottom: 1px solid #f5f5f5;
+  background-color:#fff;
+}
+.list-cell a{
+  color:#666;
+}
+.list-cell .list-cell-fl{
+	margin:0.1rem 0.32rem 0 0;
+}
+.list-cell .list-cell-fl img{
+  width:1.46rem;
+  height:1.46rem;
+}
+.list-cell .list-cell-fc{
+  margin-top:0.1rem;
+}
+.list-cell .list-cell-fr{
+  margin-top:0.5rem;
+}
+.list-cell .list-cell-fr span{
+  vertical-align: inherit;
+  margin:-0.1rem 0.3rem 0 0;
+  display: inline-block;
+}
+.list-cell .list-cell-fr img{
+  width:0.24rem;
+  height:0.44rem; 
+  display: inline-block;
+}
+/*团队员工*/
+.team-group h3,.my-profit h3{
+  padding:0.2rem 0.4rem;
+}
+.tab-content-nav{
+  width:100%;
+  height:1.173333rem;
+  background-color: #fff;
+}
+.tab-content-nav ul li{
+  width:20%;
+  line-height:1.173333rem;
+  text-align:center;
+}
+.tab-content-nav ul li a{
+  display: block;
+  color:#666;
+}
+.group-tab-active{
+  color:#ff5507 !important;
+  border-bottom:2px solid #ff5507;
+}
+.tab-content{
+  display:none;
+}
+.tab-content:first-child{
+  display: block;
+}
+.team-group .list-cell{
+  min-height:2rem;
+  padding:0 0.4rem;
+  margin-bottom:0.213333rem;
+}
+.team-group .list-cell .list-cell-fl{
+  margin-top:0.4rem;
+}
+.team-group .list-cell .list-cell-fc img{
+  width:0.373333rem;
+  height:0.373333rem;
+  margin-right:0.2rem;
+}
+.team-group .list-cell .list-cell-fc a{
+  margin-left:0.2rem;
+}
+.f-imperfect{
+  color:#ff5507;
+}
+.f-pending{
+  color:#3e90ff;
+}
+.f-failed{
+  color:#dc1915;
+}
+/*我的盈利*/
+.my-profit{
+  background-color:#fff;
+  padding-bottom:2rem;
+}
+.my-profit .tab-content-nav{
+  border-bottom:1px solid #ccc;
+  border-top:1px solid #ccc;
+}
+.my-profit .tab-content-nav ul li{
+  width:50%;
+}
+.profit-tab-content{
+  display:none;
+}
+.profit-tab-content:first-child{
+  display:block;
+}
+.profit-tab-content ul li{
+  min-height:1.28rem;
+  overflow:hidden;
+  padding:0.2rem 0.4rem;
+  border-bottom:1px solid #ccc;
+}
+.profit-tab-content ul li div{
+  width:50%;
+}
+.fc9{
+  color:#999;
+}
+.fcf57{
+  color:#ff5507
+}

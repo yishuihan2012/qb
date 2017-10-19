@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<title>圆通快递</title>
+<style type="text/css">
+body{line-height: 24px;color: #555555;font-family: "Microsoft YaHei", Arial, Verdana, System;background: #ffffff;}
+span,  p{margin: 0;padding: 0;}
+ul,ol{margin:0; padding:0; list-style-type:none;}
+.l{float: left;}.r{float: right;}
+/* ------圆通----------- */
+.YT{background: url('__PUBLIC__/web/images/yuantong.jpg') no-repeat;width: 740px;height: 483px;padding: 0  76px 0 52px;margin:0 auto;font-size: 14px;color: blue;line-height: 22px;position: relative;}
+.YT_con{width: 355px;margin-top: 101px;margin-left: 10px;}
+.YT_con li{width: 355px;clear: both;}
+.YT_con_name{margin-left: 65px;width: 100px;}
+.YT_con_city{margin-left: 40px;}
+.YT_con_unit{margin-left: 60px;}
+.YT_con_address{margin-left: 60px;display: block;width: 280px; min-height: 66px;}
+.YT_con_tell{margin-left: 100px;width: 140px;}
+.YT_con_code{margin-right: 10px;}
+.YT_con_city_m{position: absolute;width: 123px;height: 43px;top: 46px;right: 90px;line-height: 43px;text-align: center;}
+.YT_s{overflow: auto;}
+.YT_x{clear: both;width: 355px;}
+.YT_x_name{margin-top: 50px;line-height: 24px;margin-left: 12px;}
+</style>
+<body>
+<div class="YT">
+	<div class="YT_s">
+		<ul class="YT_con l">
+			<li><span class="YT_con_name l">翔云长禄</span><span class="YT_con_city_m l"></span></li>
+			<li><span class="YT_con_unit">翔云长禄生物科技有限责任公司</span></li>
+			<li><span class="YT_con_address">济南市天桥区堤口路1号</span></li>
+			<li><span class="YT_con_tell l">4001175071</span><span class="YT_con_code r"></span></li>
+		</ul>
+		<ul class="YT_con l">
+			<li><span class="YT_con_name l">{$e.a_consignee}</span><span class="YT_con_city l">{$e.a_provice}</span></li>
+			<li><span class="YT_con_unit"></span></li>
+			<li><span class="YT_con_address">{$e.a_provice}{$e.a_city}{$e.a_county}{$e.a_address}</span></li>
+			<li><span class="YT_con_tell l">{$e.a_mobile}</span><span class="YT_con_code r">{$e.a_postcode}</span></li>
+		</ul>
+	</div>
+	<div class="YT_x">
+		<div class="YT_x_name">
+			<foreach name="e.o_ginfo" item="gf">
+				{$gf.gid|get_gtitle=###}&nbsp; 数量：{$gf.gnum}
+			</foreach>
+		</div>
+	</div>
+</div>
+</body>
+<script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/js/jquery.PrintArea.js"></script>
+<script>
+	$(function(){
+		var options={popClose:true};
+		$(".project-list").printArea(options);
+	});
+</script>
+</html>

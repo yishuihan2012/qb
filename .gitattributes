@@ -1,0 +1,4 @@
+index.php merge=ours
+Application/Common/Conf/config.php  merge=ours
+Public/web/images/ merge=ours
+callback/aliPayCallback.php merge=ours

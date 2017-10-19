@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系列表</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('Sysfy/setCustomService')}">联系方式</a></li>
+                </ol>
+                 
+            </div>
+        </div>  
+    </div>
+  
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+	<form method="post" action="{:U('Sysfy/setCustomService')}" id="typeForm"">
+	  <select class="form-control m-b" name="type" style="width:30%;float: left;margin-right: 2%;margin-bottom:0;">
+		<option value="1" <if condition="$contact_type['type'] == 1">selected</if>>QQ</option>
+        <option value="2" <if condition="$contact_type['type'] == 2">selected</if>>电话</option>
+      </select>
+      <input type="submit" value="查询">
+      <a class="btn btn-white layui-btn" href="{:U('Sysfy/addCustomService')}" style="float: right">新增联系方式</a>
+	</form>
+	
+          <table class="table table-striped">
+            <thead>
+              <th>联系号码</th>
+              <th>联系方式</th>
+              <th>相关操作</th>
+            </thead>
+          <tbody>
+          <if condition="(!empty($contact_result))">
+            <foreach name="contact_result" item="contact">
+              <tr>
+                <td>{:$contact['contact_no']}</td>
+                <td><if condition="$contact['type'] == 1">qq<elseif condition="$contact['type'] == 2"/>电话</if></td>
+                <td>
+                    <a href="{:U('Sysfy/modifyCustomService',['id'=>$contact['id']])}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="{:U('Sysfy/delCustomService',['id'=>$contact['id']])}">删除</a>
+                </td>
+              </tr>
+            </foreach>
+              <else />
+              <div class="col-sm-12">
+                  <tr>
+                    <td colspan="6" style="text-align:center;">
+                      暂无公告信息
+                    </td>
+                  </tr>
+              </div>
+          </if>
+        </tbody>
+        <tfoot>
+          <tr><td style="text-align:center;">
+              {:$page}
+          </td></tr>
+        </tfoot>
+      </table>
+
+    </div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+</body>
+
+</html>

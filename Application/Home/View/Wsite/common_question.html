@@ -1,0 +1,39 @@
+<!DOCTYPE>
+<html style="font-size:100px;">
+  <head>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <style>
+	  body,html{margin:0;padding:0;font-size:0.4rem;}
+	  ul,li{margin:0;padding:0;list-style: none;}
+	  a{text-decoration: none;color:#292929;}
+	  .right{float:right;}
+	  .common-question-list{width:94%;margin:0 3%;}
+	  .common-question-list li{height:1rem;line-height:1rem;border-bottom:1px solid #e5e5e5;font-size:0.28rem;}
+	  .common-question-list li span{width:90%;display:inline-block;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+	  .common-question-list li img{width:0.2rem;height:0.32rem;margin-top:0.35rem;}
+    </style>
+  	<title>常见问题</title>
+  </head>
+  <body>
+    <section>
+      <ul class="common-question-list">
+        <volist id="question" name="questions">
+          <li>
+            <a href="{:U('Wsite/question_detail',array('id'=>$question['problem_id']))}">
+              <span>{:$question['problem_title']}</span>
+            <img src="__PUBLIC__/web/images/spread.png" class="right">
+            </a>
+          </li>
+        </volist>
+
+      </ul>
+    </section>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="__PUBLIC__/web/js/common.js"></script>
+    <script>
+	    reCall();
+      //setTimeout(showPage,1);
+    </script>
+  </body>
+</html>

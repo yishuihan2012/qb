@@ -1,0 +1,63 @@
+<!DOCTYPE>
+
+<html>
+
+  <head>
+
+  	<meta charset="UTF-8">
+
+    <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+
+    <style>
+
+      body{margin:0;padding:0;}
+
+      a{text-decoration: none;}
+
+      div{margin:0;padding:0;}
+
+      .bg{width:100%;height:12.8rem;}
+
+      .bg .bg-pic{display:block;width:100%;height:12.9rem;}
+
+      .bg p img{width:2rem;height:2rem;position:absolute;left:22%;}
+
+      .bg a{display:block;width:3rem; height:1rem;position:absolute;left:48%;}
+
+      .bg .ios-btn{background:url(__PUBLIC__/web/m_images/ios.png) no-repeat;background-size:100% auto;margin-top:1.2rem;}
+
+      .bg .android-btn{background:url(__PUBLIC__/web/m_images/android.png) no-repeat;background-size:100% auto;}
+
+    </style>
+
+  	<title>{:C('SYSTEM_TITLE')}app下载</title>
+  </head>
+
+  <body>
+
+   <!--  <div class="wrap"> -->
+
+    <div class="bg">
+
+      <img src="__PUBLIC__/web/m_images/bg_download.png" class="bg-pic">
+
+      <p><img src="https://www.pgyer.com/app/qrcode/e7BF"></p>
+
+      <a href="{$ios['vrsion_link']}" class="android-btn"></a> <!--注意 这是 IOS -->
+
+
+      <a href="{$android['vrsion_link']}" class="ios-btn"></a><!--注意 这是 android -->
+
+    </div>
+
+ <!--  </div> 
+ <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="__PUBLIC__/web/js/common.js"></script>
+    <script>
+
+      setTimeout(showPage,1);
+    </script>
+
+  </body>
+
+</html>

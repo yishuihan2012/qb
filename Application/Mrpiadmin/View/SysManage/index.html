@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统设置</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>系统设置</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="get" class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">一级分销比例</label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-10" style="margin-bottom: 1%;">
+                                        <select class="form-control m-b" name="types_c" style="width:30%;float: left;margin-right: 2%;">
+                                            <option value="1" <if condition="$s['s_scalec']['types'] eq 1">selected</if>>百分比</option>
+                                            <option value="2" <if condition="$s['s_scalec']['types'] eq 2">selected</if>>固定额</option>
+                                        </select>
+                                        <input type="text" name="scale_c" value="{$s.s_scalec.scale}" class="form-control" style="width:65%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">二级分销比例</label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-10" style="margin-bottom: 1%;">
+                                        <select class="form-control m-b" name="types_b" style="width:30%;float: left;margin-right: 2%;">
+                                            <option value="1" <if condition="$s['s_scaleb']['types'] eq 1">selected</if>>百分比</option>
+                                            <option value="2" <if condition="$s['s_scaleb']['types'] eq 2">selected</if>>固定额</option>
+                                        </select>
+                                        <input type="text" name="scale_b" value="{$s.s_scaleb.scale}" class="form-control" style="width:65%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">三级分销比例</label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-10" style="margin-bottom: 1%;">
+                                        <select class="form-control m-b" name="types_a" style="width:30%;float: left;margin-right: 2%;">
+                                            <option value="1" <if condition="$s['s_scalea']['types'] eq 1">selected</if>>百分比</option>
+                                            <option value="2" <if condition="$s['s_scalea']['types'] eq 2">selected</if>>固定额</option>
+                                        </select>
+                                        <input type="text" name="scale_a" value="{$s.s_scalea.scale}" class="form-control" style="width:65%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">总代分销比例</label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-10" style="margin-bottom: 1%;">
+                                        <select class="form-control m-b" name="types_r" style="width:30%;float: left;margin-right: 2%;">
+                                            <option value="1" <if condition="$s['s_rose']['types'] eq 1">selected</if>>百分比</option>
+                                            <option value="2" <if condition="$s['s_rose']['types'] eq 2">selected</if>>固定额</option>
+                                        </select>
+                                        <input type="text" name="scale_r" value="{$s.s_rose.scale}" class="form-control" style="width:65%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">分代分销比例</label>
+                                <div class="col-sm-10">
+                                    <div class="col-sm-10" style="margin-bottom: 1%;">
+                                        <select class="form-control m-b" name="types_t" style="width:30%;float: left;margin-right: 2%;">
+                                            <option value="1" <if condition="$s['s_trose']['types'] eq 1">selected</if>>百分比</option>
+                                            <option value="2" <if condition="$s['s_trose']['types'] eq 2">selected</if>>固定额</option>
+                                        </select>
+                                        <input type="text" name="scale_t" value="{$s.s_trose.scale}" class="form-control" style="width:65%;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">分代交付金额</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="s_trosem" value="{$s.s_trosem}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="button">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fakeloader" style="display: none;"></div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/MrPiAdmin.js"></script>
+    <script>
+        $(".btn-primary").click(function(){
+            $.post("{:U('SysManage/index')}",$(".form-horizontal").serialize(),function(t){ if(t == 1){alert("修改成功");location.href="{:U('SysManage/index')}";}else{alert("修改信息与数据库信息相同，操作取消！");}})
+        });
+    </script>
+</body>
+
+</html>

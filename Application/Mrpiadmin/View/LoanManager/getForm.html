@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加贷款信息</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ue/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ue/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ue/lang/zh-cn/zh-cn.js"></script>
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/fakeloader.css" />
+</head>
+<body class="gray-bg">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('LoanManager/index')}">贷款列表</a></li>
+                    <li><a href="#" class="active">添加贷款信息</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>贷款信息</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form action="{:$action}" method="post" class="form-horizontal" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">贷款信息标题</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="title" class="form-control" value="{$data['title']}">
+                                    <if condition="($data['id'])">
+                                      <input type="text" name="id" style="display:none;" value="{$data['id']}">
+                                    </if>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">贷款信息图片</label>
+                                <div class="col-sm-10">
+                                    <input type="file" name="image" id="image">
+                                </div>
+                                <div class="col-sm-4">
+                                  <if condition="($data['image'])">
+                                        <img src="{:$data['image']}" alt="{$data['title']}" style="width:100%;">
+                                  </if>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">贷款信息</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="credit_way_info" class="form-control" value="{$data['credit_way_info']}">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">贷款信息简介</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="short_desc" class="form-control" value="{$data['short_desc']}">
+                            </div>
+                        </div>
+                            <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">标签信息</label>
+                            <div class="col-sm-10" style="padding-top:7px;">
+                              <volist name="tags" id="tag">
+
+                                    <input type="checkbox" name="tags[]" value="{$tag['tag_id']}" id="{$tag['tag_id']}" <if condition="(in_array($tag['tag_id'],$tag_selected))"> checked </if> />
+                                    <label for="{$tag['tag_id']}">{$tag['tag_name']}</label> &nbsp;&nbsp;&nbsp;
+                              </volist>
+                            </div>
+                        </div>
+
+                                <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">贷款信息连接</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="credit_way" class="form-control" value="{$data['credit_way']}">
+                                </div>
+                            </div>
+                                <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">贷款额度区间(英文,间隔)</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="quota" class="form-control" value="{$data['quota']}">
+                                </div>
+                            </div>
+                                <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                    <label class="col-sm-2 control-label">贷款利率</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="rate" class="form-control" value="{$data['rate']}">
+                                    </div>
+                            </div>
+                              <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                      <label class="col-sm-2 control-label">信息浏览量</label>
+                                      <div class="col-sm-10">
+                                          <input type="text" name="view" class="form-control" value="{$data['view']}">
+                                      </div>
+                            </div>
+                                <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                          <label class="col-sm-2 control-label">信息排序</label>
+                                          <div class="col-sm-10">
+                                              <input type="text" name="sort" class="form-control" value="{$data['sort']}">
+                                          </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="submit">{:$action_desc}</button>
+                                    <a href = "{:U('BankManager/index')}" class="btn btn-white">取消</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fakeloader" style="display: none;"></div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script src="__PUBLIC__/js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
+    <script src="__PUBLIC__/js/plugins/summernote/summernote.min.js"></script>
+    <script src="__PUBLIC__/js/plugins/summernote/summernote-zh-CN.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/fakeloader.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/MrPiAdmin.js"></script>
+</body>
+
+</html>

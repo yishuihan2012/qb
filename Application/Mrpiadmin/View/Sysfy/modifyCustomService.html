@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{:C('SYSTEM_TITLE')}-修改客服</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>{:C('SYSTEM_TITLE')} - 修改客服</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="get" class="form-horizontal">
+                        	<input type="hidden" name="id" value="{:$contact_result['id']}"/> 
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">联系号码</label>
+                              <div class="col-sm-10">
+                                  <div class="col-sm-10" style="margin-bottom: 1%;">
+                                       <input type="text" name="contact_no" value="{:$contact_result['contact_no']}" class="form-control" style="width:65%;">
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">联系方式</label>
+                              <div class="col-sm-10">
+                                  <div class="col-sm-10" style="margin-bottom: 1%;">
+                                      <select class="form-control m-b" name="type" style="width:30%;float: left;margin-right: 2%;margin-bottom:0;">
+                                          <option value="1" <if condition="$contact_result['type'] == 1">selected</if>>QQ</option>
+                                          <option value="2" <if condition="$contact_result['type'] == 2">selected</if>>电话</option>
+                                      </select>
+                                  </div>
+                              </div>
+                          </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="button">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fakeloader" style="display: none;"></div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/MrPiAdmin.js"></script>
+    <script>
+        $(".btn-primary").click(function(){
+        	var contact_no = $("input[name='contact_no']").val();
+            var type = $("input[name='type']").val();
+            
+            if(contact_no == ''){alert("联系号码不能为空");return false;}
+            if(type == ''){alert("联系类型不能为空");return false;}
+            
+            $.post("{:U('Sysfy/modifyCustomService_act')}",
+              $(".form-horizontal").serialize(),
+                function(t){
+                  if(t == 0){
+                    alert("修改失败");
+                  }
+                  else if(t == -1){
+                    alert("手机号码格式不正确！");
+                  }
+                  else if(t == 1){
+                    alert("修改成功！");
+                    location.href="{:U('Sysfy/setCustomService')}";
+                  }
+
+                }
+              )
+          });
+    </script>
+</body>
+
+</html>

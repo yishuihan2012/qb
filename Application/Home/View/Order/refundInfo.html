@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<title>退货退款详情</title>
+    <link href="__PUBLIC__/css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+<link href="__PUBLIC__/web/fonts/iconfont.css" rel="stylesheet" type="text/css">
+<link  href="__PUBLIC__/web/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/web/css/style.css" />
+<link type="text/css" rel="stylesheet"  href="__PUBLIC__/web/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/web/css/ectouch.css">
+</head>
+<body>
+<div class="Layout_style">
+<!--顶部通用样式-->
+<header id="header">
+  <div class="header_l header_return"><a href="javascript:;" onclick="javascript :history.back(-1);" class="iconfont icon-turn-left"></a></div>
+  <h1> 退货退款详情 </h1>
+  </header>
+<!--用户信息样式-->
+ <div class="user_info_style user_style kf_service" style="overflow: auto;">
+    <div class="detailed_style clearfix ref">
+        <div class="Numbering ref_h">订单编号：<span >{$info.o_sn}</span><span class="f_r">
+            <if condition="$rI.r_status eq 1" >
+                已退款
+            </if>
+            <if condition="$rI.r_status eq 2" >
+                驳回退款
+            </if>
+        </span></div>
+        <ul class="list clearfix">
+            <foreach name="info.o_ginfo" item="gi">
+           <li class="product_detailed">
+           <a href="{:U('Index/ProductCon',array('id'=>$gi['id']))}" class="product_img"><img src="{$gi.g_thumb}" width="90" height="90"></a>
+            <div class="product_content"><a href="#">{$gi.g_title}</a><h3><span>{$gi.ginfo}</span><span></span></h3>
+             <h2>价格：￥{$gi.g_vipprice}<i>x{$gi.gnum}</i></h2></div>
+           </li>
+            </foreach>
+        </ul>
+        <div class="numeral"><span>数量：{$info.count}件</span><span>总价：<i>{$info.o_price}</i></span></div>
+  </div>
+     <form id="form_va" method="post">
+  <div class="refund">
+    <div class="refund_tit"><i></i>退货理由</div>
+    <div class="zptj">
+        <div id="imgs">
+            <foreach name="rI.r_img" item="rIi">
+                <img src="{$rIi}" width="100%">
+            </foreach>
+        </div>
+      <textarea name="r_reason" style="padding: 1%; font-size: 0.9rem; width: 98%;border:1px solid #e3e3e3;height: 90px;color: #666666;margin-bottom:15px;" placeholder="退货理由80个字符之内">{$rI.r_reason}</textarea>
+    </div>
+
+
+  </div>
+     </form>
+ </div>
+
+</div>
+<include file="Index/footer"/>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/web/js/style.js"></script>
+<script src="__PUBLIC__/js/plugins/summernote/summernote.min.js"></script>
+<script src="__PUBLIC__/js/plugins/summernote/summernote-zh-CN.js"></script>
+</body>
+</html>

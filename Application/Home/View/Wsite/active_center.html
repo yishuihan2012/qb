@@ -1,0 +1,51 @@
+<!DOCTYPE>
+<html style="font-size:100px;">
+  <head>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <link href="__PUBLIC__/web/css/style.css" rel="stylesheet" type="text/css">
+  	<title>内部办卡活动中心</title>
+  </head>
+  <body>
+    <section class="active-center-container">
+	  <div class="active-center-bg">
+	  <a href="#" class="actve-center-join">立即办卡</a>
+	  </div>
+	  <h2>合作通道 放心申卡</h2>
+
+
+
+	  <ul class="active-center-heng-list">
+		<volist name = "long" id = "vo">
+	  	<li>
+	  	  <a href="{$vo.activity_href}">
+	  	  	<img src="__PUBLIC__/web/images/ic_wallet_active_hot.png">
+	  	  	<h3>{$vo.activity_title}</h3>
+	  	  	<p>{$vo.activity_sort_title}</p>
+	  	  </a>
+	  	</li>
+		</volist>
+	  </ul>
+
+
+	  <h2>内部审核通道 急速审批</h2>
+	  <ul class="active-center-list">
+		<volist name = "high" id = "vol">
+	  	<li>
+	  	  <a href="{$vol.activity_href}">
+	  	  	<img src="__PUBLIC__/web/images/ic_wallet_active_hot.png">
+	  	  	<h3>{$vol.activity_title}</h3>
+	  	  	<p>内部版</p>
+	  	  </a>
+	  	</li>
+		</volist>
+	  </ul>
+    </section>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="__PUBLIC__/web/js/common.js"></script>
+    <script>
+	  reCall();
+      //setTimeout(showPage,1);
+    </script>
+  </body>
+</html>

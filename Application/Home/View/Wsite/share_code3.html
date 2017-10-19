@@ -1,0 +1,49 @@
+<!DOCTYPE>
+<html style="font-size:100px;">
+  <head>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <link href="__PUBLIC__/web/css/style.css" rel="stylesheet" type="text/css">
+  	<title>分享二维码</title>
+  </head>
+  <body style="visibility:hidden;">
+    <section class="help-container share-code">
+        <div class="share-cont" style="bottom: 8%;">
+          <img src="{$usermanage_result['u_ewm']}" class="share-code-pic">
+        </div>
+        </div>
+        <a href="javascript:void(0)">
+        <img src="__PUBLIC__/web/images/share_code_btn.png" class="share-code-btn" id="shareCodeBtn" style="height: 0.9rem">
+      </a>
+    </section>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="__PUBLIC__/web/js/common.js"></script>
+    <script>
+	   reCall();
+     setTimeout(showPage,1);
+     function showPage(){
+      $("body").css({'visibility':"visible"});
+     }
+      $(function(){
+          // 计算二维码位置
+          var width=document.documentElement.clientWidth;
+          var domWidth=width/3;
+          $('.share-code-pic').css({'width':domWidth,'height':domWidth});
+          $('#shareCodeBtn').click(function(){
+             var u = navigator.userAgent;
+            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+            var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+            if(isAndroid){
+              // alert('android');
+              window.AndroidMessage.share();
+            }else if(isiOS){
+              // alert('ios');
+              window.webkit.messageHandlers.shareCode.postMessage(123);
+            }else{
+              // alert('unknown');
+            }
+      });
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<title>订单提交</title>
+<link href="__PUBLIC__/web/fonts/iconfont.css" rel="stylesheet" type="text/css">
+<link  href="__PUBLIC__/web/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/web/css/style.css" />
+<link type="text/css" rel="stylesheet"  href="__PUBLIC__/web/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/web/css/ectouch.css">
+</head>
+<body>
+<div class="Layout_style">
+ <header id="header">
+  <div class="header_l header_return"><a href="javascript:;" onclick="javascript :history.back(-1);" class="return_cz"><i class="fa fa-angle-left icon_zjt"></i></a></div>
+  <h1> 订单提交 </h1>
+</header>
+<section class="user_style">
+<div class="shop_cart">
+   <div class="schedule"><ul><li><em>1</em>查看购物车</li><li class="on"><em>2</em>确认订单</li><li><em>3</em>成功提交订单</li></ul></div>
+</div>
+    <form class="orderform" method="post" action="{:U('Order/OrderCon')}">
+ <div class="user_info_style Submit_Order">
+      <div class="Order_address">
+         <span class="address_title">收货地址</span>
+          <!--20160919-->
+          <if condition="$check eq 1"><a href="{:U('My/MyAddress',array('hid'=>$hid,'MP_gids'=>$MP_gids,'num'=>$num,'ginfo'=>$ginfo))}" class="fa fa-pencil-square-o modify"></a></if>
+          <if condition="$check eq 2"><a href="{:U('My/MyAddress',array('hid'=>$hid,'MP_gids'=>$MP_gids))}" class="fa fa-pencil-square-o modify"></a></if>
+          <!--20160919-->
+         <div class="address_info">
+          <p>{$a.a_provice}{$a.a_city}{$a.a_county}{$a.a_address}</p>
+          <p>{$a.a_consignee} {$a.a_mobile}</p>
+             <input type="hidden" name="o_aid" value="{$a.id}">
+          </div>
+      </div>
+      <div class="p_list Order_p_list">
+  <foreach name="list" item="l" key="k">
+      <ul class="list list_name">
+          <li class="img"><a href="{:U('Index/ProductCon',array('id'=>$l['id']))}"><img src="{$l.g_thumb}"></a></li>
+          <li class="p_list_one">
+              <a href="{:U('Index/ProductCon',array('id'=>$l['id']))}">
+                  <p class="p_title">{$l.g_title}</p>
+                  <p class="Brief">数量：{$l.num}</p>
+                  <p class="Brief">详情：{$l.ginfo}</p>
+                  <p class="p_Price">￥{$l.g_vipprice}元<span>{$l.g_price}元</span></p>
+              </a>
+              <input type="hidden" name="cart[{$k}][gid]" value="{$l.id}">
+              <input type="hidden" name="cart[{$k}][gnum]" value="{$l.num}">
+              <input type="hidden" name="cart[{$k}][ginfo]" value="{$l.ginfo}">
+          </li>
+      </ul>
+  </foreach>
+  <div id="datePlugin"></div>
+  <div class="Order_price">总价：{$totalprice}元<input type="hidden" name="o_price" value="{$totalprice}"></div>
+   <div><a href="javascript:void(0);" class="c-btn3" id="Submit_Order">提交订单</a></div>
+  </div>
+ </div>
+    </form>
+</section>
+</div>
+<include file="Index/footer"/>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/web/js/style.js"></script>
+</body>
+<script>
+    $(".c-btn3").click(function(){
+        if($("input[name='o_aid']").val()==""){
+            alert("请先填写地址");
+        }
+        else {
+            $(".orderform").submit();
+        }
+    })
+</script>
+</html>
+

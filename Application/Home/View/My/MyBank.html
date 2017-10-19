@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<title>填写银行卡</title>
+<link href="__PUBLIC__/web/fonts/iconfont.css" rel="stylesheet" type="text/css">
+<link  href="__PUBLIC__/web/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/web/css/style.css" />
+<link type="text/css" rel="stylesheet"  href="__PUBLIC__/web/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/web/css/ectouch.css">
+</head>
+<body>
+<div class="Layout_style">
+ <header id="header">
+  <div class="header_l header_return"><a  href="javascript:;"onClick="javascript :history.back(-1);" class="iconfont icon-turn-left"></a></div>
+  <h1> 填写银行卡</h1>
+</header>
+<!--注册样式-->
+  <div class="reg_log_com user_style  kf_service">
+  <div class="registes">
+    <div class="reg_log_ADD">
+       <div class="sc_sm"><span>*</span>请填写持卡人本人的银行卡<input type="hidden" name="f_price" value="{$f.f_price}">
+           <input type="hidden" name="f_types" value="{$f.f_types}"></div>
+        <div class="l_u"><label><span style="color: red;">*</span>持卡人：</label><input style=" width:70%" class="input " type="text" name="f_bname" placeholder=""></div>
+        <div class="l_u"><label><span style="color: red;">*</span>卡号：</label><input style=" width:75%" class="input " type="text" name="f_bnumber" placeholder=""></div>
+        <div class="l_u"><label><span style="color: red;">*</span>开户行：</label><input style=" width:70%" class="input " type="text" name="f_bkname" placeholder=""></div>
+        <div class="l_u"><label><span style="color: red;">*</span>开户行地点：</label><input style=" width:60%" class="input " type="text" name="f_bkadd" placeholder=""></div>
+
+    </div>
+      <input type="hidden"  name="c_code" value="{$f.c_code}">
+      <div class="submit_op"><a href="javascript:ToMoney(2);" class="c-btn3">提交</a></div>
+  </div>
+</div>
+</div>
+<include file="Index/footer"/>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/web/js/style.js"></script>
+</body>
+<script>
+    function ToMoney(tt){
+        var f_price=$("input[name='f_price']").val();
+        var f_types=$("input[name='f_types']").val();
+        var f_bname=$("input[name='f_bname']").val();
+        var f_bnumber=$("input[name='f_bnumber']").val();
+        var f_bkname=$("input[name='f_bkname']").val();
+        var f_bkadd=$("input[name='f_bkadd']").val();
+        var c_code=$("input[name='c_code']").val();
+        if(f_bname!="" && f_bnumber!="" && f_bnumber.length>15&&f_bkname!=""&&f_bkadd!="") {
+            $.post("{:U('My/ToMoney')}", {
+                types: tt,
+                f_price: f_price,
+                f_types: f_types,
+                f_bname: f_bname,
+                f_bnumber: f_bnumber,
+                f_bkname: f_bkname,
+                f_bkadd: f_bkadd,
+                c_code: c_code
+            }, function (t) {
+                if (t == 1) {
+                    alert("已提交申请，请耐心等待！");
+                    location.href="{:U('My/MyCf')}";
+                } else if(t== 3){
+                    alert("验证码错误");
+                }else{
+                    alert("金额不足")
+                }
+            });
+        }
+        else{
+            alert("请仔细填写本人信息，确认真实有效，虚假信息后果自负！");
+        }
+    }
+</script>
+</html>

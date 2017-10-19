@@ -1,0 +1,20 @@
+<div class="di_footer"><a href="/"  class="sy">首页</a><a href="{:U('Index/ShopCart')}"  class="car">购物车</a>
+     <if condition="$u_level_l eq 0">
+         <a href="{:U('My/MyFx')}" class="zx ">爱心分享中心</a>
+        <!-- <a  class="zx " onClick="returnUrl()">爱心分享中心</a>-->
+     <else/>
+         <a href="{:U('Dis/index')}" class="zx ">爱心分享中心</a>
+     </if>
+   <a href="{:U('My/index')}"  class="wd">我的</a></div>
+   <script type="text/javascript">
+  var u_level="{$u_level_l}"
+  function returnUrl() {
+    if(u_level==0){
+      alert('您还没有消费体验产品，不能使用二维码');
+      location.href="{:U('Index/index')}"
+    }else{
+      location.href=" {:U('My/MyEwm',array('u_code'=>$u_code))}"
+    }
+
+  }
+</script>

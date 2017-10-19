@@ -1,0 +1,304 @@
+@charset "utf-8";
+/*! normalize.css v2.1.3 | MIT License | git.io/normalize */
+/*Html5*/
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+    display: block;
+}
+audio,
+canvas,
+video {
+    display: inline-block;
+}
+audio:not([controls]) {
+    display: none;
+    height: 0;
+}
+/*Base*/
+html {
+	font: 12px/1.8 "微软雅黑","\5b8b\4f53",Arial,sans-serif;
+	color: #666;
+    -ms-text-size-adjust: 100%; 
+    -webkit-text-size-adjust: 100%; /*修正手持设备字体变化*/
+}
+* {
+    margin: 0;
+	padding: 0;
+}
+a {
+	text-decoration: none;
+    background: transparent; /*修正win8系统IE连接灰色背景*/
+	outline:none;
+	blr:expression(this.onFocus=this.blur());
+}
+a:focus {
+    outline: 0;background-color:none;
+    text-decoration: none;
+}
+a:active,
+a:hover {
+    outline: 0;
+    background-color:none;
+    text-decoration: none;
+	/*transition:text-shadow 500ms ease-in 0ms, color 500ms ease-in 0ms;*/
+}
+img {
+    border: 0;
+    margin:0;
+    padding:0;
+	-ms-interpolation-mode:bicubic
+}
+fieldset {
+    border: 1px solid #c0c0c0;
+    margin: 0 2px;
+    padding: 0.35em 0.625em 0.75em;
+}
+button,
+input,
+select,
+textarea {
+    font-family: inherit; 
+    font-size: 100%; 
+    margin: 0;
+    outline:none;
+}
+button,
+input {
+    line-height: normal;
+}
+button,
+select {
+    text-transform: none;
+}
+button,
+html input[type="button"], 
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button; 
+    cursor: pointer; 
+}
+
+button[disabled],
+html input[disabled] {
+    cursor: default;
+}
+input[type="checkbox"],
+input[type="radio"] {
+    box-sizing: border-box; 
+    padding: 0; 
+}
+input[type="search"] {
+    -webkit-appearance: textfield; 
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box; 
+    box-sizing: content-box;
+}
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+input.submit {
+	border: 0;
+	margin: 0;
+	cursor: pointer;
+}
+input.radio {
+	width: 13px;
+	height: 13px;
+	float: left;
+	display: inline;
+}
+textarea {
+    overflow: auto; 
+    vertical-align: top;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+ul,
+ol { 
+	list-style:none;
+}
+li {
+	list-style:none;
+}
+i, em {
+    font-style: normal;
+}
+/*清除浮动*/
+.clear {
+    clear: both;
+}
+.f-cb{
+    zoom: 1;
+}
+.f-cb:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+.fl {
+	float:left;
+}
+.fr{
+	float:right;
+}
+.fc{
+  text-align: center;
+}
+.ftr{
+  text-align:right;
+}
+/*字体*/
+.ari{
+    font-family: "Arial";
+}
+/*字号*/
+
+.f12{
+    font-size: 12px;
+}
+.f14{
+    font-size: 14px;
+}
+.f16{
+    font-size: 16px;
+}
+.f18{
+    font-size: 18px;
+}
+.f20{
+    font-size: 20px;
+}
+.f22{
+    font-size: 22px;
+}
+.f24{
+    font-size: 24px;
+}
+.f36{
+    font-size: 36px;
+}
+
+[data-dpr="2"] .f12{
+	font-size:24px;
+}
+[data-dpr="2"] .f14{
+	font-size:28px;
+}
+[data-dpr="2"] .f16{
+	font-size:32px;
+}
+[data-dpr="2"] .f18{
+	font-size:36px;
+}
+[data-dpr="2"] .f20{
+	font-size:40px;
+}
+[data-dpr="2"] .f22{
+	font-size:44px;
+}
+[data-dpr="2"] .f24{
+	font-size:48px;
+}
+[data-dpr="2"] .f36{
+    font-size:72px;
+}
+
+[data-dpr="3"] .f12{
+	font-size:36px;
+}
+[data-dpr="3"] .f14{
+	font-size:42px;
+}
+[data-dpr="3"] .f16{
+	font-size:48px;
+}
+[data-dpr="3"] .f18{
+	font-size:54px;
+}
+[data-dpr="3"] .f20{
+	font-size:60px;
+}
+[data-dpr="3"] .f22{
+	font-size:66px;
+}
+[data-dpr="3"] .f24{
+	font-size:72px;
+}
+[data-dpr="3"] .f36{
+    font-size:108px;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.por {
+    position: relative;
+}
+.poa {
+    position: absolute;
+}
+.poa-f {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.ovh {
+    overflow: hidden;
+}
+.noselect {
+    user-select: none;
+}
+.z1 {
+    z-index: 1;
+}
+.z2 {
+    z-index: 2;
+}
+.dn {
+    display: none;
+}
+.w-f {
+    width: 100%;
+}
+.h-f {
+    height: 100%;
+}
+.fwn {
+    font-weight: normal;
+}
+.t-f {
+    transition: all 0.5s ease 0s;
+}
+.t-c {
+    transition: color 0.5s ease 0s;
+}
+.t-bg {
+    transition: background 0.5s ease 0s;
+}
+.circle-pic{
+  border-radius: 50%;
+}

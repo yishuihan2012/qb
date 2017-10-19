@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加导航</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/css/fakeloader.css" />
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>添加导航</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="get" class="form-horizontal">
+                            <!--input type="hidden" name="is_menu" value="1" -->
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">标题</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="m_name" class="form-control">
+                                </div>
+                            </div>
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">是否是导航</label>
+                                <div class="col-sm-10">
+									<input type="radio" name="is_menu" value="1">是&nbsp;
+                                    <input type="radio" name="is_menu" value="0">否&nbsp;
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">图标上传</label>
+                                <div class="col-sm-10">
+                                    <input type="file" multiple="multiple" class="form-control">
+                                    <input type="hidden" name="m_image" value="">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">图文内容</label>
+                                <div class="col-sm-10">
+                                    <div class="summernote">
+                                        请在这里填写图文信息
+                                    </div>
+                                    <input type="hidden" id="m_content" name="m_content" value="">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-primary" type="button">保存内容</button>
+                                    <button class="btn btn-white" type="button" onclick="javascript:history.go(-1);">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fakeloader" style="display: none;"></div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script src="__PUBLIC__/js/plugins/summernote/summernote.min.js"></script>
+    <script src="__PUBLIC__/js/plugins/summernote/summernote-zh-CN.js"></script>
+    <script src="__PUBLIC__/js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/fakeloader.min.js"></script>
+     <script type="text/javascript" >
+         PicUploadUrl="{:U('upload/summernote')}";
+    </script>
+    <script src="__PUBLIC__/js/MrPiAdmin.js"></script>
+    <script>
+        $(function(){
+            $(".fakeloader").fakeLoader({timeToHide:100000,bgColor:"#fff",spinner:"spinner2"});
+        });
+        $('input[type="file"]').prettyFile();
+        $(document).ready(function(){$(".summernote").summernote({lang:"zh-CN",onImageUpload:function(files,editor,$editable){sendFile(files[0],editor,$editable)}})});var edit=function(){$("#eg").addClass("no-padding");$(".click2edit").summernote({lang:"zh-CN",focus:true})};var save=function(){$("#eg").removeClass("no-padding");var aHTML=$(".click2edit").code();$(".click2edit").destroy()};
+        $(".btn-primary").click(function(){
+            $("#m_content").val($.trim($(".summernote").code()));
+            $.post("{:U('MenuManage/MenuAdd')}",$(".form-horizontal").serialize(),function(t){ if(t == 1){
+			var is_menu= $('input[name="is_menu"]:checked').val();
+			
+				if(is_menu==1){
+					alert("添加成功");location.href="{:U('MenuManage/MenuList')}";
+					
+				}else{
+					alert("添加成功");window.location.reload();
+				}
+				
+			
+			
+			}else{alert("添加失败");}})
+        });
+        $('input[type="file"]').change(function(e){
+            data=new FormData();
+            for(var i=0;i<e.target.files.length;i++)
+            {
+                var file = e.target.files.item(i);
+                //判断类型
+                if(!/image\/\w+/.test(file.type))
+                {
+                    continue;   //不是图片 就跳出这一次循环
+                }
+                else{
+                    data.append("file[]",file);
+                }
+            }
+            send_File(data,0);
+        });
+
+        function send_File(file,t) {
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: "{:U('upload/summernote')}",
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend:function(){
+                    $(".fakeloader").show();
+                },
+                complete:function(){
+                    $(".fakeloader").hide();
+                },
+                success: function(url) {
+                    var a=eval(url);
+
+                    $("input[name='m_image']").val(a[0]);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

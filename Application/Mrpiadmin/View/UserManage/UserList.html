@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户列表</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/layui/css/layui.css" />
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <ol class="breadcrumb">
+                    <li><a href="/index.php?s=/Mrpiadmin/Index/indexpage.html">主页</a></li>
+                    <li><a href="{:u('UserManage/UserList')}">用户列表</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row m-b-sm m-t-sm">
+            <form action="{:U('UserManage/UserList')}" method="post" style="padding:0 0 20px 0;">
+                 <div class="btn-group" style="margin-left: 20px; width:100%;">
+                    <div class="input-group">
+                        <div class="layui-input-inline" style="margin-right:10px;">
+                             <input type="text" name="u_mobile" class="form-control" value="{:$mobile}" placeholder="请输入用户名手机号...">
+                        </div>
+                        <div class="layui-input-inline" style="margin-right:10px;">
+                            <input class="layui-input" name="start" value="{$u_start}" placeholder="开始时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                        </div>
+                        <div class="layui-input-inline" style="margin-right:20px;">
+                            <input class="layui-input" name="end" value="{$u_end}" placeholder="结束时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                        </div>
+                        
+                        <div class="layui-input-inline" style="margin-right:10px;">
+                        <select name="u_member_id" id=""  class="form-control" data="{$u_member_id}">
+                            <option value="0">全部</option>
+                            <foreach name="role" item="v">
+                             <option value="{$v.member_id}" <if condition="$v.member_id eq $u_member_id">selected="selected"</if> >{$v.member_name}</option>
+                            </foreach>
+                        </select>
+                        </div>
+                        <div class="layui-input-inline" style="margin-right:10px;">
+                        <select name="is_cert" id=""  class="form-control" data="{$is_cert}">
+                            <option value="2" <if condition="$is_cert eq 2">selected="selected"</if>>全部</option>
+                            <option value="0"  <if condition="$is_cert eq 0">selected="selected"</if> >未认证</option>
+                            <option value="1"  <if condition="$is_cert eq 1">selected="selected"</if> >已认证</option>
+                        </select>
+                        </div>
+                        <div  class="layui-input-inline">
+                             <span class="input-group-btn"><button class="btn btn-white" type="submit">搜索</button></span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <table class="table ">
+                <tr style="border-top:0px;">
+                    <foreach name="counts" item="v">
+                        <td  class="project-completion">{$key}总数：{$v}</td>
+                    </foreach>
+                </tr>
+            </table>
+        </div>
+
+        <if condition="(isset($parents_info))">
+          <div class="row">
+            <div class="col-sm-12" style="padding:5px 10px;background:#fff;">
+                  <h3>用户 ：{:$parents_info['u_account']}，下级用户列表</h3>
+              </div>
+          </div>
+        </if>
+
+        <div class="row">
+          <if condition="(!empty($list))">
+            <foreach name="list" item="ul">
+            <div class="col-sm-4" style="height: 230px;">
+                <div class="contact-box">
+                    <a href="{:U('UserManage/UserCon',array('id'=>$ul['id']))}">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="{$ul.u_image}" width="128" height="256">
+                                <div class="m-t-xs font-bold">{$ul.true_name}</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong>{$ul.u_account}&nbsp;&nbsp;&nbsp;{$ul.usercertification_user_state}</strong></h3>
+                            <if condition="$Think.session.login_type eq '1'">
+                            <p>{$ul.member_name}<if condition="$ul.u_member_id eq end($role)['member_id']"><else/>
+
+                            <a  style="color:green;font-size:16px;" user_id="{$ul.id}" u_member_id="{$ul.u_member_id}" class="uplevel"><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="font-size:12px;">升级</button></a></if>
+                            </p>
+                            </if>
+                            <address>
+                            电话：{$ul.u_mobile}<br>
+                            <!-- 余额：{$ul.u_money}<br>
+                            佣金：{$ul.u_commission}<br> -->
+                            推荐码：{$ul.u_code}<br>
+                            <!-- 分销比例：{$ul.u_scale}%<br> -->
+                            <!-- 所属上级：{$ul.u_thec|getParent=###}<br> -->
+                            注册时间：{$ul.u_times}
+                            </address>
+                        </div>
+                        <div class="clearfix">
+                           <!-- <p class="project-actions" style="float:right;">
+                                <a href="javascript:UserPass({$ul.id})" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> 恢复默认密码 </a>
+                            </p>-->
+                            <p class="project-actions" style="float:right;">
+                                 <a href="{:U('UserManage/commission',['id'=>$ul['id']])}" class="btn btn-white btn-sm"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>分成信息</a>
+                             </p>
+                            <p class="project-actions" style="float:right;">
+                                 <if condition=" $ul.status eq 1">
+                                 <a onclick="UserDel({$ul.id})" class="btn btn-white btn-sm"><span class="glyphicon glyphicon-list-alt login_forbid" aria-hidden="true"></span>账号禁用</a>
+                                 <else/>
+                                 <a onclick="UserOpen({$ul.id})" class="btn btn-white btn-sm"><span class="glyphicon glyphicon-list-alt login_forbid" aria-hidden="true"></span>账号启用</a>
+                                 </if>
+                             </p>
+                            <p class="project-actions" style="float:right;">
+                                <a href="{:U('UserManage/UserEdit',array('id'=>$ul['id']))}" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> 修改 </a>
+                            </p>
+                            <!-- <if condition="$ul.is_del eq 0">
+                            <p class="project-actions" style="float:right;">
+                                <a href="javascript:UserDel({$ul.id})" class="btn btn-white btn-sm"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> 禁用 </a>
+                            </p>
+                                <else/>
+                            <p class="project-actions" style="float:right;">
+                                <a href="javascript:UserOpen({$ul.id})" class="btn btn-white btn-sm"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> 启用 </a>
+                            </p>
+                            </if> -->
+                            <!-- <if condition="$ul.u_state eq 0">
+                            <p class="project-actions" style="float:right;">
+                                <a href="javascript:UserState({$ul.id})" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> 审核 </a>
+                            </p>
+                            </if> -->
+                        </div>
+                    </a>
+                </div>
+            </div>
+            </foreach>
+              <else />
+              <div class="col-sm-12">
+                  <div style="margin:20px;">
+                    暂无下级用户数据
+                  </div>
+              </div>
+          </if>
+        </div>
+        {$page}
+    </div>
+    <!-- 模态框 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">请选择升级到级别</h4>
+          </div>
+          <div class="modal-body">
+               <form action="{:U('UserManage/upgrade')}" method="post" class="uplevelform">
+               <select name="up_level" id="upgrade" class="form-control">
+                    <foreach name="role" item="v">
+                    <if condition="$v['member_id']" >
+                        <option value="{$v.member_id}">{$v.member_name}</option>
+                    </if>
+                    </foreach>
+               </select>
+               <input type="hidden" name="u_member_id">
+               <input type="hidden" name="user_id">
+               </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary save_upgrade">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 模态框 -->
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script src="/Public/js/plugins/layer/layer.min.js"></script>
+    <script src="__PUBLIC__/layui/layui.js"></script>
+    <script>
+        layui.use('laydate', function(){
+                var laydate = layui.laydate;
+            });
+        $(document).ready(function(){
+            $(".contact-box").each(function(){
+                animationHover(this,"pulse");
+            })
+            // href="{:U('UserManage/upgrade',['id'=>$ul['id']])}" onclick="return confirm('确认升级吗？升级后将无法撤销！')" 
+            $('.uplevel').click(function(){
+                var user_id=$(this).attr('user_id');
+                var u_member_id=$(this).attr('u_member_id');
+                $("#myModal").attr('user_id',user_id);
+                $("#myModal").attr('u_member_id',u_member_id);
+                $('input[name="u_member_id"]').val(u_member_id);
+                $('input[name="user_id"]').val(user_id);
+            })
+            $(".save_upgrade").click(function(){
+                
+                var user_id=$("#myModal").attr('user_id');
+                var u_member_id=$("#myModal").attr('u_member_id');
+                var up_level=$("#upgrade").val();
+                if(up_level>u_member_id){
+                    $('.uplevelform').submit();
+                //     $.ajax({
+                //         url: '{:U("UserManage/upgrade")}',
+                //         type: 'post',
+                //         dataType: 'text',
+                //         data: {'user_id':user_id,'u_member_id':u_member_id,'up_level':up_level},
+                //         success:function(data){
+                //             alert(data.info);
+                //             window.location.reload();
+                //         }
+                //     })
+                  
+                    
+                }else{
+                    alert('不能降级！');
+                }
+            })
+        });
+            function UserDel(id){
+                $.post(
+                    "{:U('UserManage/UserDel')}",
+                    {id:id},
+                    function(t){ 
+                        if(t == 1){
+                            alert("封禁成功");
+                            window.location.reload();
+                        }else{
+                            alert("该用户已被禁止使用");
+                        }
+                    }
+                );
+            }
+            function UserOpen(id){
+                $.post("{:U('UserManage/UserOpen')}",{id:id},function(t){ if(t == 1){alert("启用成功");window.location.reload();}else{alert("该用户已成功启用");}});
+            }
+            function UserPass(id){
+                $.post("{:U('UserManage/UserPass')}",{id:id},function(t){ if(t == 1){alert("恢复成功");window.location.reload();}else{alert("该用户已恢复密码");}});
+            }
+            function UserState(id){
+                $.post("{:U('UserManage/UserState')}",{id:id},function(t){ if(t == 1){alert("审核成功");window.location.reload();}else{alert("审核失败");}});
+            }
+    </script>
+</body>
+
+</html>

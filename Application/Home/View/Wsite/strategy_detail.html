@@ -1,0 +1,23 @@
+<!DOCTYPE>
+<html style="font-size:100px;">
+  <head>
+  	<meta charset="UTF-8">
+  	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <link href="__PUBLIC__/web/css/style.css" rel="stylesheet" type="text/css">
+  	<title>攻略详情</title>
+  </head>
+  <body>
+    <section class="strategy-detail-container">
+	    <h3>{$data.article_title}</h3>
+       <!--  <p class="strategy-detail-zhai">摘要:</p>
+        <p class="strategy-detail-zhai-cont">{$data.article_short}</p> -->
+        <div class="strategy-detail-cont"><p>{$data.article_description}</p></div>
+    </section>
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="__PUBLIC__/web/js/common.js"></script>
+    <script>
+	    reCall();
+      //setTimeout(showPage,1);
+    </script>
+  </body>
+</html>

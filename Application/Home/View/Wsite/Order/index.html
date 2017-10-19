@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<title>订单管理</title>
+<link href="__PUBLIC__/web/fonts/iconfont.css" rel="stylesheet" type="text/css">
+<link  href="__PUBLIC__/web/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/web/css/style.css" />
+<link type="text/css" rel="stylesheet"  href="__PUBLIC__/web/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/web/css/ectouch.css">
+</head>
+<body>
+<div class="Layout_style">
+<header id="header">
+  <div class="header_l header_return"><a href="javascript:;" onclick="javascript :history.back(-1);" class="return_cz"><i class="fa fa-angle-left icon_zjt"></i></a></div>
+  <h1> 订单管理 </h1>
+</header>
+<!--订单管理界面-->
+ <div class="order_style clearfix order_list_style">
+   <div id="Order_Manage">
+    <div class="hd"><ul><li class="cur">全部</li><li>待付款</li><li>待发货</li><li>待收货</li><li>已完成</li></ul></div>
+    <div class="bd" id="order-bd">
+      <div class="con">
+       <ul class="list">
+        <foreach name="order_list" item="ol">
+        <li class="order_style Multiple_orders">
+         <div class="order_title"><span class="Numbering f_l">编号：{$ol.o_sn}</span><span class="status  f_r">状态：<i>{$ol.o_status|get_status=###}</i></span></div>
+         <div class="Order_ID"><span class="f_r"><if condition="$ol.o_status eq 0">下单时间：{$ol.o_datetime|date="Y-m-d H:i:s",###}<else/>付款时间：{$ol.o_paytime|date="Y-m-d H:i:s",###}</if></span></div>
+         <foreach name="ol.o_ginfo" item="og">
+         <div class="product_img clearfix">
+          <a href="{:U('Index/ProductCon',array('id'=>$og['id']))}" class="img"><img src="{$og.g_thumb}" width="80" height="80" /></a>
+          <span class="title">{$og.g_title}</span><br>
+          <span class="title">详情：{$og.ginfo}</span><br>
+          <span class="price">价格：￥{$og.g_vipprice}x{$og.gnum}</span>
+         </div>
+         </foreach>
+         <div class="operating"><span class="price">总价：<i>￥</i>{$ol.o_price}</span><a href="{:U('Order/OrderCon',array('id'=>$ol['id']))}" class="detailed_link">详细</a><if condition="$ol.o_status eq 0"><a href="{:U('Order/OrderCon',array('id'=>$ol['id']))}" class="detailed_link">付款</a></if><if condition="$ol.o_status eq 0 or $ol.o_status eq 3"><a href="javascript:OrderDel({$ol.id})" class="iconfont icon-delete"></a></if>
+          <if condition="$ol.o_status eq 2">
+           <a href="javascript:OrderSure({$ol.id})" class="detailed_link">确认收货</a>
+          </if>
+          <if condition="$ol.o_status eq 2">
+           <a href="{:U('Order/refund',array('id'=>$ol['id']))}" class="detailed_link">申请退款</a>
+
+          </if>
+          <if condition="$ol.o_status eq 7 or $ol.o_status eq 5 or $ol.o_status eq 6">
+           <a href="{:U('Order/refundInfo',array('id'=>$ol['id']))}" class="detailed_link">查看退款信息</a>
+
+          </if>
+
+         </div>
+         <if condition="$ol.o_status eq 2">
+         <div style="color:red">五天后系统自动确认收货，确认收货后不允许退款
+         </div>
+          </if>
+        </li>
+        </foreach>
+       </ul>
+      </div>
+     <div class="con none">
+       <ul class="list">
+        <foreach name="o.status0" item="s0">
+        <li class="order_style Multiple_orders">
+         <div class="order_title"><span class="Numbering f_l">编号：{$s0.o_sn}</span><span class="status  f_r">状态：<i>待付款</i></span></div>
+         <div class="Order_ID"><span class="f_r"><if condition="$s0.o_status eq 0">下单时间：{$s0.o_datetime|date="Y-m-d H:i:s",###}<else/>付款时间：{$s0.o_paytime|date="Y-m-d H:i:s",###}</if></span></div>
+         <foreach name="s0.o_ginfo" item="og">
+          <div class="product_img clearfix">
+           <a href="{:U('Index/ProductCon',array('id'=>$og['id']))}" class="img"><img src="{$og.g_thumb}" width="80" height="80" /></a>
+           <span class="title">{$og.g_title}</span><br>
+           <span class="title">详情：{$og.ginfo}</span><br>
+           <span class="price">价格：￥{$og.g_vipprice}x{$og.gnum}</span>
+          </div>
+         </foreach>
+         <div class="operating"><span class="price">总价：<i>￥</i>{$s0.o_price}</span><a href="{:U('Order/OrderCon',array('id'=>$s0['id']))}" class="detailed_link">详细</a><a href="{:U('Order/OrderCon',array('id'=>$s0['id']))}" class="detailed_link">付款</a><a href="javascript:OrderDel({$ol.id})" class="iconfont icon-delete"></a></div>
+        </li>
+        </foreach>
+       </ul>
+      </div>
+       <div class="con none">
+       <ul class="list">
+        <foreach name="o.status1" item="s1">
+         <li class="order_style Multiple_orders">
+          <div class="order_title"><span class="Numbering f_l">编号：{$s1.o_sn}</span><span class="status  f_r">状态：<i>待发货</i></span></div>
+          <div class="Order_ID"><span class="f_r"><if condition="$s1.o_status eq 0">下单时间：{$s1.o_datetime|date="Y-m-d H:i:s",###}<else/>付款时间：{$s1.o_paytime|date="Y-m-d H:i:s",###}</if></span></div>
+          <foreach name="s1.o_ginfo" item="og">
+           <div class="product_img clearfix">
+            <a href="{:U('Index/ProductCon',array('id'=>$og['id']))}" class="img"><img src="{$og.g_thumb}" width="80" height="80" /></a>
+            <span class="title">{$og.g_title}</span><br>
+            <span class="title">详情：{$og.ginfo}</span><br>
+            <span class="price">价格：￥{$og.g_vipprice}x{$og.gnum}</span>
+           </div>
+          </foreach>
+          <div class="operating"><span class="price">总价：<i>￥</i>{$s1.o_price}</span><a href="{:U('Order/OrderCon',array('id'=>$s1['id']))}" class="detailed_link">详细</a></div>
+         </li>
+        </foreach>
+       </ul>
+      </div>
+     <div class="con none">
+      <ul class="list">
+       <foreach name="o.status2" item="s2">
+        <li class="order_style Multiple_orders">
+         <div class="order_title"><span class="Numbering f_l">编号：{$s2.o_sn}</span><span class="status  f_r">状态：<i>待收货</i></span></div>
+         <div class="Order_ID"><span class="f_r"><if condition="$s2.o_status eq 0">下单时间：{$s2.o_datetime|date="Y-m-d H:i:s",###}<else/>付款时间：{$s2.o_paytime|date="Y-m-d H:i:s",###}</if></span></div>
+         <foreach name="s2.o_ginfo" item="og">
+          <div class="product_img clearfix">
+           <a href="{:U('Index/ProductCon',array('id'=>$og['id']))}" class="img"><img src="{$og.g_thumb}" width="80" height="80" /></a>
+           <span class="title">{$og.g_title}</span><br>
+           <span class="title">详情：{$og.ginfo}</span><br>
+           <span class="price">价格：￥{$og.g_vipprice}x{$og.gnum}</span>
+          </div>
+         </foreach>
+         <div class="operating"><span class="price">总价：<i>￥</i>{$s2.o_price}</span><a href="{:U('Order/OrderCon',array('id'=>$s2['id']))}" class="detailed_link">详细</a><a href="javascript:OrderSure({$s2.id})" class="detailed_link">确认收货</a>
+           <a href="{:U('Order/refund',array('id'=>$s2['id']))}" class="detailed_link">申请退款</a>
+
+         </div>
+         <div style="color:red">五天后系统自动确认收货，确认收货后不允许退款
+         </div>
+        </li>
+       </foreach>
+      </ul>
+     </div>
+     <div class="con none">
+      <ul class="list">
+       <foreach name="o.status3" item="s3">
+        <li class="order_style Multiple_orders">
+         <div class="order_title"><span class="Numbering f_l">编号：{$s3.o_sn}</span><span class="status  f_r">状态：<i>
+          <if condition="$s3.o_status eq 3">
+           已完成
+          </if>
+          <if condition="$s3.o_status eq 7">
+           驳回退款
+          </if>
+
+         </i></span></div>
+         <div class="Order_ID"><span class="f_r"><if condition="$s3.o_status eq 0">下单时间：{$s3.o_datetime|date="Y-m-d H:i:s",###}<else/>付款时间：{$s3.o_paytime|date="Y-m-d H:i:s",###}</if></span></div>
+         <foreach name="s3.o_ginfo" item="og">
+          <div class="product_img clearfix">
+           <a href="{:U('Index/ProductCon',array('id'=>$og['id']))}" class="img"><img src="{$og.g_thumb}" width="80" height="80" /></a>
+           <span class="title">{$og.g_title}</span><br>
+           <span class="title">详情：{$og.ginfo}</span><br>
+           <span class="price">价格：￥{$og.g_vipprice}x{$og.gnum}</span>
+          </div>
+         </foreach>
+         <div class="operating"><span class="price">总价：<i>￥</i>{$s3.o_price}</span><a href="{:U('Order/OrderCon',array('id'=>$s3['id']))}" class="detailed_link">详细</a><a href="javascript:OrderDel({$s3.id})" class="iconfont icon-delete"></a>
+
+          <if condition="$s3.o_status eq 7 or $s3.o_status eq 6 or $s3.o_status eq 5">
+           <a href="{:U('Order/refundInfo',array('id'=>$s3['id']))}" class="detailed_link">查看退款信息</a>
+          </if>
+
+           <!--<a href="javascript:OrderRefund({$s3.id})" class="detailed_link">申请退款</a>-->
+         </div>
+
+
+
+        </li>
+       </foreach>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+<include file="Index/footer"/>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/web/js/style.js"></script>
+</body>
+<script>
+ function OrderDel(id){
+  $.post("{:U('Order/OrderDel')}",{id:id},function(t){ if(t == 1){location.reload()}else{alert("请先登录");}})
+ }
+ function OrderSure(id){
+  $.post("{:U('Order/OrderSure')}",{id:id},function(t){ if(t == 1){alert("已确认收货！");location.reload();}else{alert("请先登录");}})
+ }
+ function OrderRefund(id){
+  $.post("{:U('Order/OrderRefund')}",{id:id},function(t){ if(t == 1){alert("已申请退款退货！");location.reload();}else{alert("请先登录");}})
+ }
+</script>
+</html>

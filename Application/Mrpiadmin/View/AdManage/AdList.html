@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>广告列表</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="__PUBLIC__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__PUBLIC__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInUp">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>广告列表</h5>
+                        <div class="ibox-tools">
+                            <a href="{:U('MODULE_NAME/AdManage/AdAdd')}" class="btn btn-primary btn-xs">创建广告</a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row m-b-sm m-t-sm">
+                            <div class="col-md-1">
+
+                            </div>
+                        </div>
+                        <div class="project-list">
+                            <table class="table table-hover">
+                                <tbody>
+                                <foreach name="ad_list" item="al">
+                                    <tr>
+                                        <td class="project-status">
+                                            <if condition="$al.is_del eq 0">
+                                                <span class="label label-primary">投放中</span>
+                                                <else/>
+                                                <span class="label label-danger">已删除</span>
+                                            </if>
+                                        </td>
+                                        <td class="project-title">
+                                            <a href="{$al.a_image}" target="_blank">{$al.a_title}</a>
+                                            <br/>
+                                            <small>链接地址： {$al.a_url}</small>
+                                        </td>
+                                        <td class="project-actions">
+                                            <a href="{:U('AdManage/AdEdit',array('id'=>$al['id']))}" class="btn btn-white btn-sm"><i class="fa fa-folder"></i> 编辑 </a>
+                                            <a href="javascript:ad_del({$al.id});" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> 删除 </a>
+                                        </td>
+                                    </tr>
+                                </foreach>
+                                </tbody>
+                            </table>
+                            {$page}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="__PUBLIC__/js/jquery.min.js?v=2.1.4"></script>
+    <script src="__PUBLIC__/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="__PUBLIC__/js/content.min.js?v=1.0.0"></script>
+    <script>
+       $(document).ready(function(){$("#loading-example-btn").click(function(){btn=$(this);simpleLoad(btn,true);simpleLoad(btn,false)})});function simpleLoad(btn,state){if(state){btn.children().addClass("fa-spin");btn.contents().last().replaceWith(" Loading")}else{setTimeout(function(){btn.children().removeClass("fa-spin");btn.contents().last().replaceWith(" Refresh")},2000)}};
+       function ad_del(id){
+           $.post("{:U('AdManage/AdDel')}",{id:id},function(t){ if(t == 1){alert("删除成功");location.href="{:U('AdManage/AdList')}";}else{alert("删除失败");}});
+       }
+    </script>
+
+    </body>
+
+</html>
